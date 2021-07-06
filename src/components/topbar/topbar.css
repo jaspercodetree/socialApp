@@ -1,0 +1,20 @@
+.topbarContainer{
+    display: flex;
+    height: 50px;
+    align-items: center;
+    background-color: #ffc;
+}
+
+.topbarLeft{
+flex: 4;
+}
+
+.tipbarCenter{
+flex:8;
+
+}
+
+.topbarRight{
+flex: 4;
+
+}
