@@ -5,14 +5,14 @@ export default function Topbar() {
     return (
         <div className="topbarContainer">
             <div className="topbarLeft">
-                <div className="logo">
+                <span className="logo">
                     JasperBook
-                </div>
+                </span>
             </div>
             <div className="tipbarCenter">
                 <div className="searchbar">
-                    <Search />
-                    <input type="text" className="searchInput" placeholder="搜尋您的朋友，或是發布文章、影片" />
+                    <Search className="searchIcon" />
+                    <input type="text" className="searchInput" placeholder="搜尋您的朋友，發布文章、影片" />
                 </div>
             </div>
             <div className="topbarRight">
@@ -34,6 +34,7 @@ export default function Topbar() {
                         <span className="topbarIconBadge">1</span>
                     </div>
                 </div>
+                <img src="/assets/person/1.jpeg" alt="" className="topbarImg" />
             </div>
         </div>
     )
