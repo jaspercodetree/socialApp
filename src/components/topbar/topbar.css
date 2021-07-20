@@ -5,6 +5,7 @@
     background-color: purple;
     position: sticky;
     top: 0;
+    z-index: 999;
 }
 
 .topbarLeft{

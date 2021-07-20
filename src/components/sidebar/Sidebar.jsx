@@ -1,3 +1,5 @@
+import CloseFriend from '../closeFriend/CloseFriend';
+import { Users } from '../../dummyData';
 import './sidebar.css';
 import {
     RssFeed,
@@ -56,50 +58,8 @@ export default function Sidebar() {
                 <button className="sidebarButton">Show more</button>
                 <hr className="sidebarHr" />
                 <ul className="sidebarFriendList">
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
-                    <li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li><li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li><li className="sidebarFriend">
-                        <img src="/assets/person/2.jpeg" alt="" className="sidebarFriendImg" />
-                        <span className="sidebarFriendName">Jack Chang</span>
-                    </li>
+                    {Users.map(u => <CloseFriend id={u.id} user={u} />)}
                 </ul>
-
             </div>
         </div>
     )
