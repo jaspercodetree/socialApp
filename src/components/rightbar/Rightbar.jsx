@@ -3,13 +3,14 @@ import { Users } from "../../dummyData";
 import './rightbar.css'
 
 export default function Rightbar() {
-    return (
-        <div className="rightbar">
-            <div className="rightbarWrapper">
+
+    const HomeRightbar = () => {
+        return (
+            <>
                 <div className="birthdayContainer">
                     <img src="assets/gift.png" alt="" className="birthdayImg" />
                     <span className="birthdayText">
-                        <b>李泰鑫</b> 以及 <b>5個其他的朋友</b> 今天生日
+                        <b>曾國峰</b> 以及 <b>5個其他的朋友</b> 今天生日
                     </span>
                 </div>
                 <img src="assets/ad.png" alt="" className="rightbarAd" />
@@ -17,6 +18,61 @@ export default function Rightbar() {
                 <ul className="rightbarFriendList">
                     {Users.map(u => <Online key={u.id} user={u} />)}
                 </ul>
+            </>
+        )
+    }
+
+    const ProfileRightbar = () => {
+        return (
+            <>
+                <h4 className="rightbarTitle">使用者資訊</h4>
+                <div className="rightbarInfo">
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey">城市:</span>
+                        <span className="rightbarInfoValue">台北</span>
+                    </div>
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey">家鄉:</span>
+                        <span className="rightbarInfoValue">新北</span>
+                    </div>
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey">關係:</span>
+                        <span className="rightbarInfoValue">已婚</span>
+                    </div>
+                </div>
+
+                <h4 className="rightbarTitle">使用者朋友</h4>
+                <div className="rightbarFollowings">
+                    <div className="rightbarFollowing">
+                        <img src="assets/person/1.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Jason</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Jason</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="assets/person/3.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Jason</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="assets/person/4.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Jason</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="assets/person/5.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Jason</span>
+                    </div>
+                </div>
+            </>
+        )
+    }
+    return (
+
+
+        <div className="rightbar" >
+            <div className="rightbarWrapper">
+                {/* {profile ? < ProfileRightbar /> : <HomeRightbar />} */}
             </div>
         </div>
     )
