@@ -1,5 +1,5 @@
 import CloseFriend from '../closeFriend/CloseFriend';
-import { Users } from '../../dummyData';
+import { Users } from '../../dummyData'; //data
 import './sidebar.css';
 import {
     RssFeed,
@@ -58,9 +58,11 @@ export default function Sidebar() {
                 <button className="sidebarButton">Show more</button>
                 <hr className="sidebarHr" />
                 <ul className="sidebarFriendList">
-                    {Users.map(u => <CloseFriend id={u.id} user={u} />)}
+                    {Users.map((u) => (
+                        <CloseFriend id={u.id} user={u} />
+                    ))}
                 </ul>
             </div>
         </div>
-    )
+    );
 }

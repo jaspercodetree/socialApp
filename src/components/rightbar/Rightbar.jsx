@@ -2,7 +2,7 @@ import Online from '../online/Online';
 import { Users } from "../../dummyData";
 import './rightbar.css'
 
-export default function Rightbar() {
+export default function Rightbar({ profile }) {
 
     const HomeRightbar = () => {
         return (
@@ -68,11 +68,9 @@ export default function Rightbar() {
         )
     }
     return (
-
-
         <div className="rightbar" >
             <div className="rightbarWrapper">
-                {/* {profile ? < ProfileRightbar /> : <HomeRightbar />} */}
+                {profile ? < ProfileRightbar /> : <HomeRightbar />}
             </div>
         </div>
     )

@@ -7,6 +7,7 @@ export default function Post({ post }) {
     // console.log(post);
 
     // let user = Users.filter(u => u.id === 1);
+    // filter得到'陣列 
     // console.log(user[0])
 
     const [like, setLike] = useState(post.like);
