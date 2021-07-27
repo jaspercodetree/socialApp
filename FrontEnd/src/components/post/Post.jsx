@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MoreVert } from '@material-ui/icons';
-import { Users } from '../../dummyData';
+import axios from 'axios';
+// import { Users } from '../../dummyData';
 import './post.css';
 
 export default function Post({ post }) {
@@ -12,8 +13,17 @@ export default function Post({ post }) {
 	// filter得到'陣列
 	// console.log(user[0])
 
-	const [like, setLike] = useState(post.like);
+	const [like, setLike] = useState();
 	const [isLiked, setIsLiked] = useState(false);
+	const [user, setUser] = useState([]);
+
+	useEffect(() => {
+		const getUser = async () => {
+			const res = await axios.get(`users/${post.userId}`);
+			setUser(res.data);
+		};
+		getUser();
+	}, []);
 
 	const likeHandler = () => {
 		isLiked ? setLike(like - 1) : setLike(like + 1);
@@ -26,20 +36,11 @@ export default function Post({ post }) {
 				<div className="postTop">
 					<div className="postTopLeft">
 						<img
-							src={
-								PF +
-								Users.filter((u) => u.id === post.userId)[0]
-									.profilePicture
-							}
+							src={user.profilePicture}
 							alt=""
 							className="postProfileImg"
 						/>
-						<span className="postUsername">
-							{
-								Users.filter((u) => u.id === post.userId)[0]
-									.username
-							}
-						</span>
+						<span className="postUsername">{user.username}</span>
 						<span className="postDate">{post.date}</span>
 					</div>
 					<div className="postTopRight">

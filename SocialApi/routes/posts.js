@@ -72,6 +72,24 @@ router.put('/:id/like', async (req, res) => {
 });
 
 //貼文牆 (自己與已追蹤followings的好友)
-router.get('/');
+router.get('/timeline/:id', async (req, res) => {
+	try {
+		//自己的貼文
+		const currentUserPosts = await Post.find({ userId: req.params.id });
+
+		//朋友的貼文
+		const currentUser = await User.findById(req.params.id);
+		const followingsUserIds = await currentUser.followings; //array
+		const friendPosts = await Promise.all(
+			followingsUserIds.map((friendId) => Post.find({ userId: friendId }))
+		);
+
+		//合併兩個陣列,所有貼文
+		const timelinePosts = currentUserPosts.concat(friendPosts);
+		res.status(200).json(timelinePosts);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 
 module.exports = router;
