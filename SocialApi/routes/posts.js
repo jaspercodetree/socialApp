@@ -71,4 +71,7 @@ router.put('/:id/like', async (req, res) => {
 	}
 });
 
+//貼文牆 (自己與已追蹤followings的好友)
+router.get('/');
+
 module.exports = router;
