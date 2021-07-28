@@ -40,9 +40,14 @@ router.delete('/:id', async (req, res) => {
 });
 
 //get
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
+	//設計兩種方式都可以取得使用者(名稱或id)
+	const userId = req.query.userId;
+	const username = req.query.username;
 	try {
-		const user = await User.findById(req.params.id);
+		const user = userId
+			? await User.findById(userId)
+			: await User.findOne({ username: username });
 		//透過user._doc 可以拿到整個資料，然後我們透過解構只去拿other(避開password 和 updateAt 資料不傳)，所以只回傳other
 		const { password, updatedAt, ...other } = user._doc;
 		res.status(200).json(other);

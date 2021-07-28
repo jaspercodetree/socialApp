@@ -1,5 +1,6 @@
 import './topbar.css';
 import { Search, Person, Chat, Notifications } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 export default function Topbar() {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -7,7 +8,9 @@ export default function Topbar() {
 	return (
 		<div className="topbarContainer">
 			<div className="topbarLeft">
-				<span className="logo">JasperBook</span>
+				<Link to="/" style={{ textDecoration: 'none' }}>
+					<span className="logo">JasperBook</span>
+				</Link>
 			</div>
 			<div className="tipbarCenter">
 				<div className="searchbar">
@@ -31,14 +34,16 @@ export default function Topbar() {
 					</div>
 					<div className="topbarIconItem">
 						<Chat />
-						<span className="topbarIconBadge">1</span>
+						<span className="topbarIconBadge">2</span>
 					</div>
 					<div className="topbarIconItem">
 						<Notifications />
-						<span className="topbarIconBadge">1</span>
+						<span className="topbarIconBadge">3</span>
 					</div>
 				</div>
+				{/* <Link to={`profile/${user.username}`}> */}
 				<img src={`${PF}person/8.jpeg`} alt="" className="topbarImg" />
+				{/* </Link> */}
 			</div>
 		</div>
 	);

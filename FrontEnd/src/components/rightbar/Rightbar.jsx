@@ -4,7 +4,6 @@ import './rightbar.css';
 
 export default function Rightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	console.log(PF);
 	const HomeRightbar = () => {
 		return (
 			<>

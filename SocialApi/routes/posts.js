@@ -85,8 +85,23 @@ router.get('/timeline/:id', async (req, res) => {
 		);
 
 		//合併兩個陣列,所有貼文
-		const timelinePosts = currentUserPosts.concat(friendPosts);
+		//此處要用展開運算符，才能只拿出friendPosts陣列裡面的資料合併
+		const timelinePosts = currentUserPosts.concat(...friendPosts);
 		res.status(200).json(timelinePosts);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+//個人頁面 (自己所有貼文)
+router.get('/profile/:username', async (req, res) => {
+	try {
+		const currentUser = await User.findOne({
+			username: req.params.username,
+		});
+		const posts = await Post.find({ userId: currentUser._id });
+
+		res.status(200).json(posts);
 	} catch (err) {
 		res.status(500).json(err);
 	}
