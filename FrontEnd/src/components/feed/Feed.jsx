@@ -8,11 +8,12 @@ import axios from 'axios';
 export default function Feed({ username }) {
 	const [posts, setPosts] = useState([]);
 
+	//有收到username 則判斷為使用者個人頁面；否則為使用者共同貼圖牆頁面
 	useEffect(() => {
 		const getPosts = async () => {
 			const res = username
 				? await axios.get('/posts/profile/' + username)
-				: await axios.get('posts/timeline/60e553e65cd1772ce8f1e3ea');
+				: await axios.get('/posts/timeline/60e553e65cd1772ce8f1e3ea');
 			// console.log(res);
 			setPosts(res.data);
 		};

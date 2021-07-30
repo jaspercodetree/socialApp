@@ -1,23 +1,59 @@
+import { useContext } from 'react';
+import { useRef } from 'react';
+import { loginCall } from '../../apiCalls';
+import { AuthContext } from '../../context/AuthContext';
 import './login.css';
 
 export default function Login() {
-    return (
-        <div className="login">
-            <div className="loginWrapper">
-                <div className="loginLeft">
-                    <h3 className="loginLogo">JasperLogo</h3>
-                    <span className="loginDesc">連結世界上所有的朋友</span>
-                </div>
-                <div className="loginRight">
-                    <div className="loginBox">
-                        <input type="text" placeholder="Email" className="loginInput" />
-                        <input type="text" placeholder="Password" className="loginInput" />
-                        <button className="loginButton">登入</button>
-                        <span className="loginForget">忘記密碼?</span>
-                        <button className="loginRegisterButton">註冊</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+	const email = useRef();
+	const password = useRef();
+	const { isFetching, dispatch } = useContext(AuthContext);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		loginCall(
+			{
+				email: email.current.value,
+				password: password.current.value,
+			},
+			dispatch
+		);
+	};
+
+	return (
+		<div className="login">
+			<div className="loginWrapper">
+				<div className="loginLeft">
+					<h3 className="loginLogo">JasperLogo</h3>
+					<span className="loginDesc">連結世界上所有的朋友</span>
+				</div>
+				<div className="loginRight">
+					<form className="loginBox" onSubmit={handleSubmit}>
+						<input
+							type="email"
+							placeholder="Email"
+							className="loginInput"
+							required
+							ref={email}
+						/>
+						<input
+							type="password"
+							placeholder="Password"
+							className="loginInput"
+							required
+							minLength="5"
+							ref={password}
+						/>
+						<button type="submit" className="loginButton">
+							登入
+						</button>
+						<span className="loginForget">
+							<a href="/login">忘記密碼?</a>
+						</span>
+						<button className="loginRegisterButton">註冊</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	);
 }

@@ -22,7 +22,7 @@ export default function Post({ post }) {
 
 	useEffect(() => {
 		const getUser = async () => {
-			const res = await axios.get(`users/${post.userId}`);
+			const res = await axios.get(`/users?userId=${post.userId}`);
 			setUser(res.data);
 		};
 		getUser();
@@ -58,8 +58,12 @@ export default function Post({ post }) {
 					</div>
 				</div>
 				<div className="postCenter">
-					<span className="postText">{post?.desc}</span>
-					<img src={PF + post.img} alt="" className="postImg" />
+					<span className="postText">{post.desc}</span>
+					<img
+						src={PF + `post/` + post.img}
+						alt=""
+						className="postImg"
+					/>
 				</div>
 				<div className="postBottom">
 					<div className="postBottomLeft">

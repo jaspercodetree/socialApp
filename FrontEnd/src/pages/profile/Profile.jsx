@@ -12,11 +12,11 @@ export default function Profile() {
 	const [user, setUser] = useState({});
 	useEffect(() => {
 		const getUser = async () => {
-			const res = axios.get('/users?username=jasper');
+			const res = await axios.get('/users?username=jasper');
 			setUser(res.data);
 		};
 		getUser();
-	});
+	}, []);
 
 	return (
 		<>
@@ -27,18 +27,26 @@ export default function Profile() {
 					<div className="profileRightTop">
 						<div className="profileCover">
 							<img
-								src={`${PF}post/1.jpeg`}
+								src={
+									user.coverPicture
+										? PF + `person/${user.coverPicture}`
+										: PF + `person/noCover.png`
+								}
 								alt=""
 								className="profileCoverImg"
 							/>
 							<img
-								src={`${PF}person/8.jpeg`}
+								src={
+									user.profilePicture
+										? PF + `person/${user.profilePicture}`
+										: PF + `person/noAvatar.png`
+								}
 								alt=""
 								className="profileUserImg"
 							/>
 						</div>
 						<div className="profileInfo">
-							<h4 className="profileInfoName">{}</h4>
+							<h4 className="profileInfoName">{user.username}</h4>
 							<span className="profileInfoDesc">I'm cool</span>
 						</div>
 					</div>
