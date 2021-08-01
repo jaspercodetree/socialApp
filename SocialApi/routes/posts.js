@@ -60,10 +60,10 @@ router.put('/:id/like', async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		if (post.likes.includes(req.body.userId)) {
-			post.updateOne({ $pull: { likes: req.body.userId } });
+			await post.updateOne({ $pull: { likes: req.body.userId } });
 			res.status(200).json('已經對貼文退讚');
 		} else {
-			post.updateOne({ $push: { likes: req.body.userId } });
+			await post.updateOne({ $push: { likes: req.body.userId } });
 			res.status(200).json('已經對貼文按讚');
 		}
 	} catch (err) {

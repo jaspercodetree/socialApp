@@ -1,9 +1,18 @@
 import './topbar.css';
 import { Search, Person, Chat, Notifications } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Topbar() {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const { user } = useContext(AuthContext);
+	// console.log(user);
+
+	const logout = () => {
+		localStorage.removeItem('user');
+		window.location.replace('/login');
+	};
 
 	return (
 		<div className="topbarContainer">
@@ -18,7 +27,7 @@ export default function Topbar() {
 					<input
 						type="text"
 						className="searchInput"
-						placeholder="搜尋您的朋友，發布文章、影片"
+						placeholder={`搜尋 ${user.data.username} 的朋友，發布文章、影片`}
 					/>
 				</div>
 			</div>
@@ -36,14 +45,18 @@ export default function Topbar() {
 						<Chat />
 						<span className="topbarIconBadge">2</span>
 					</div>
-					<div className="topbarIconItem">
+					<div className="topbarIconItem" onClick={logout}>
 						<Notifications />
 						<span className="topbarIconBadge">3</span>
 					</div>
 				</div>
-				{/* <Link to={`profile/${user.username}`}> */}
-				<img src={`${PF}person/8.jpeg`} alt="" className="topbarImg" />
-				{/* </Link> */}
+				<Link to={`/profile/${user.data.username}`}>
+					<img
+						src={PF + `person/${user.data.profilePicture}`}
+						alt=""
+						className="topbarImg"
+					/>
+				</Link>
 			</div>
 		</div>
 	);

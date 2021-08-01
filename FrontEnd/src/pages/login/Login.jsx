@@ -2,7 +2,9 @@ import { useContext } from 'react';
 import { useRef } from 'react';
 import { loginCall } from '../../apiCalls';
 import { AuthContext } from '../../context/AuthContext';
+import { CircularProgress } from '@material-ui/core';
 import './login.css';
+import { Link } from 'react-router-dom';
 
 export default function Login() {
 	const email = useRef();
@@ -45,12 +47,30 @@ export default function Login() {
 							ref={password}
 						/>
 						<button type="submit" className="loginButton">
-							登入
+							{isFetching ? (
+								<CircularProgress
+									color="secondary"
+									size="18px"
+								/>
+							) : (
+								'登入'
+							)}
 						</button>
 						<span className="loginForget">
 							<a href="/login">忘記密碼?</a>
 						</span>
-						<button className="loginRegisterButton">註冊</button>
+						<Link to="/register" style={{ textAlign: 'center' }}>
+							<button className="loginRegisterButton">
+								{isFetching ? (
+									<CircularProgress
+										color="secondary"
+										size="18px"
+									/>
+								) : (
+									'註冊'
+								)}
+							</button>
+						</Link>
 					</form>
 				</div>
 			</div>
