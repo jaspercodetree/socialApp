@@ -1,35 +1,83 @@
 import './share.css';
 import { PermMedia, Label, Room, EmojiEmotions } from '@material-ui/icons';
-// import { useContext } from 'react';
-// import { AuthContext } from '../../context/AuthContext';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { useRef } from 'react';
+import axios from 'axios';
 
-export default function share() {
-	// const { user } = useContext(AuthContext);
+export default function Share() {
+	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const { user } = useContext(AuthContext);
+	const desc = useRef();
+	const [file, setFile] = useState(null);
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		const newPost = {
+			userId: user.data._id,
+			desc: desc.current.value,
+		};
+
+		if (file) {
+			const data = new FormData();
+			const filename = Date.now() + file.name;
+			data.append('name', filename);
+			data.append('file', file);
+			newPost.img = filename;
+			console.log(newPost);
+			try {
+				await axios.post('/upload', data);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+
+		try {
+			await axios.post('/posts', newPost);
+			window.location.reload();
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	return (
 		<div className="share">
-			<div className="shareWrapper">
+			<form className="shareWrapper" onSubmit={handleSubmit}>
 				<div className="shareTop">
 					<img
-						src="/assets/person/8.jpeg"
+						src={
+							user.data.profilePicture
+								? PF + `person/${user.data.profilePicture}`
+								: PF + `person/noAvatar.png`
+						}
 						alt=""
 						className="shareProfileImg"
 					/>
 					<input
-						// placeholder={`${user.data.username} 你今天過得好嗎?`}
+						placeholder={`${user.data.username} 你今天過得好嗎?`}
 						className="shareInput"
+						ref={desc}
 					/>
 				</div>
 				<hr className="shareHr" />
 				<div className="shareBottom">
 					<div className="shareOptions">
-						<div className="shareOption">
+						<label htmlFor="uploadFile" className="shareOption">
 							<PermMedia
 								htmlColor="tomato"
 								className="shareIcon"
 							/>
-							<span className="shareOptionText">照片或影片</span>
-						</div>
+							<span className="shareOptionText">照片</span>
+							<input
+								style={{ display: 'none' }}
+								type="file"
+								name="uploadFile"
+								id="uploadFile"
+								accept=".png, .jpg, .jpeg"
+								onChange={(e) => setFile(e.target.files[0])}
+							/>
+						</label>
 						<div className="shareOption">
 							<Label htmlColor="green" className="shareIcon" />
 							<span className="shareOptionText">標籤</span>
@@ -46,9 +94,11 @@ export default function share() {
 							<span className="shareOptionText">心情</span>
 						</div>
 					</div>
-					<button className="shareButton">Share</button>
+					<button className="shareButton" type="submit">
+						分享
+					</button>
 				</div>
-			</div>
+			</form>
 		</div>
 	);
 }
