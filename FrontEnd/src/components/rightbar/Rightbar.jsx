@@ -1,9 +1,29 @@
 import Online from '../online/Online';
 import { Users } from '../../dummyData';
 import './rightbar.css';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 export default function Rightbar({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const [friends, setFriends] = useState([]);
+	/* 此處user為此profile頁面的user ;  currentUser為目前登入的user */
+
+	//profile 右側欄朋友列表
+	useEffect(() => {
+		const getFriends = async () => {
+			try {
+				const friendsList = await axios.get(
+					'/users/friends/' + user?._id
+				);
+				setFriends(friendsList.data);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		getFriends();
+	}, [user]);
 
 	const HomeRightbar = () => {
 		return (
@@ -14,7 +34,7 @@ export default function Rightbar({ user }) {
 						<b>曾國峰</b> 以及 <b>5個其他的朋友</b> 今天生日
 					</span>
 				</div>
-				<img src={`${PF}ad.png`} alt="" className="rightbarAd" />
+				<img src={PF + `ad.png`} alt="" className="rightbarAd" />
 				<div className="rightbarTitle">在線的朋友</div>
 				<ul className="rightbarFriendList">
 					{Users.map((u) => (
@@ -32,11 +52,15 @@ export default function Rightbar({ user }) {
 				<div className="rightbarInfo">
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">城市:</span>
-						<span className="rightbarInfoValue">{user.city}</span>
+						<span className="rightbarInfoValue">
+							{user.city ? user.city : '神秘都市'}
+						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">家鄉:</span>
-						<span className="rightbarInfoValue">{user.from}</span>
+						<span className="rightbarInfoValue">
+							{user.from ? user.from : '秘密之地'}
+						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">關係:</span>
@@ -52,46 +76,29 @@ export default function Rightbar({ user }) {
 
 				<h4 className="rightbarTitle">使用者朋友</h4>
 				<div className="rightbarFollowings">
-					<div className="rightbarFollowing">
-						<img
-							src={`${PF}person/1.jpeg`}
-							alt=""
-							className="rightbarFollowingImg"
-						/>
-						<span className="rightbarFollowingName">Jason</span>
-					</div>
-					<div className="rightbarFollowing">
-						<img
-							src={`${PF}person/2.jpeg`}
-							alt=""
-							className="rightbarFollowingImg"
-						/>
-						<span className="rightbarFollowingName">Jason</span>
-					</div>
-					<div className="rightbarFollowing">
-						<img
-							src={`${PF}person/3.jpeg`}
-							alt=""
-							className="rightbarFollowingImg"
-						/>
-						<span className="rightbarFollowingName">Jason</span>
-					</div>
-					<div className="rightbarFollowing">
-						<img
-							src={`${PF}person/4.jpeg`}
-							alt=""
-							className="rightbarFollowingImg"
-						/>
-						<span className="rightbarFollowingName">Jason</span>
-					</div>
-					<div className="rightbarFollowing">
-						<img
-							src={`${PF}person/5.jpeg`}
-							alt=""
-							className="rightbarFollowingImg"
-						/>
-						<span className="rightbarFollowingName">Jason</span>
-					</div>
+					{friends.map((friend) => (
+						<Link
+							to={`/profile/${friend.username}`}
+							style={{ textDecoration: 'none' }}
+							key={friend._id}
+						>
+							<div className="rightbarFollowing">
+								<img
+									src={
+										friend.profilePicture
+											? PF +
+											  `person/${friend.profilePicture}`
+											: PF + '/person/noAvatar.png'
+									}
+									alt=""
+									className="rightbarFollowingImg"
+								/>
+								<span className="rightbarFollowingName">
+									{friend.username}
+								</span>
+							</div>
+						</Link>
+					))}
 				</div>
 			</>
 		);

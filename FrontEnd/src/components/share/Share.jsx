@@ -19,6 +19,7 @@ export default function Share() {
 			desc: desc.current.value,
 		};
 
+		//1.透過/upload將圖片上傳到資料夾，並將路徑名稱存到newPost；2.再將newPost 透過/posts上傳到資料庫
 		if (file) {
 			const data = new FormData();
 			const filename = Date.now() + file.name;
