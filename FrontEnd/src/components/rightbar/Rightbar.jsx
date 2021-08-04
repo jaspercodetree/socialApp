@@ -1,29 +1,59 @@
 import Online from '../online/Online';
 import { Users } from '../../dummyData';
 import './rightbar.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import { Add, Remove } from '@material-ui/icons';
 
 export default function Rightbar({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const [friends, setFriends] = useState([]);
-	/* 此處user為此profile頁面的user ;  currentUser為目前登入的user */
+	const { user: currentUser, dispatch } = useContext(AuthContext);
+
+	const [followed, setFollowed] = useState();
+
+	/* user為此profile頁面的user ;  currentUser為目前登入的user */
 
 	//profile 右側欄朋友列表
 	useEffect(() => {
-		const getFriends = async () => {
-			try {
-				const friendsList = await axios.get(
-					'/users/friends/' + user?._id
-				);
-				setFriends(friendsList.data);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-		getFriends();
+		if (user != null) {
+			const getFriends = async () => {
+				try {
+					const friendsList = await axios.get(
+						'/users/friends/' + user._id
+					);
+					setFriends(friendsList.data);
+				} catch (err) {
+					console.log(err);
+				}
+			};
+			getFriends();
+		}
 	}, [user]);
+
+	useEffect(() => {
+		if (user != null) {
+			setFollowed(currentUser.followings.includes(user._id));
+		}
+	}, [currentUser.followings, user]);
+
+	const handleClick = async () => {
+		if (followed) {
+			await axios.put(`/users/${user._id}/unfollow`, {
+				userId: currentUser._id,
+			});
+			dispatch({ type: 'UNFOLLOW', payload: user._id });
+		} else {
+			await axios.put(`/users/${user._id}/follow`, {
+				userId: currentUser._id,
+			});
+			dispatch({ type: 'FOLLOW', payload: user._id });
+		}
+
+		setFollowed(!followed);
+	};
 
 	const HomeRightbar = () => {
 		return (
@@ -48,6 +78,12 @@ export default function Rightbar({ user }) {
 	const ProfileRightbar = () => {
 		return (
 			<>
+				{currentUser.username !== user.username && (
+					<div className="rightbarFollowButton" onClick={handleClick}>
+						{followed ? '解除追蹤 ' : '加入追蹤 '}
+						{followed ? <Remove /> : <Add />}
+					</div>
+				)}
 				<h4 className="rightbarTitle">使用者資訊</h4>
 				<div className="rightbarInfo">
 					<div className="rightbarInfoItem">

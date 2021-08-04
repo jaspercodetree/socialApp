@@ -27,7 +27,7 @@ export default function Topbar() {
 					<input
 						type="text"
 						className="searchInput"
-						placeholder={`搜尋 ${user.data.username} 的朋友，發布文章、影片`}
+						placeholder={`搜尋 ${user.username} 的朋友，發布文章、影片`}
 					/>
 				</div>
 			</div>
@@ -50,11 +50,11 @@ export default function Topbar() {
 						<span className="topbarIconBadge">3</span>
 					</div>
 				</div>
-				<Link to={`/profile/${user.data.username}`}>
+				<Link to={`/profile/${user.username}`}>
 					<img
 						src={
-							user.data.profilePicture
-								? PF + `person/${user.data.profilePicture}`
+							user.profilePicture
+								? PF + `person/${user.profilePicture}`
 								: PF + '/person/noAvatar.png'
 						}
 						alt=""

@@ -15,7 +15,7 @@ export default function Feed({ username }) {
 		const getPosts = async () => {
 			const res = username
 				? await axios.get('/posts/profile/' + username)
-				: await axios.get('/posts/timeline/' + user.data._id);
+				: await axios.get('/posts/timeline/' + user._id);
 
 			//依貼文時間排序
 			setPosts(
@@ -25,7 +25,7 @@ export default function Feed({ username }) {
 			);
 		};
 		getPosts();
-	}, [username, user.data._id]);
+	}, [username, user._id]);
 
 	return (
 		<div className="feed">

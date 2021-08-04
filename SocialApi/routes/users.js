@@ -112,21 +112,20 @@ router.put('/:id/unfollow', async (req, res) => {
 router.get('/friends/:userId', async (req, res) => {
 	try {
 		const user = await User.findById(req.params.userId);
-		const friendsIdAry = user.followings;
 		const friends = await Promise.all(
-			friendsIdAry.map((friendId) => User.findById(friendId))
+			user.followings.map((friendId) => User.findById(friendId))
 		);
 
 		//建一個新的array 只拿取其中三個屬性
-		const friendList = [];
+		let friendList = [];
 		friends.map((friend) => {
 			const { _id, username, profilePicture } = friend;
 			friendList.push({ _id, username, profilePicture });
 		});
 
-		return res.status(200).json(friendList);
+		res.status(200).json(friendList);
 	} catch (error) {
-		console.log(error);
+		res.status(500).json(error);
 	}
 });
 

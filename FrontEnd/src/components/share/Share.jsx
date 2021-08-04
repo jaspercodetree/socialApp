@@ -15,7 +15,7 @@ export default function Share() {
 		e.preventDefault();
 
 		const newPost = {
-			userId: user.data._id,
+			userId: user._id,
 			desc: desc.current.value,
 		};
 
@@ -48,15 +48,15 @@ export default function Share() {
 				<div className="shareTop">
 					<img
 						src={
-							user.data.profilePicture
-								? PF + `person/${user.data.profilePicture}`
+							user.profilePicture
+								? PF + `person/${user.profilePicture}`
 								: PF + `person/noAvatar.png`
 						}
 						alt=""
 						className="shareProfileImg"
 					/>
 					<input
-						placeholder={`${user.data.username} 你今天過得好嗎?`}
+						placeholder={`${user.username} 你今天過得好嗎?`}
 						className="shareInput"
 						ref={desc}
 					/>

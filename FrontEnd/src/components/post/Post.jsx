@@ -22,8 +22,8 @@ export default function Post({ post }) {
 	const [user, setUser] = useState({});
 
 	useEffect(() => {
-		setIsLiked(post.likes.includes(currentUser.data._id));
-	}, [currentUser.data._id, post.likes]);
+		setIsLiked(post.likes.includes(currentUser._id));
+	}, [currentUser._id, post.likes]);
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -36,7 +36,7 @@ export default function Post({ post }) {
 	const likeHandler = () => {
 		try {
 			axios.put('/posts/' + post._id + '/like', {
-				userId: currentUser.data._id,
+				userId: currentUser._id,
 			});
 		} catch (err) {
 			console.log(err);

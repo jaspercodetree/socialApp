@@ -31,6 +31,18 @@
     margin: 0;
 }
 
+.rightbarFollowButton{
+   display: flex;
+   justify-content: flex-start;
+   align-items: center;
+   background-color: #ffa;
+   border-radius: 8px;
+   padding: 12px;
+   margin-top: 42px;
+   cursor: pointer;
+   max-width: 100px;
+
+}
 
 .rightbarTitle{
     font-size: 18px;

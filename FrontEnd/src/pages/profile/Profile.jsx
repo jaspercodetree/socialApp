@@ -21,6 +21,8 @@ export default function Profile() {
 		getUser();
 	}, [username]);
 
+	// console.log(user);
+
 	return (
 		<>
 			<Topbar />
