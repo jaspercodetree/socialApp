@@ -1,5 +1,11 @@
 import './share.css';
-import { PermMedia, Label, Room, EmojiEmotions } from '@material-ui/icons';
+import {
+	PermMedia,
+	Label,
+	Room,
+	EmojiEmotions,
+	Cancel,
+} from '@material-ui/icons';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { useRef } from 'react';
@@ -62,6 +68,21 @@ export default function Share() {
 					/>
 				</div>
 				<hr className="shareHr" />
+				{/* 上傳圖片預覽 */}
+				{file && (
+					<div className="shareImgContainer">
+						<img
+							className="shareImg"
+							src={URL.createObjectURL(file)}
+							alt=""
+						/>
+						<Cancel
+							className="shareCancelImg"
+							style={{ fontSize: '28px' }}
+							onClick={() => setFile(null)}
+						/>
+					</div>
+				)}
 				<div className="shareBottom">
 					<div className="shareOptions">
 						<label htmlFor="uploadFile" className="shareOption">
