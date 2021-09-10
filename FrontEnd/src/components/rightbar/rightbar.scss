@@ -74,8 +74,12 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 
-	a:visited {
+	a {
 		color: #000;
+
+		&:visited {
+			color: #000;
+		}
 	}
 
 	.rightbarFollowing {

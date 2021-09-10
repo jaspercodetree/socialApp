@@ -1,6 +1,26 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const Post = require('../models/Post');
+const jwt = require('jsonwebtoken');
+
+//JWT verify
+const verify = (req, res, next) => {
+	const authHeader = req.headers.authorization;
+	if (authHeader) {
+		const token = authHeader.split(' ')[1];
+
+		jwt.verify(token, 'mySecretKey', (err, user) => {
+			if (err) {
+				return res.status(403).json('Token is not valid!');
+			}
+
+			req.user = user;
+			next();
+		});
+	} else {
+		res.status(401).json('You are not authenticated!');
+	}
+};
 
 //create
 router.post('/', async (req, res) => {
@@ -39,7 +59,7 @@ router.put('/:id', async (req, res) => {
 });
 
 //delete
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		if (req.body.userId === post.userId) {

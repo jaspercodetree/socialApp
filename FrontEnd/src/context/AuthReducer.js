@@ -40,6 +40,16 @@ const AuthReducer = (state, action) => {
 				},
 			};
 
+		//JWT功能
+		case 'REFRESH':
+			return {
+				...state,
+				user: {
+					...state.user,
+					accessToken: action.payload.accessToken,
+					refreshToken: action.payload.refreshToken,
+				},
+			};
 		default:
 			return state;
 	}
