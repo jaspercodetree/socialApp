@@ -1,6 +1,6 @@
-import CloseFriend from '../closeFriend/CloseFriend';
-import { Users } from '../../dummyData'; //data
 import './sidebar.css';
+import { Users } from '../../dummyData';
+import CloseFriend from '../closeFriend/CloseFriend';
 import {
 	RssFeed,
 	Chat,

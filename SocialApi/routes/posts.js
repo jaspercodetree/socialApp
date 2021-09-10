@@ -46,7 +46,7 @@ router.delete('/:id', async (req, res) => {
 			post.deleteOne();
 			res.status(200).json('此篇貼文已被刪除');
 		} else {
-			res.status(400).json('你只能刪除自己的貼圖');
+			res.status(400).json('你只能刪除自己的貼文');
 		}
 	} catch (err) {
 		res.status(500).json(err);

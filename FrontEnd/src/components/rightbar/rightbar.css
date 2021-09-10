@@ -1,87 +1,119 @@
-.rightbar{
-    flex: 3;
-    padding-right: 16px;
+.rightbar {
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
 }
 
-.birthdayContainer{
-    display: flex;
-    align-items: center;
-    margin: 16px 0 0 0;
+.rightbar .rightbarWrapper {
+  padding: 16px;
 }
 
-.birthdayImg{
-    width: 32px;
-    margin-right: 16px;
+.birthdayContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.rightbarAd{
-    max-width: 100%;
-    border-radius:10px ;
-    margin: 16px 0 0 0;
+.birthdayContainer .birthdayImg {
+  width: 32px;
+  margin-right: 16px;
 }
 
-.rightbarTitle{
-    font-weight: 700;
-    margin: 20px  0;
+.birthdayContainer .birthdayText {
+  font-size: 16px;
 }
 
-.rightbarFriendList{
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.rightbarTitle {
+  font-weight: 700;
+  margin: 20px 0;
 }
 
-.rightbarFollowButton{
-   display: flex;
-   justify-content: flex-start;
-   align-items: center;
-   background-color: #ffa;
-   border-radius: 8px;
-   padding: 12px;
-   margin-top: 42px;
-   cursor: pointer;
-   max-width: 100px;
-
+.rightbarFriendList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.rightbarTitle{
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 10px;
+.rightbarFollowButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #ffa;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 42px;
+  cursor: pointer;
+  max-width: 100px;
 }
 
-.rightbarInfoItem{
-    margin-bottom: 10px;
+.rightbarTitle {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 
-.rightbarInfoKey{
-    font-weight: 500;
-    margin-right: 16px;
-    color: #555;;
+.rightbarInfo .rightbarInfoItem {
+  margin-bottom: 10px;
 }
 
-.rightbarInfoValue{
-    font-weight: 300;
+.rightbarInfo .rightbarInfoItem .rightbarInfoKey {
+  font-weight: 500;
+  margin-right: 16px;
+  color: #555;
 }
 
-.rightbarFollowings{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+.rightbarInfo .rightbarInfoItem .rightbarInfoValue {
+  font-weight: 300;
 }
 
-.rightbarFollowing{
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    align-items: center;
-    cursor: pointer;
-
+.rightbarFollowings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-.rightbarFollowingImg{
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
+.rightbarFollowings a:visited {
+  color: #000;
+}
+
+.rightbarFollowings .rightbarFollowing {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.rightbarFollowings .rightbarFollowing .rightbarFollowingImg {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.rightbarFollowings .rightbarFollowing .rightbarFollowingName {
+  text-decoration: none;
 }

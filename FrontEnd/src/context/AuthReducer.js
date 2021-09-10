@@ -1,5 +1,6 @@
 const AuthReducer = (state, action) => {
 	switch (action.type) {
+		//登入功能
 		case 'LOGIN_START':
 			return {
 				user: null,
@@ -16,8 +17,10 @@ const AuthReducer = (state, action) => {
 			return {
 				user: null,
 				isFetching: false,
-				error: true,
+				error: action.payload,
 			};
+
+		//追蹤功能
 		case 'FOLLOW':
 			return {
 				...state,

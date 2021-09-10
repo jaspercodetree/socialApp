@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 //update
 router.put('/:id', async (req, res) => {
 	if (req.body.userId === req.params.id) {
-		//將要修改的密碼加密
+		//傳進來的資料如有密碼，將其要修改的密碼加密
 		if (req.body.password) {
 			const salt = await bcrypt.genSalt(10);
 			req.body.password = await bcrypt.hash(req.body.password, salt);
@@ -14,6 +14,7 @@ router.put('/:id', async (req, res) => {
 		//找到此使用者 更新資料
 		try {
 			const user = await User.findByIdAndUpdate(req.params.id, {
+				//將所有req的資料更新
 				$set: req.body,
 			});
 			res.status(200).json('使用者資料已更新');
@@ -27,15 +28,18 @@ router.put('/:id', async (req, res) => {
 
 //delete
 router.delete('/:id', async (req, res) => {
-	if (req.body.userId === req.params.id) {
-		try {
-			await User.findOneAndDelete(req.body.userId);
+	try {
+		//先抓user來判斷是否是Admin
+		const user = await User.findById(req.body.userId);
+
+		if (req.body.userId === req.params.id || user.isAdmin) {
+			await User.findByIdAndDelete(req.params.id);
 			res.status(200).json('帳號已刪除');
-		} catch (err) {
-			res.status(500).json(err);
+		} else {
+			res.status(400).json('你只能刪除自己的帳號');
 		}
-	} else {
-		res.status(400).json('你只能刪除自己的帳號');
+	} catch (err) {
+		res.status(500).json(err);
 	}
 });
 
@@ -56,19 +60,21 @@ router.get('/', async (req, res) => {
 	}
 });
 
-//follow
+//follow a user
 router.put('/:id/follow', async (req, res) => {
+	//followers粉絲群
+	//followings追蹤的目標
 	if (req.body.userId !== req.params.id) {
 		try {
 			const currentUser = await User.findById(req.body.userId);
 			const userBeFollow = await User.findById(req.params.id);
 
-			if (!userBeFollow.followers.includes(req.body.userId)) {
-				await userBeFollow.updateOne({
-					$push: { followers: req.body.userId },
-				});
+			if (!currentUser.followings.includes(req.params.id)) {
 				await currentUser.updateOne({
 					$push: { followings: req.params.id },
+				});
+				await userBeFollow.updateOne({
+					$push: { followers: req.body.userId },
 				});
 				res.status(200).json('已加入追蹤');
 			} else {
@@ -82,19 +88,19 @@ router.put('/:id/follow', async (req, res) => {
 	}
 });
 
-//unfollow
+//unfollow a user
 router.put('/:id/unfollow', async (req, res) => {
 	if (req.body.userId !== req.params.id) {
 		try {
 			const currentUser = await User.findById(req.body.userId);
 			const userBeFollow = await User.findById(req.params.id);
 
-			if (userBeFollow.followers.includes(req.body.userId)) {
-				await userBeFollow.updateOne({
-					$pull: { followers: req.body.userId },
-				});
+			if (currentUser.followings.includes(req.params.id)) {
 				await currentUser.updateOne({
 					$pull: { followings: req.params.id },
+				});
+				await userBeFollow.updateOne({
+					$pull: { followers: req.body.userId },
 				});
 				res.status(200).json('已取消追蹤');
 			} else {

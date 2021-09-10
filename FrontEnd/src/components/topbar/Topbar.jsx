@@ -21,7 +21,7 @@ export default function Topbar() {
 					<span className="logo">JasperBook</span>
 				</Link>
 			</div>
-			<div className="tipbarCenter">
+			<div className="topbarCenter">
 				<div className="searchbar">
 					<Search className="searchIcon" />
 					<input

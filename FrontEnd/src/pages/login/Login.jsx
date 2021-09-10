@@ -1,10 +1,10 @@
-import { useContext } from 'react';
-import { useRef } from 'react';
-import { loginCall } from '../../apiCalls';
-import { AuthContext } from '../../context/AuthContext';
-import { CircularProgress } from '@material-ui/core';
 import './login.css';
+import { CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { loginCall } from '../../apiCalls';
+import { useRef } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function Login() {
 	const email = useRef();
@@ -12,6 +12,7 @@ export default function Login() {
 	const { isFetching, dispatch } = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
+		//讓submit時 不要refresh page
 		e.preventDefault();
 		loginCall(
 			{
@@ -57,7 +58,7 @@ export default function Login() {
 							)}
 						</button>
 						<span className="loginForget">
-							<a href="/login">忘記密碼?</a>
+							<Link to="/login">忘記密碼?</Link>
 						</span>
 						<Link to="/register" style={{ textAlign: 'center' }}>
 							<button className="loginRegisterButton">

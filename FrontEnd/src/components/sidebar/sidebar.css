@@ -1,59 +1,65 @@
-.sidebar{
-    flex: 3;
-    height: calc(100vh - 50px);
-    overflow-y: scroll;
-    position: sticky;
-    top: 50px;
+.sidebar {
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 50px;
+  /* scroll bar */
 }
 
-/* scroll bar */
-::-webkit-scrollbar{
-    width: 5px;
+.sidebar ::-webkit-scrollbar {
+  width: 5px;
 }
 
-::-webkit-scrollbar-thumb{
-    background-color: rgb(179,179,179);
+.sidebar ::-webkit-scrollbar-thumb {
+  background-color: #b3b3b3;
 }
 
-::-webkit-scrollbar-track{
-    background-color: #f1f1f1;
+.sidebar ::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
 }
 
-.sidebarWrapper{
-    padding: 20px;
+.sidebar .sidebarWrapper {
+  padding: 20px;
 }
 
-.sidebarList{
-    padding: 0;
-    margin: 0;
-    list-style:none;
+.sidebarList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.sidebarListItem{
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+.sidebarList .sidebarListItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 20px;
 }
 
-.sidebarIcon{
-margin-right: 16px;
+.sidebarList .sidebarListItem .sidebarIcon {
+  margin-right: 16px;
 }
 
-.sidebarButton{
-    width: 150px;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    font-weight: bold;
+.sidebarButton {
+  width: 150px;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
-.sidebarHr{
-    margin: 20px 0;
+.sidebarHr {
+  margin: 20px 0;
 }
 
-.sidebarFriendList{
-    padding: 0;
-    margin: 0;
-    list-style: none;
+.sidebarFriendList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
-

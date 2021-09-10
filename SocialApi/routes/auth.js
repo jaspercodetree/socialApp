@@ -5,16 +5,18 @@ const bcrypt = require('bcrypt');
 //register
 router.post('/register', async (req, res) => {
 	try {
-		//bcrypt password
+		//產生bcrypt password
 		const salt = await bcrypt.genSalt(10);
 		const hashPassword = await bcrypt.hash(req.body.password, salt);
 
+		//新增使用者
 		const newUser = new User({
 			username: req.body.username,
 			email: req.body.email,
 			password: hashPassword,
 		});
 
+		//儲存&回傳值到前端
 		const user = await newUser.save();
 		res.status(200).json(user);
 	} catch (err) {
@@ -35,7 +37,7 @@ router.post('/login', async (req, res) => {
 			user.password
 		);
 		if (validPassword == false) {
-			res.status(404).json('密碼錯誤');
+			res.status(400).json('密碼錯誤');
 		}
 
 		res.status(200).json(user);

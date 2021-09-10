@@ -1,8 +1,8 @@
-import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import './register.css';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useRef } from 'react';
 import { useHistory } from 'react-router';
+import axios from 'axios';
 
 export default function Register() {
 	const username = useRef();
@@ -35,32 +35,32 @@ export default function Register() {
 	};
 
 	return (
-		<div className="login">
-			<div className="loginWrapper">
-				<div className="loginLeft">
-					<h3 className="loginLogo">JasperLogo</h3>
-					<span className="loginDesc">連結世界上所有的朋友</span>
+		<div className="register">
+			<div className="registerWrapper">
+				<div className="registerLeft">
+					<h3 className="registerLogo">JasperLogo</h3>
+					<span className="registerDesc">連結世界上所有的朋友</span>
 				</div>
-				<form className="loginRight" onSubmit={handleSubmit}>
-					<div className="loginBox">
+				<form className="registerRight" onSubmit={handleSubmit}>
+					<div className="registerBox">
 						<input
 							type="text"
 							placeholder="使用者姓名"
-							className="loginInput"
+							className="registerInput"
 							required
 							ref={username}
 						/>
 						<input
 							type="email"
 							placeholder="Email"
-							className="loginInput"
+							className="registerInput"
 							required
 							ref={email}
 						/>
 						<input
 							type="password"
 							placeholder="密碼"
-							className="loginInput"
+							className="registerInput"
 							required
 							minLength="5"
 							ref={password}
@@ -68,11 +68,11 @@ export default function Register() {
 						<input
 							type="password"
 							placeholder="確認密碼"
-							className="loginInput"
+							className="registerInput"
 							required
 							ref={passwordAgain}
 						/>
-						<button className="loginButton" type="submit">
+						<button className="registerButton" type="submit">
 							註冊
 						</button>
 						<Link to="/login" style={{ textAlign: 'center' }}>

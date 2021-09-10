@@ -1,10 +1,10 @@
+import './feed.css';
 import Post from '../post/Post';
 import Share from '../share/Share';
-import './feed.css';
 // import { Posts } from "../../dummyData";
 import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
+import axios from 'axios';
 
 export default function Feed({ username }) {
 	const [posts, setPosts] = useState([]);
@@ -20,7 +20,11 @@ export default function Feed({ username }) {
 			//依貼文時間排序
 			setPosts(
 				res.data.sort((p1, p2) => {
-					return new Date(p2.createdAt) - new Date(p1.createdAt);
+					if (new Date(p1.createdAt) > new Date(p2.createdAt))
+						return -1;
+					if (new Date(p1.createdAt) < new Date(p2.createdAt))
+						return 1;
+					return 0;
 				})
 			);
 		};
@@ -30,7 +34,8 @@ export default function Feed({ username }) {
 	return (
 		<div className="feed">
 			<div className="feedWrapper">
-				{!username ? <Share /> : ''}
+				{(!username || username === user.username) && <Share />}
+
 				{posts.map((p) => (
 					<Post key={p._id} post={p} />
 				))}

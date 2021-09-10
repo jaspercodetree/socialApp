@@ -1,5 +1,6 @@
-.feed{
-    flex: 6;
-    padding: 16px;
+.feed {
+  -webkit-box-flex: 6;
+      -ms-flex: 6;
+          flex: 6;
+  padding: 16px;
 }
-

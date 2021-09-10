@@ -1,18 +1,20 @@
-import Online from '../online/Online';
-import { Users } from '../../dummyData';
 import './rightbar.css';
-import { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
+import Advertisement from '../advertisement/Advertisement';
 import { Add, Remove } from '@material-ui/icons';
+import { Users } from '../../dummyData';
+import Online from '../online/Online';
+import { Link } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import axios from 'axios';
 
 export default function Rightbar({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
 	const [friends, setFriends] = useState([]);
 	const { user: currentUser, dispatch } = useContext(AuthContext);
 
-	const [followed, setFollowed] = useState();
+	const [followed, setFollowed] = useState(false);
 
 	/* user為此profile頁面的user ;  currentUser為目前登入的user */
 
@@ -33,12 +35,12 @@ export default function Rightbar({ user }) {
 		}
 	}, [user]);
 
+	//加入/解除追蹤
 	useEffect(() => {
-		if (user != null) {
-			setFollowed(currentUser.followings.includes(user._id));
-		}
-	}, [currentUser.followings, user]);
+		setFollowed(currentUser.followings.includes(user?._id));
+	}, [currentUser, user?._id]);
 
+	//注意:即使已經更新資料庫，但由於追蹤按鈕的文字是由context內的followings是否有user._id判斷，因此我們必須透過useReducer去更新context的狀態，來更新文字
 	const handleClick = async () => {
 		if (followed) {
 			await axios.put(`/users/${user._id}/unfollow`, {
@@ -64,7 +66,7 @@ export default function Rightbar({ user }) {
 						<b>曾國峰</b> 以及 <b>5個其他的朋友</b> 今天生日
 					</span>
 				</div>
-				<img src={PF + `ad.png`} alt="" className="rightbarAd" />
+				<Advertisement />
 				<div className="rightbarTitle">在線的朋友</div>
 				<ul className="rightbarFriendList">
 					{Users.map((u) => (
@@ -84,6 +86,7 @@ export default function Rightbar({ user }) {
 						{followed ? <Remove /> : <Add />}
 					</div>
 				)}
+
 				<h4 className="rightbarTitle">使用者資訊</h4>
 				<div className="rightbarInfo">
 					<div className="rightbarInfoItem">
@@ -136,6 +139,7 @@ export default function Rightbar({ user }) {
 						</Link>
 					))}
 				</div>
+				<Advertisement />
 			</>
 		);
 	};

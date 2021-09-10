@@ -1,30 +1,26 @@
+import './post.css';
+// import { Users } from '../../dummyData';
+import { Link } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import { MoreVert } from '@material-ui/icons';
+import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 //引入時間套件
 import { format } from 'timeago.js';
-import { AuthContext } from '../../context/AuthContext';
-
-// import { Users } from '../../dummyData';
-import './post.css';
-import { Link } from 'react-router-dom';
+import AlertDialog from '../alertDialog/AlertDialog';
 
 export default function Post({ post }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const { user: currentUser } = useContext(AuthContext);
 
-	// let user = Users.filter(u => u.id === 1);
-	// filter得到'陣列
-	// console.log(user[0])
-	const [like, setLike] = useState(post.likes.length);
-	const [isLiked, setIsLiked] = useState(false);
-	//此處與以下的getuser 是指post貼文的user
+	//A.此處user與useEffect的getuser 是指去獲得  好友圈內每一則post貼文的發文者user
 	const [user, setUser] = useState({});
 
-	useEffect(() => {
-		setIsLiked(post.likes.includes(currentUser._id));
-	}, [currentUser._id, post.likes]);
+	//B.like相關
+	//此處user 由於與A處的名稱重複，因此我們起一個暱稱currentUser代替，currentUser代表的是登入的使用者資料
+	const { user: currentUser } = useContext(AuthContext);
+	const [like, setLike] = useState(post.likes.length);
+	const [isLiked, setIsLiked] = useState(false);
 
+	//A.
 	useEffect(() => {
 		const getUser = async () => {
 			const res = await axios.get(`/users?userId=${post.userId}`);
@@ -32,6 +28,11 @@ export default function Post({ post }) {
 		};
 		getUser();
 	}, [post.userId]);
+
+	//B.
+	useEffect(() => {
+		setIsLiked(post.likes.includes(currentUser._id));
+	}, [currentUser._id, post.likes]);
 
 	const likeHandler = () => {
 		try {
@@ -68,7 +69,7 @@ export default function Post({ post }) {
 						</span>
 					</div>
 					<div className="postTopRight">
-						<MoreVert />
+						<AlertDialog post={post} />
 					</div>
 				</div>
 				<div className="postCenter">
