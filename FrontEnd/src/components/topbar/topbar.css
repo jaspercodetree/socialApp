@@ -75,6 +75,11 @@
   color: #fff;
 }
 
+.topbarRight a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .topbarRight .topbarLink {
   margin-right: 10px;
   font-size: 14px;

@@ -1,0 +1,51 @@
+.uploadTestContainer {
+	.image-preview-wrapper {
+		display: block;
+		max-width: 310px;
+		// max-height: 310px;
+		width: 100%;
+		border: 2px solid #cccccc;
+		margin: 0 auto;
+		position: relative;
+		cursor: pointer;
+	}
+
+	.spinner-wrapper {
+		position: absolute;
+		opacity: 0;
+		margin: 0;
+		padding: 0;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		color: #fff;
+	}
+
+	.opacity-1 {
+		opacity: 1;
+	}
+
+	img {
+		border: 1px solid #ddd; /* Gray border */
+		border-radius: 4px; /* Rounded border */
+		padding: 5px; /* Some padding */
+		width: 300px; /* Set a small width */
+	}
+
+	/* Add a hover effect (blue shadow) */
+	img:hover {
+		box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+	}
+
+	.text-center {
+		text-align: center;
+	}
+
+	.mb-5 {
+		margin-bottom: 32px;
+	}
+
+	.my-5 {
+		margin: 32px 0;
+	}
+}

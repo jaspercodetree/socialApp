@@ -12,8 +12,7 @@ import { useRef } from 'react';
 import axios from 'axios';
 
 export default function Share() {
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const { user } = useContext(AuthContext);
+	const { user, PF } = useContext(AuthContext);
 	const desc = useRef();
 	const [file, setFile] = useState(null);
 
@@ -62,7 +61,7 @@ export default function Share() {
 						className="shareProfileImg"
 					/>
 					<input
-						placeholder={`${user.username} 你今天過得好嗎?`}
+						placeholder={`${user.username} 今天coding了嗎?`}
 						className="shareInput"
 						ref={desc}
 					/>

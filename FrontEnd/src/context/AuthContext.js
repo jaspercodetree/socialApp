@@ -15,6 +15,7 @@ export const AuthContext = createContext(INITIAL_STATE);
 export const AuthContextProvider = ({ children }) => {
 	//引入reducer
 	const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
+	// const [state, setState] = useState(INITIAL_STATE);
 
 	// console.log(state.user);
 	//將登入後的拿到的user 轉JSON存在localstorage
@@ -29,6 +30,8 @@ export const AuthContextProvider = ({ children }) => {
 				isFetching: state.isFetching,
 				error: state.error,
 				dispatch,
+				// setState,
+				PF: process.env.REACT_APP_PUBLIC_FOLDER,
 			}}
 		>
 			{children}

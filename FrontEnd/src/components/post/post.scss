@@ -85,9 +85,92 @@
 
 	.postBottomRight {
 		.postCommentText {
+			margin-right: 16px;
 			cursor: pointer;
 			border-bottom: 1px dotted #999;
 			font-size: 16px;
+		}
+	}
+}
+
+.postComment {
+	display: flex;
+	flex-direction: column;
+	margin-top: 16px;
+	.commentShare {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		.commentShareLeft {
+			.commentShareImg {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				object-fit: cover;
+				margin-right: 8px;
+			}
+		}
+		.commentShareRight {
+			width: 70%;
+			height: 30px;
+			padding-left: 16px;
+			background-color: #ffa;
+			border: 1px solid #ccc;
+			border-radius: 30px;
+			display: flex;
+			align-items: center;
+
+			.commentShareInput {
+				width: 80%;
+				border: none;
+				background-color: transparent;
+
+				&:focus {
+					outline: none;
+				}
+			}
+		}
+	}
+	.commentList {
+		.commentListItem {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			margin-top: 8px;
+
+			.commentListLeft {
+				.commentListImg {
+					width: 32px;
+					height: 32px;
+					border-radius: 50%;
+					object-fit: cover;
+					margin-right: 8px;
+				}
+			}
+			.commentListRight {
+				display: flex;
+				width: 70%;
+				height: 30px;
+				padding-left: 16px;
+				background-color: #eee;
+				border: 1px solid #ccc;
+				border-radius: 30px;
+				display: flex;
+				align-items: center;
+
+				.commentListItemText {
+					width: 80%;
+					border: none;
+					background-color: transparent;
+					color: #999;
+
+					&:focus {
+						outline: none;
+					}
+				}
+			}
 		}
 	}
 }

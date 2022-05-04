@@ -5,8 +5,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 export default function Topbar() {
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const { user } = useContext(AuthContext);
+	const { user, PF } = useContext(AuthContext);
 	// console.log(user);
 
 	const logout = () => {
@@ -33,8 +32,12 @@ export default function Topbar() {
 			</div>
 			<div className="topbarRight">
 				<div className="topbarLinks">
-					<span className="topbarLink">HomePage</span>
-					<span className="topbarLink">Timeline</span>
+					<Link to="/register">
+						<span className="topbarLink">HomePage</span>
+					</Link>
+					<Link to="/login">
+						<span className="topbarLink">Timeline</span>
+					</Link>
 				</div>
 				<div className="topbarIcons">
 					<div className="topbarIconItem">
@@ -45,9 +48,12 @@ export default function Topbar() {
 						<Chat />
 						<span className="topbarIconBadge">2</span>
 					</div>
-					<div className="topbarIconItem" onClick={logout}>
+					<div className="topbarIconItem">
 						<Notifications />
 						<span className="topbarIconBadge">3</span>
+					</div>
+					<div className="topbarIconItem" onClick={logout}>
+						登出
 					</div>
 				</div>
 				<Link to={`/profile/${user.username}`}>
@@ -57,7 +63,7 @@ export default function Topbar() {
 								? PF + `/person/${user.profilePicture}`
 								: PF + '/person/noAvatar.png'
 						}
-						alt=""
+						alt="userAvatar"
 						className="topbarImg"
 					/>
 				</Link>

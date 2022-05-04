@@ -1,5 +1,4 @@
 import './sidebar.css';
-import { Users } from '../../dummyData';
 import CloseFriend from '../closeFriend/CloseFriend';
 import {
 	RssFeed,
@@ -12,8 +11,27 @@ import {
 	Event,
 	School,
 } from '@material-ui/icons';
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import axios from 'axios';
 
 export default function Sidebar() {
+	const [friends, setFriends] = useState([]);
+	const { user } = useContext(AuthContext);
+	// console.log(friends);
+
+	useEffect(() => {
+		if (user != null) {
+			const getFriends = async () => {
+				await axios
+					.get('/users/friends/' + user._id)
+					.then((res) => setFriends(res.data))
+					.catch((err) => console.log(err));
+			};
+			getFriends();
+		}
+	}, [user]);
+
 	return (
 		<div className="sidebar">
 			<div className="sidebarWrapper">
@@ -58,8 +76,8 @@ export default function Sidebar() {
 				<button className="sidebarButton">Show more</button>
 				<hr className="sidebarHr" />
 				<ul className="sidebarFriendList">
-					{Users.map((u) => (
-						<CloseFriend key={u.id} user={u} />
+					{friends.map((f) => (
+						<CloseFriend key={f._id} friend={f} />
 					))}
 				</ul>
 			</div>

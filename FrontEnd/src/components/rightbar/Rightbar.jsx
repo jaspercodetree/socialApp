@@ -1,7 +1,6 @@
 import './rightbar.css';
 import Advertisement from '../advertisement/Advertisement';
 import { Add, Remove } from '@material-ui/icons';
-import { Users } from '../../dummyData';
 import Online from '../online/Online';
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
@@ -9,10 +8,8 @@ import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
 export default function Rightbar({ user }) {
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
 	const [friends, setFriends] = useState([]);
-	const { user: currentUser, dispatch } = useContext(AuthContext);
+	const { user: currentUser, dispatch, PF } = useContext(AuthContext);
 
 	const [followed, setFollowed] = useState(false);
 
@@ -20,16 +17,12 @@ export default function Rightbar({ user }) {
 
 	//profile 右側欄朋友列表
 	useEffect(() => {
-		if (user != null) {
+		if (user && Object.entries(user).length !== 0) {
 			const getFriends = async () => {
-				try {
-					const friendsList = await axios.get(
-						'/users/friends/' + user._id
-					);
-					setFriends(friendsList.data);
-				} catch (err) {
-					console.log(err);
-				}
+				await axios
+					.get('/users/friends/' + user._id)
+					.then((res) => setFriends(res.data))
+					.catch((err) => console.log(err));
 			};
 			getFriends();
 		}
@@ -54,7 +47,7 @@ export default function Rightbar({ user }) {
 			dispatch({ type: 'FOLLOW', payload: user._id });
 		}
 
-		setFollowed(!followed);
+		// setFollowed(!followed);
 	};
 
 	const HomeRightbar = () => {
@@ -69,8 +62,8 @@ export default function Rightbar({ user }) {
 				<Advertisement />
 				<div className="rightbarTitle">在線的朋友</div>
 				<ul className="rightbarFriendList">
-					{Users.map((u) => (
-						<Online key={u.id} user={u} />
+					{friends.map((f) => (
+						<Online key={f._id} friend={f} />
 					))}
 				</ul>
 			</>

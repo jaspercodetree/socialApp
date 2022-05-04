@@ -1,19 +1,20 @@
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import './online.css';
 
-export default function Online({ user }) {
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
+export default function Online({ friend }) {
+	const { PF } = useContext(AuthContext);
 	return (
 		<li className="rightbarFriend">
 			<div className="rightbarProfileImgContainer">
 				<img
-					src={PF + user.profilePicture}
+					src={PF + 'person/' + friend.profilePicture}
 					alt=""
 					className="rightbarProfileImg"
 				/>
 				<span className="rightbarOnline"></span>
 			</div>
-			<span className="rightbarUsername">{user.username}</span>
+			<span className="rightbarUsername">{friend.username}</span>
 		</li>
 	);
 }

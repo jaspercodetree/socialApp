@@ -10,6 +10,7 @@ import {
 } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
+import Upload from './pages/upload/Upload';
 
 function App() {
 	const { user } = useContext(AuthContext);
@@ -27,6 +28,9 @@ function App() {
 				</Route>
 				<Route path="/profile/:username">
 					<Profile />
+				</Route>
+				<Route path="/upload">
+					<Upload />
 				</Route>
 			</Switch>
 		</Router>

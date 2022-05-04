@@ -112,7 +112,116 @@
 }
 
 .postBottom .postBottomRight .postCommentText {
+  margin-right: 16px;
   cursor: pointer;
   border-bottom: 1px dotted #999;
   font-size: 16px;
+}
+
+.postComment {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 16px;
+}
+
+.postComment .commentShare {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.postComment .commentShare .commentShareLeft .commentShareImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 8px;
+}
+
+.postComment .commentShare .commentShareRight {
+  width: 70%;
+  height: 30px;
+  padding-left: 16px;
+  background-color: #ffa;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.postComment .commentShare .commentShareRight .commentShareInput {
+  width: 80%;
+  border: none;
+  background-color: transparent;
+}
+
+.postComment .commentShare .commentShareRight .commentShareInput:focus {
+  outline: none;
+}
+
+.postComment .commentList .commentListItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.postComment .commentList .commentListItem .commentListLeft .commentListImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 8px;
+}
+
+.postComment .commentList .commentListItem .commentListRight {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 70%;
+  height: 30px;
+  padding-left: 16px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.postComment .commentList .commentListItem .commentListRight .commentListItemText {
+  width: 80%;
+  border: none;
+  background-color: transparent;
+  color: #999;
+}
+
+.postComment .commentList .commentListItem .commentListRight .commentListItemText:focus {
+  outline: none;
 }

@@ -10,6 +10,7 @@ export default function Login() {
 	const email = useRef();
 	const password = useRef();
 	const { isFetching, dispatch } = useContext(AuthContext);
+	// const { isFetching, setState } = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
 		//讓submit時 不要refresh page
@@ -20,6 +21,7 @@ export default function Login() {
 				password: password.current.value,
 			},
 			dispatch
+			// setState
 		);
 	};
 
