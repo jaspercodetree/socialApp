@@ -9,15 +9,16 @@ import axios from 'axios';
 
 export default function Rightbar({ user }) {
 	const [friends, setFriends] = useState([]);
-	const { user: currentUser, dispatch, PF } = useContext(AuthContext);
+	const { user: loginUser, dispatch, PF } = useContext(AuthContext);
 
 	const [followed, setFollowed] = useState(false);
 
-	/* user為此profile頁面的user ;  currentUser為目前登入的user */
+	/* user為此profile頁面的user ;  loginUser為目前登入的user */
 
 	//profile 右側欄朋友列表
 	useEffect(() => {
 		if (user && Object.entries(user).length !== 0) {
+			// console.log(Object.entries(user));
 			const getFriends = async () => {
 				await axios
 					.get('/users/friends/' + user._id)
@@ -30,19 +31,19 @@ export default function Rightbar({ user }) {
 
 	//加入/解除追蹤
 	useEffect(() => {
-		setFollowed(currentUser.followings.includes(user?._id));
-	}, [currentUser, user?._id]);
+		setFollowed(loginUser.followings.includes(user?._id));
+	}, [loginUser, user?._id]);
 
 	//注意:即使已經更新資料庫，但由於追蹤按鈕的文字是由context內的followings是否有user._id判斷，因此我們必須透過useReducer去更新context的狀態，來更新文字
 	const handleClick = async () => {
 		if (followed) {
 			await axios.put(`/users/${user._id}/unfollow`, {
-				userId: currentUser._id,
+				userId: loginUser._id,
 			});
 			dispatch({ type: 'UNFOLLOW', payload: user._id });
 		} else {
 			await axios.put(`/users/${user._id}/follow`, {
-				userId: currentUser._id,
+				userId: loginUser._id,
 			});
 			dispatch({ type: 'FOLLOW', payload: user._id });
 		}
@@ -73,7 +74,7 @@ export default function Rightbar({ user }) {
 	const ProfileRightbar = () => {
 		return (
 			<>
-				{currentUser.username !== user.username && (
+				{loginUser.username !== user.username && (
 					<div className="rightbarFollowButton" onClick={handleClick}>
 						{followed ? '解除追蹤 ' : '加入追蹤 '}
 						{followed ? <Remove /> : <Add />}

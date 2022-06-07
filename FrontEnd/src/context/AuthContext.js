@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 	// const [state, setState] = useState(INITIAL_STATE);
 
-	// console.log(state.user);
+	console.log(state.user);
 	//將登入後的拿到的user 轉JSON存在localstorage
 	useEffect(() => {
 		localStorage.setItem('user', JSON.stringify(state.user));

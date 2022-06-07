@@ -17,11 +17,21 @@ export default function Profile() {
 		const getUser = async () => {
 			await axios
 				.get(`/users?username=${username}`)
-				.then((res) => setUser(res.data))
+				.then((res) => {
+					// console.log(res.data);
+					if (res.data.coverPicture) {
+						res.data.coverPictureSrc =
+							PF + `post/${res.data.coverPicture}`;
+						setUser(res.data);
+					} else {
+						res.data.coverPictureSrc = PF + `person/noCover.png`;
+						setUser(res.data);
+					}
+				})
 				.catch((err) => console.log(err));
 		};
 		getUser();
-	}, [username]);
+	}, [username, PF]);
 
 	// console.log(user);
 
@@ -34,11 +44,7 @@ export default function Profile() {
 					<div className="profileRightTop">
 						<div className="profileCover">
 							<img
-								src={
-									user.coverPicture
-										? PF + `post/${user.coverPicture}`
-										: PF + `person/noCover.png`
-								}
+								src={user.coverPictureSrc}
 								alt=""
 								className="profileCoverImg"
 							/>
