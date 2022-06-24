@@ -1,11 +1,4 @@
 .topbarContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 50px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   background-color: purple;
   position: -webkit-sticky;
   position: sticky;
@@ -13,24 +6,24 @@
   z-index: 999;
 }
 
-.topbarLeft {
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
+.topbarContainer .row {
+  height: 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .topbarLeft .logo {
-  font-size: 24px;
-  margin-left: 20px;
+  font-size: 20px;
   font-weight: bold;
   color: white;
   cursor: pointer;
 }
 
-.topbarCenter {
-  -webkit-box-flex: 5;
-      -ms-flex: 5;
-          flex: 5;
+@media screen and (max-width: 320px) {
+  .topbarLeft .logo {
+    font-size: 24px;
+  }
 }
 
 .topbarCenter .searchbar {
@@ -54,6 +47,7 @@
 .topbarCenter .searchbar .searchInput {
   width: 90%;
   border: none;
+  font-size: 14px;
 }
 
 .topbarCenter .searchbar .searchInput:focus {
@@ -61,17 +55,15 @@
 }
 
 .topbarRight {
-  -webkit-box-flex: 4;
-      -ms-flex: 4;
-          flex: 4;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   color: #fff;
 }
 
@@ -93,7 +85,6 @@
 }
 
 .topbarRight .topbarIcons .topbarIconItem {
-  margin-right: 15px;
   cursor: pointer;
   position: relative;
 }

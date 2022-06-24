@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,11 +9,14 @@ import { MoreVert } from '@material-ui/icons';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import jwt_decode from 'jwt-decode';
+import './alertDialog.css';
+
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 export default function AlertDialog({ post }) {
 	const { user: currentUser, dispatch } = useContext(AuthContext);
 
-	const [open, setOpen] = React.useState(false);
+	const [open, setOpen] = useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -86,18 +89,25 @@ export default function AlertDialog({ post }) {
 
 	return (
 		<div>
-			<Button onClick={handleClickOpen}>
-				<MoreVert />
-			</Button>
+			<DropdownButton
+				title=""
+				variant="light"
+				id="bg-nested-dropdown"
+				className="border-0"
+			>
+				<Dropdown.Item
+					className="dropdownItem text-center"
+					eventKey="1"
+					onClick={handleClickOpen}
+				>
+					刪除貼文
+				</Dropdown.Item>
+			</DropdownButton>
+
 			<Dialog open={open} onClose={handleClose}>
 				<DialogTitle id="alert-dialog-title">
-					{'您是否確定要刪除此貼文 ?'}
+					{'確定刪除此貼文 ?'}
 				</DialogTitle>
-				{/* <DialogContent>
-					<DialogContentText id="alert-dialog-description">
-						貼文刪除後無法復原
-					</DialogContentText>
-				</DialogContent> */}
 				<DialogActions>
 					<Button onClick={handleClose} color="primary">
 						取消

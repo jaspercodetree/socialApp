@@ -8,10 +8,10 @@ export default function Home() {
 	return (
 		<>
 			<Topbar />
-			<div className="homeContainer">
+			<div className="homeContainer container-fluid">
 				<Sidebar />
-				<Feed />
-				<Rightbar />
+				<Feed isHomePage={true} />
+				<Rightbar isHomePage={true} />
 			</div>
 		</>
 	);

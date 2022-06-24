@@ -1,7 +1,4 @@
 .sidebar {
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
   height: calc(100vh - 50px);
   overflow-y: scroll;
   position: -webkit-sticky;

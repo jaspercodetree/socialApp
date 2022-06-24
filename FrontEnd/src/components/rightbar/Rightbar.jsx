@@ -2,30 +2,55 @@ import './rightbar.css';
 import Advertisement from '../advertisement/Advertisement';
 import { Add, Remove } from '@material-ui/icons';
 import Online from '../online/Online';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
-export default function Rightbar({ user }) {
+export default function Rightbar({ user, isHomePage }) {
 	const [friends, setFriends] = useState([]);
+	const [profileFriends, setProfileFriends] = useState([]);
 	const { user: loginUser, dispatch, PF } = useContext(AuthContext);
 
 	const [followed, setFollowed] = useState(false);
 
+	// console.log(user);
 	/* user為此profile頁面的user ;  loginUser為目前登入的user */
+
+	//profile 線上朋友列表
+	useEffect(() => {
+		if (loginUser && Object.entries(loginUser).length !== 0) {
+			// console.log(Object.entries(loginUser));
+			const getFriends = async () => {
+				await axios
+					.get('/users/friends/' + loginUser._id)
+					.then((res) => setFriends(res.data))
+					.catch((err) => console.log(err));
+			};
+			getFriends();
+		}
+	}, [loginUser]);
 
 	//profile 右側欄朋友列表
 	useEffect(() => {
 		if (user && Object.entries(user).length !== 0) {
 			// console.log(Object.entries(user));
-			const getFriends = async () => {
+			const getProfileFriends = async () => {
 				await axios
-					.get('/users/friends/' + user._id)
-					.then((res) => setFriends(res.data))
+					.get(`/users/friends/` + user._id)
+					.then((res) => {
+						res.data.length !== 0
+							? setProfileFriends(res.data)
+							: setProfileFriends([
+									{
+										profilePicture: 'noAvatar.png',
+										username: 'QwQ 朋友募集中',
+									},
+							  ]);
+					})
 					.catch((err) => console.log(err));
 			};
-			getFriends();
+			getProfileFriends();
 		}
 	}, [user]);
 
@@ -109,7 +134,7 @@ export default function Rightbar({ user }) {
 
 				<h4 className="rightbarTitle">使用者朋友</h4>
 				<div className="rightbarFollowings">
-					{friends.map((friend) => (
+					{profileFriends.map((friend) => (
 						<Link
 							to={`/profile/${friend.username}`}
 							style={{ textDecoration: 'none' }}
@@ -138,7 +163,13 @@ export default function Rightbar({ user }) {
 		);
 	};
 	return (
-		<div className="rightbar">
+		<div
+			className={
+				isHomePage === true
+					? 'rightbar d-none d-md-block col-md-3 col-lg-2'
+					: 'rightbar d-none d-md-block col-md-3'
+			}
+		>
 			<div className="rightbarWrapper">
 				{user ? <ProfileRightbar /> : <HomeRightbar />}
 			</div>

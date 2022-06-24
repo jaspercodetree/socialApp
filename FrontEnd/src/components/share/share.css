@@ -29,17 +29,48 @@
   margin-right: 10px;
 }
 
-.shareTop .shareInput {
+.shareTop .postUsername {
+  margin-right: 8px;
+  font-weight: 700;
+}
+
+.shareTop .emojiWrapper {
+  font-size: 14px;
+}
+
+.shareTop .emojiWrapper img {
+  width: 16px;
+  height: 16px;
+}
+
+.shareTop .tagUserWrapper .tagUserName {
+  font-size: 14px;
+  text-decoration: underline;
+  -webkit-text-decoration-color: #000;
+          text-decoration-color: #000;
+}
+
+.shareTop .sharePostWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+}
+
+.shareTop .sharePostWrapper .sharePostInput {
   border: none;
-  width: 80%;
+  background-color: transparent;
+  width: 100%;
+  resize: none;
 }
 
-.shareTop .shareInput:focus {
+.shareTop .sharePostWrapper .sharePostInput:focus {
   outline: none;
-}
-
-.shareHr {
-  margin: 20px;
 }
 
 .shareImgContainer {
@@ -70,18 +101,18 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  padding: 0 20px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .shareBottom .shareOptions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
 }
 
 .shareBottom .shareOptions .shareOption {
@@ -96,7 +127,7 @@
 }
 
 .shareBottom .shareOptions .shareOption .shareIcon {
-  font-size: 18px;
+  font-size: 24px;
   margin-right: 4px;
 }
 
@@ -106,10 +137,81 @@
 }
 
 .shareBottom .shareButton {
-  padding: 8px;
+  padding: 4px;
+  margin-top: 16px;
   border: none;
   border-radius: 8px;
-  background-color: #aff;
-  font-weight: 500;
+  background-color: purple;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.emojiModal li {
+  list-style: none !important;
+  border-radius: 8px;
+}
+
+.emojiModal li:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+.emojiModal li .emojiItem {
+  width: 36px;
+  height: 36px;
+  background: #e4e6eb;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-right: 12px;
+}
+
+.emojiModal li .emojiItem img {
+  width: 20px;
+  height: 20px;
+}
+
+.tagModal .modal-body {
+  min-height: 50vh;
+}
+
+.tagModal .modal-body .searchBar {
+  width: 100%;
+  height: 30px;
+  background-color: #f0f2f5;
+  border-radius: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.tagModal .modal-body .searchBar .searchIcon {
+  font-size: 20px !important;
+  margin-left: 10px;
+}
+
+.tagModal .modal-body .searchBar .searchInput {
+  width: 90%;
+  border: none;
+  text-indent: 8px;
+}
+
+.tagModal .modal-body .searchBar .searchInput:focus {
+  outline: none;
+}
+
+.tagModal .modal-body .searchTagUser {
   cursor: pointer;
 }

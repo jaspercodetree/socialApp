@@ -1,0 +1,19 @@
+.searchTagUserListWrap {
+	.searchTagUser {
+		display: flex;
+		align-items: center;
+		margin-bottom: 15px;
+
+		&:hover {
+			background-color: rgb(253, 244, 253);
+		}
+
+		.searchTagUserImg {
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			object-fit: cover;
+			margin-right: 10px;
+		}
+	}
+}

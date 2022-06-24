@@ -1,0 +1,22 @@
+.searchTagUserListWrap .searchTagUser {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 15px;
+}
+
+.searchTagUserListWrap .searchTagUser:hover {
+  background-color: #fdf4fd;
+}
+
+.searchTagUserListWrap .searchTagUser .searchTagUserImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 10px;
+}

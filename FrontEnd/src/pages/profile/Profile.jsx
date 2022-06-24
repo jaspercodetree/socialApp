@@ -8,7 +8,7 @@ import Topbar from '../../components/topbar/Topbar';
 import './profile.css';
 
 export default function Profile() {
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const PF = 'http://localhost:8800/images/';
 	//練習用useParams  (可以透過.username拿取 是因為在App.js已有命名)
 	const username = useParams().username;
 
