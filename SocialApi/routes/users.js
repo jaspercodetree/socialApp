@@ -60,6 +60,61 @@ router.get('/', async (req, res) => {
 	}
 });
 
+//get all user
+router.get('/all', async (req, res) => {
+	try {
+		let users = await User.find();
+
+		res.status(200).json(users);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+//get recommend Users
+router.get('/:id/recommendUsers', async (req, res) => {
+	try {
+		let authorFollowings = await User.findById(req.params.id).select(
+			'followings'
+		);
+		//加入自己
+		authorFollowings.followings.push(req.params.id);
+
+		let allUsers = await User.find();
+
+		//篩選掉自己與已是朋友的帳號
+		let filterUsers = allUsers.filter((item) => {
+			let isExist = true;
+
+			authorFollowings.followings.forEach((i) => {
+				if (item._id == i) {
+					isExist *= false;
+				} else {
+					isExist *= true;
+				}
+			});
+			return isExist;
+		});
+		res.status(200).json(filterUsers);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+//search user
+router.get('/search', async (req, res) => {
+	const username = req.query.username;
+
+	try {
+		const user = await User.find({
+			username: { $regex: username, $options: 'i' },
+		});
+		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
 //follow a user
 router.put('/:id/follow', async (req, res) => {
 	//followers粉絲群
