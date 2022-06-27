@@ -1,5 +1,4 @@
 .sidebar {
-	flex: 3;
 	height: calc(100vh - 50px);
 	overflow-y: scroll;
 	position: sticky;
@@ -23,7 +22,6 @@
 	}
 }
 
-//sidebarList
 .sidebarList {
 	padding: 0;
 	margin: 0;
@@ -48,13 +46,11 @@
 	font-weight: bold;
 }
 
-//sidebarHr
 .sidebarHr {
 	margin: 20px 0;
 }
 
-//sidebarFriendList
-.sidebarFriendList {
+.recommendUserList {
 	padding: 0;
 	margin: 0;
 	list-style: none;

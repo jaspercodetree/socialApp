@@ -1,4 +1,4 @@
-.sidebarFriend {
+.recommendUser {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -8,7 +8,7 @@
   margin-bottom: 15px;
 }
 
-.sidebarFriend .sidebarFriendImg {
+.recommendUser .recommendUserImg {
   width: 32px;
   height: 32px;
   border-radius: 50%;
