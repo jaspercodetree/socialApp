@@ -18,6 +18,21 @@ const PostSchema = new mongoose.Schema(
 			type: Array,
 			default: [],
 		},
+		comments: {
+			type: Array,
+			default: [],
+		},
+		emojiImg: {
+			type: String,
+			default: '',
+		},
+		emojiText: {
+			type: String,
+			max: 10,
+		},
+		tagUserId: {
+			type: String,
+		},
 	},
 	{ timestamps: true }
 );

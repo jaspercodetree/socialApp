@@ -59,7 +59,7 @@ router.put('/:id', async (req, res) => {
 });
 
 //delete
-router.delete('/:id', verify, async (req, res) => {
+router.delete('/:id/', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		if (req.body.userId === post.userId) {
@@ -122,6 +122,28 @@ router.get('/profile/:username', async (req, res) => {
 		const posts = await Post.find({ userId: currentUser._id });
 
 		res.status(200).json(posts);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+//add comment
+router.put('/:id/addComment', async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.id);
+		await post.updateOne({ $push: { comments: req.body.comment } });
+		res.status(200).json('addComment success');
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+//delete comment
+router.put('/:id/deleteComment', async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.id);
+		await post.updateOne({ $pull: { comments: req.body.comment } });
+		res.status(200).json('deleteComment success');
 	} catch (err) {
 		res.status(500).json(err);
 	}
