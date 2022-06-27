@@ -1,0 +1,15 @@
+.dropdown-toggle {
+	box-shadow: none !important;
+}
+
+.dropdown-menu {
+	inset: 0px 0px auto auto !important;
+	padding: 0;
+	min-width: 120px;
+
+	.dropdown-item:hover {
+		background-color: #dc3545;
+		color: #fff;
+		border-radius: 4px;
+	}
+}
