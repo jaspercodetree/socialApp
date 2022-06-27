@@ -1,0 +1,32 @@
+.searchUserListWrap {
+  width: 25%;
+}
+
+@media screen and (max-width: 768px) {
+  .searchUserListWrap {
+    width: 50%;
+  }
+}
+
+.searchUserListWrap .searchUser {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 15px;
+}
+
+.searchUserListWrap .searchUser:hover {
+  background-color: #fdf4fd;
+}
+
+.searchUserListWrap .searchUser .searchUserImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 10px;
+}
