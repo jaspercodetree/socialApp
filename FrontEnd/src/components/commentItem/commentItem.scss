@@ -1,0 +1,49 @@
+.commentListItem {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 100%;
+	margin-top: 8px;
+
+	.commentListLeft {
+		.commentListImg {
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			object-fit: cover;
+			margin-right: 8px;
+		}
+	}
+	.commentListRight {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		flex: 1;
+		background-color: #eee;
+		border-radius: 16px;
+
+		.commentListItemText {
+			width: 100%;
+			border: none;
+			background-color: transparent;
+			font-size: 14px;
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		.commentListItemTime {
+			width: 100%;
+			text-align: end;
+			font-size: 8px;
+			color: #999;
+		}
+	}
+
+	&:hover {
+		.currentUserComment #commentDeleteBtn {
+			visibility: visible !important;
+		}
+	}
+}
