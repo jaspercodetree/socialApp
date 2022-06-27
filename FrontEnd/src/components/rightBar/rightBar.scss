@@ -1,0 +1,102 @@
+.rightBar {
+	.rightBarWrapper {
+		padding: 16px;
+	}
+}
+
+//birthdayContainer
+.birthdayContainer {
+	display: flex;
+	align-items: center;
+
+	.birthdayImg {
+		width: 32px;
+		margin-right: 16px;
+	}
+
+	.birthdayText {
+		font-size: 16px;
+	}
+}
+
+.rightBarTitle {
+	font-weight: 700;
+	margin: 20px 0;
+}
+
+//rightBarFriendList
+.rightBarFriendList {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+//ProfileRightBar
+//rightBarFollowButton
+.rightBarFollowButton {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: #ffa;
+	border-radius: 8px;
+	padding: 12px;
+	margin-top: 42px;
+	cursor: pointer;
+	max-width: 130px;
+}
+
+.rightBarTitle {
+	font-size: 18px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+//rightBarInfo
+.rightBarInfo .rightBarInfoItem {
+	margin-bottom: 10px;
+
+	.rightBarInfoKey {
+		font-weight: 500;
+		margin-right: 16px;
+		color: #555;
+	}
+
+	.rightBarInfoValue {
+		font-weight: 300;
+	}
+}
+
+//rightBarFollowings
+.rightBarFollowings {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	a {
+		color: #000;
+
+		&:visited {
+			color: #000;
+		}
+	}
+
+	.rightBarFollowing {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 20px;
+		align-items: center;
+		cursor: pointer;
+
+		.rightBarFollowingImg {
+			width: 100px;
+			height: 100px;
+			object-fit: cover;
+			border-radius: 5px;
+			margin-bottom: 8px;
+		}
+
+		.rightBarFollowingName {
+			text-decoration: none;
+		}
+	}
+}

@@ -1,0 +1,117 @@
+.rightBar .rightBarWrapper {
+  padding: 16px;
+}
+
+.birthdayContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.birthdayContainer .birthdayImg {
+  width: 32px;
+  margin-right: 16px;
+}
+
+.birthdayContainer .birthdayText {
+  font-size: 16px;
+}
+
+.rightBarTitle {
+  font-weight: 700;
+  margin: 20px 0;
+}
+
+.rightBarFriendList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rightBarFollowButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #ffa;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 42px;
+  cursor: pointer;
+  max-width: 130px;
+}
+
+.rightBarTitle {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.rightBarInfo .rightBarInfoItem {
+  margin-bottom: 10px;
+}
+
+.rightBarInfo .rightBarInfoItem .rightBarInfoKey {
+  font-weight: 500;
+  margin-right: 16px;
+  color: #555;
+}
+
+.rightBarInfo .rightBarInfoItem .rightBarInfoValue {
+  font-weight: 300;
+}
+
+.rightBarFollowings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.rightBarFollowings a {
+  color: #000;
+}
+
+.rightBarFollowings a:visited {
+  color: #000;
+}
+
+.rightBarFollowings .rightBarFollowing {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.rightBarFollowings .rightBarFollowing .rightBarFollowingImg {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.rightBarFollowings .rightBarFollowing .rightBarFollowingName {
+  text-decoration: none;
+}

@@ -1,0 +1,121 @@
+.topBarContainer {
+  background-color: purple;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.topBarContainer .row {
+  height: 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.topBarLeft .logo {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 320px) {
+  .topBarLeft .logo {
+    font-size: 24px;
+  }
+}
+
+.topBarCenter .searchBar {
+  width: 100%;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.topBarCenter .searchBar .searchIcon {
+  font-size: 20px !important;
+  margin-left: 10px;
+}
+
+.topBarCenter .searchBar .searchInput {
+  width: 90%;
+  border: none;
+  font-size: 14px;
+}
+
+.topBarCenter .searchBar .searchInput:focus {
+  outline: none;
+}
+
+.topBarRight {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  color: #fff;
+}
+
+.topBarRight a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.topBarRight .topBarLink {
+  margin-right: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.topBarRight .topBarIcons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.topBarRight .topBarIcons .topBarIconItem {
+  cursor: pointer;
+  position: relative;
+}
+
+.topBarRight .topBarIcons .topBarIconBadge {
+  width: 15px;
+  height: 15px;
+  background-color: #ffc;
+  border-radius: 50%;
+  color: #000;
+  position: absolute;
+  top: -8px;
+  left: 16px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 8px;
+  font-weight: bold;
+}
+
+.topBarRight .topBarImg {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  cursor: pointer;
+}
