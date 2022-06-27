@@ -1,11 +1,4 @@
-.topbarContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  height: 50px;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+.topBarContainer {
   background-color: purple;
   position: -webkit-sticky;
   position: sticky;
@@ -13,27 +6,27 @@
   z-index: 999;
 }
 
-.topbarLeft {
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
+.topBarContainer .row {
+  height: 50px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.topbarLeft .logo {
-  font-size: 24px;
-  margin-left: 20px;
+.topBarLeft .logo {
+  font-size: 20px;
   font-weight: bold;
   color: white;
   cursor: pointer;
 }
 
-.topbarCenter {
-  -webkit-box-flex: 5;
-      -ms-flex: 5;
-          flex: 5;
+@media screen and (max-width: 320px) {
+  .topBarLeft .logo {
+    font-size: 24px;
+  }
 }
 
-.topbarCenter .searchbar {
+.topBarCenter .searchBar {
   width: 100%;
   height: 30px;
   background-color: #fff;
@@ -46,59 +39,57 @@
           align-items: center;
 }
 
-.topbarCenter .searchbar .searchIcon {
+.topBarCenter .searchBar .searchIcon {
   font-size: 20px !important;
   margin-left: 10px;
 }
 
-.topbarCenter .searchbar .searchInput {
+.topBarCenter .searchBar .searchInput {
   width: 90%;
   border: none;
+  font-size: 14px;
 }
 
-.topbarCenter .searchbar .searchInput:focus {
+.topBarCenter .searchBar .searchInput:focus {
   outline: none;
 }
 
-.topbarRight {
-  -webkit-box-flex: 4;
-      -ms-flex: 4;
-          flex: 4;
+.topBarRight {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   color: #fff;
 }
 
-.topbarRight a {
+.topBarRight a {
   text-decoration: none;
   color: inherit;
 }
 
-.topbarRight .topbarLink {
+.topBarRight .topBarLink {
   margin-right: 10px;
   font-size: 14px;
   cursor: pointer;
 }
 
-.topbarRight .topbarIcons {
+.topBarRight .topBarIcons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.topbarRight .topbarIcons .topbarIconItem {
-  margin-right: 15px;
+.topBarRight .topBarIcons .topBarIconItem {
   cursor: pointer;
   position: relative;
 }
 
-.topbarRight .topbarIcons .topbarIconBadge {
+.topBarRight .topBarIcons .topBarIconBadge {
   width: 15px;
   height: 15px;
   background-color: #ffc;
@@ -120,7 +111,7 @@
   font-weight: bold;
 }
 
-.topbarRight .topbarImg {
+.topBarRight .topBarImg {
   width: 32px;
   height: 32px;
   border-radius: 50%;

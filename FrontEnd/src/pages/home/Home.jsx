@@ -1,17 +1,17 @@
 import Feed from '../../components/feed/Feed';
-import Rightbar from '../../components/rightbar/Rightbar';
+import RightBar from '../../components/rightBar/RightBar';
 import Sidebar from '../../components/sidebar/Sidebar';
-import Topbar from '../../components/topbar/Topbar';
+import TopBar from '../../components/topBar/TopBar';
 import './home.css';
 
 export default function Home() {
 	return (
 		<>
-			<Topbar />
-			<div className="homeContainer">
+			<TopBar />
+			<div className="homeContainer container-fluid">
 				<Sidebar />
-				<Feed />
-				<Rightbar />
+				<Feed isHomePage={true} />
+				<RightBar isHomePage={true} />
 			</div>
 		</>
 	);

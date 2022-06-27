@@ -2,13 +2,13 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
-import Rightbar from '../../components/rightbar/Rightbar';
+import RightBar from '../../components/rightBar/RightBar';
 import Sidebar from '../../components/sidebar/Sidebar';
-import Topbar from '../../components/topbar/Topbar';
+import TopBar from '../../components/topBar/TopBar';
 import './profile.css';
 
 export default function Profile() {
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const PF = 'http://localhost:8800/images/';
 	//練習用useParams  (可以透過.username拿取 是因為在App.js已有命名)
 	const username = useParams().username;
 
@@ -37,7 +37,7 @@ export default function Profile() {
 
 	return (
 		<>
-			<Topbar />
+			<TopBar />
 			<div className="profile">
 				<Sidebar />
 				<div className="profileRight">
@@ -65,7 +65,7 @@ export default function Profile() {
 					</div>
 					<div className="profileRightBottom">
 						<Feed username={username} />
-						<Rightbar user={user} />
+						<RightBar user={user} />
 					</div>
 				</div>
 			</div>

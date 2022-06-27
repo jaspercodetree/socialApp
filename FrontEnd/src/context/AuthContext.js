@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }) => {
 				error: state.error,
 				dispatch,
 				// setState,
-				PF: process.env.REACT_APP_PUBLIC_FOLDER,
+				PF: 'http://localhost:8800/images/',
 			}}
 		>
 			{children}
