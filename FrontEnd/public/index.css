@@ -1,5 +1,33 @@
 *{
     margin: 0;
     font-family: 'Roboto', sans-serif;
+    
+
+
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px; }
+
+  /* scrollbar */
+	/* width */
+	::-webkit-scrollbar {
+		width: 8px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+		background: #F8F9FB;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+		background: #989898;
+		/*border-radius: 6px;*/
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+		background: #686868;
+	}
