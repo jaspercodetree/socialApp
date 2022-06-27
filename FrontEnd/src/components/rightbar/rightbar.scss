@@ -1,7 +1,5 @@
-.rightbar {
-	flex: 3;
-
-	.rightbarWrapper {
+.rightBar {
+	.rightBarWrapper {
 		padding: 16px;
 	}
 }
@@ -21,21 +19,21 @@
 	}
 }
 
-.rightbarTitle {
+.rightBarTitle {
 	font-weight: 700;
 	margin: 20px 0;
 }
 
-//rightbarFriendList
-.rightbarFriendList {
+//rightBarFriendList
+.rightBarFriendList {
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
 
-//ProfileRightbar
-//rightbarFollowButton
-.rightbarFollowButton {
+//ProfileRightBar
+//rightBarFollowButton
+.rightBarFollowButton {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -44,32 +42,32 @@
 	padding: 12px;
 	margin-top: 42px;
 	cursor: pointer;
-	max-width: 100px;
+	max-width: 130px;
 }
 
-.rightbarTitle {
+.rightBarTitle {
 	font-size: 18px;
 	font-weight: 500;
 	margin-bottom: 10px;
 }
 
-//rightbarInfo
-.rightbarInfo .rightbarInfoItem {
+//rightBarInfo
+.rightBarInfo .rightBarInfoItem {
 	margin-bottom: 10px;
 
-	.rightbarInfoKey {
+	.rightBarInfoKey {
 		font-weight: 500;
 		margin-right: 16px;
 		color: #555;
 	}
 
-	.rightbarInfoValue {
+	.rightBarInfoValue {
 		font-weight: 300;
 	}
 }
 
-//rightbarFollowings
-.rightbarFollowings {
+//rightBarFollowings
+.rightBarFollowings {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
@@ -82,14 +80,14 @@
 		}
 	}
 
-	.rightbarFollowing {
+	.rightBarFollowing {
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 20px;
 		align-items: center;
 		cursor: pointer;
 
-		.rightbarFollowingImg {
+		.rightBarFollowingImg {
 			width: 100px;
 			height: 100px;
 			object-fit: cover;
@@ -97,7 +95,7 @@
 			margin-bottom: 8px;
 		}
 
-		.rightbarFollowingName {
+		.rightBarFollowingName {
 			text-decoration: none;
 		}
 	}

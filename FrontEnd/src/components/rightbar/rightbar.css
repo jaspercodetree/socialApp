@@ -1,10 +1,4 @@
-.rightbar {
-  -webkit-box-flex: 3;
-      -ms-flex: 3;
-          flex: 3;
-}
-
-.rightbar .rightbarWrapper {
+.rightBar .rightBarWrapper {
   padding: 16px;
 }
 
@@ -26,18 +20,18 @@
   font-size: 16px;
 }
 
-.rightbarTitle {
+.rightBarTitle {
   font-weight: 700;
   margin: 20px 0;
 }
 
-.rightbarFriendList {
+.rightBarFriendList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.rightbarFollowButton {
+.rightBarFollowButton {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -52,30 +46,30 @@
   padding: 12px;
   margin-top: 42px;
   cursor: pointer;
-  max-width: 100px;
+  max-width: 130px;
 }
 
-.rightbarTitle {
+.rightBarTitle {
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 10px;
 }
 
-.rightbarInfo .rightbarInfoItem {
+.rightBarInfo .rightBarInfoItem {
   margin-bottom: 10px;
 }
 
-.rightbarInfo .rightbarInfoItem .rightbarInfoKey {
+.rightBarInfo .rightBarInfoItem .rightBarInfoKey {
   font-weight: 500;
   margin-right: 16px;
   color: #555;
 }
 
-.rightbarInfo .rightbarInfoItem .rightbarInfoValue {
+.rightBarInfo .rightBarInfoItem .rightBarInfoValue {
   font-weight: 300;
 }
 
-.rightbarFollowings {
+.rightBarFollowings {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -86,15 +80,15 @@
           justify-content: space-between;
 }
 
-.rightbarFollowings a {
+.rightBarFollowings a {
   color: #000;
 }
 
-.rightbarFollowings a:visited {
+.rightBarFollowings a:visited {
   color: #000;
 }
 
-.rightbarFollowings .rightbarFollowing {
+.rightBarFollowings .rightBarFollowing {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -109,7 +103,7 @@
   cursor: pointer;
 }
 
-.rightbarFollowings .rightbarFollowing .rightbarFollowingImg {
+.rightBarFollowings .rightBarFollowing .rightBarFollowingImg {
   width: 100px;
   height: 100px;
   -o-object-fit: cover;
@@ -118,6 +112,6 @@
   margin-bottom: 8px;
 }
 
-.rightbarFollowings .rightbarFollowing .rightbarFollowingName {
+.rightBarFollowings .rightBarFollowing .rightBarFollowingName {
   text-decoration: none;
 }

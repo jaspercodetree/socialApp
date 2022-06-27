@@ -7,7 +7,7 @@ export default function Advertisement() {
 
 	return (
 		<>
-			<img src={PF + `ad.jpg`} alt="" className="rightbarAd" />
+			<img src={PF + `ad.jpg`} alt="" className="rightBarAd" />
 		</>
 	);
 }

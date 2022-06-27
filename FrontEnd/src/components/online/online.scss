@@ -1,20 +1,20 @@
-.rightbarFriend {
+.rightBarFriend {
 	display: flex;
 	align-items: center;
 	margin-bottom: 15px;
 
-	.rightbarProfileImgContainer {
+	.rightBarProfileImgContainer {
 		margin-right: 10px;
 		position: relative;
 
-		.rightbarProfileImg {
+		.rightBarProfileImg {
 			width: 40px;
 			height: 40px;
 			border-radius: 50%;
 			object-fit: cover;
 		}
 
-		.rightbarOnline {
+		.rightBarOnline {
 			width: 12px;
 			height: 12px;
 			border-radius: 50%;
@@ -26,7 +26,7 @@
 		}
 	}
 
-	.rightbarUsername {
+	.rightBarUsername {
 		font-weight: 500;
 	}
 }

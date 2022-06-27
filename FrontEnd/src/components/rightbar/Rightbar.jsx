@@ -1,31 +1,56 @@
-import './rightbar.css';
+import './rightBar.css';
 import Advertisement from '../advertisement/Advertisement';
 import { Add, Remove } from '@material-ui/icons';
 import Online from '../online/Online';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 
-export default function Rightbar({ user }) {
+export default function RightBar({ user, isHomePage }) {
 	const [friends, setFriends] = useState([]);
+	const [profileFriends, setProfileFriends] = useState([]);
 	const { user: loginUser, dispatch, PF } = useContext(AuthContext);
 
 	const [followed, setFollowed] = useState(false);
 
+	// console.log(user);
 	/* user為此profile頁面的user ;  loginUser為目前登入的user */
+
+	//profile 線上朋友列表
+	useEffect(() => {
+		if (loginUser && Object.entries(loginUser).length !== 0) {
+			// console.log(Object.entries(loginUser));
+			const getFriends = async () => {
+				await axios
+					.get('/users/friends/' + loginUser._id)
+					.then((res) => setFriends(res.data))
+					.catch((err) => console.log(err));
+			};
+			getFriends();
+		}
+	}, [loginUser]);
 
 	//profile 右側欄朋友列表
 	useEffect(() => {
 		if (user && Object.entries(user).length !== 0) {
 			// console.log(Object.entries(user));
-			const getFriends = async () => {
+			const getProfileFriends = async () => {
 				await axios
-					.get('/users/friends/' + user._id)
-					.then((res) => setFriends(res.data))
+					.get(`/users/friends/` + user._id)
+					.then((res) => {
+						res.data.length !== 0
+							? setProfileFriends(res.data)
+							: setProfileFriends([
+									{
+										profilePicture: 'noAvatar.png',
+										username: 'QwQ 朋友募集中',
+									},
+							  ]);
+					})
 					.catch((err) => console.log(err));
 			};
-			getFriends();
+			getProfileFriends();
 		}
 	}, [user]);
 
@@ -51,7 +76,7 @@ export default function Rightbar({ user }) {
 		// setFollowed(!followed);
 	};
 
-	const HomeRightbar = () => {
+	const HomeRightBar = () => {
 		return (
 			<>
 				<div className="birthdayContainer">
@@ -61,8 +86,8 @@ export default function Rightbar({ user }) {
 					</span>
 				</div>
 				<Advertisement />
-				<div className="rightbarTitle">在線的朋友</div>
-				<ul className="rightbarFriendList">
+				<div className="rightBarTitle">在線的朋友</div>
+				<ul className="rightBarFriendList">
 					{friends.map((f) => (
 						<Online key={f._id} friend={f} />
 					))}
@@ -71,33 +96,33 @@ export default function Rightbar({ user }) {
 		);
 	};
 
-	const ProfileRightbar = () => {
+	const ProfileRightBar = () => {
 		return (
 			<>
 				{loginUser.username !== user.username && (
-					<div className="rightbarFollowButton" onClick={handleClick}>
+					<div className="rightBarFollowButton" onClick={handleClick}>
 						{followed ? '解除追蹤 ' : '加入追蹤 '}
 						{followed ? <Remove /> : <Add />}
 					</div>
 				)}
 
-				<h4 className="rightbarTitle">使用者資訊</h4>
-				<div className="rightbarInfo">
-					<div className="rightbarInfoItem">
-						<span className="rightbarInfoKey">城市:</span>
-						<span className="rightbarInfoValue">
+				<h4 className="rightBarTitle">使用者資訊</h4>
+				<div className="rightBarInfo">
+					<div className="rightBarInfoItem">
+						<span className="rightBarInfoKey">城市:</span>
+						<span className="rightBarInfoValue">
 							{user.city ? user.city : '神秘都市'}
 						</span>
 					</div>
-					<div className="rightbarInfoItem">
-						<span className="rightbarInfoKey">家鄉:</span>
-						<span className="rightbarInfoValue">
+					<div className="rightBarInfoItem">
+						<span className="rightBarInfoKey">家鄉:</span>
+						<span className="rightBarInfoValue">
 							{user.from ? user.from : '秘密之地'}
 						</span>
 					</div>
-					<div className="rightbarInfoItem">
-						<span className="rightbarInfoKey">關係:</span>
-						<span className="rightbarInfoValue">
+					<div className="rightBarInfoItem">
+						<span className="rightBarInfoKey">關係:</span>
+						<span className="rightBarInfoValue">
 							{user.relationship === 0
 								? '單身'
 								: user.relationship === 1
@@ -107,15 +132,15 @@ export default function Rightbar({ user }) {
 					</div>
 				</div>
 
-				<h4 className="rightbarTitle">使用者朋友</h4>
-				<div className="rightbarFollowings">
-					{friends.map((friend) => (
+				<h4 className="rightBarTitle">使用者朋友</h4>
+				<div className="rightBarFollowings">
+					{profileFriends.map((friend) => (
 						<Link
 							to={`/profile/${friend.username}`}
 							style={{ textDecoration: 'none' }}
 							key={friend._id}
 						>
-							<div className="rightbarFollowing">
+							<div className="rightBarFollowing">
 								<img
 									src={
 										friend.profilePicture
@@ -124,9 +149,9 @@ export default function Rightbar({ user }) {
 											: PF + '/person/noAvatar.png'
 									}
 									alt=""
-									className="rightbarFollowingImg"
+									className="rightBarFollowingImg"
 								/>
-								<span className="rightbarFollowingName">
+								<span className="rightBarFollowingName">
 									{friend.username}
 								</span>
 							</div>
@@ -138,9 +163,15 @@ export default function Rightbar({ user }) {
 		);
 	};
 	return (
-		<div className="rightbar">
-			<div className="rightbarWrapper">
-				{user ? <ProfileRightbar /> : <HomeRightbar />}
+		<div
+			className={
+				isHomePage === true
+					? 'rightBar d-none d-md-block col-md-3 col-lg-2'
+					: 'rightBar d-none d-md-block col-md-3'
+			}
+		>
+			<div className="rightBarWrapper">
+				{user ? <ProfileRightBar /> : <HomeRightBar />}
 			</div>
 		</div>
 	);
