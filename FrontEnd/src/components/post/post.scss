@@ -36,6 +36,23 @@
 			font-weight: 700;
 		}
 
+		.emojiWrapper {
+			font-size: 14px;
+
+			img {
+				width: 16px;
+				height: 16px;
+			}
+		}
+		.tagUserWrapper {
+			.tagUserName {
+				font-size: 14px;
+				color: #000;
+				text-decoration: underline;
+				text-decoration-color: #000;
+			}
+		}
+
 		.postDate {
 			font-size: 8px;
 			font-weight: 500;
@@ -112,63 +129,34 @@
 			}
 		}
 		.commentShareRight {
-			width: 70%;
-			height: 30px;
-			padding-left: 16px;
-			background-color: #ffa;
-			border: 1px solid #ccc;
-			border-radius: 30px;
 			display: flex;
 			align-items: center;
+			flex-wrap: wrap;
+			width: 100%;
+			background-color: rgb(252, 252, 208);
+			border-radius: 30px;
 
 			.commentShareInput {
-				width: 80%;
 				border: none;
 				background-color: transparent;
+				font-size: 14px;
+				width: 93%;
+				resize: none;
 
 				&:focus {
 					outline: none;
 				}
 			}
-		}
-	}
-	.commentList {
-		.commentListItem {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width: 100%;
-			margin-top: 8px;
 
-			.commentListLeft {
-				.commentListImg {
-					width: 32px;
-					height: 32px;
-					border-radius: 50%;
-					object-fit: cover;
-					margin-right: 8px;
+			@media screen and (max-width: 1400px) {
+				.commentShareInput {
+					width: 90%;
 				}
 			}
-			.commentListRight {
-				display: flex;
-				width: 70%;
-				height: 30px;
-				padding-left: 16px;
-				background-color: #eee;
-				border: 1px solid #ccc;
-				border-radius: 30px;
-				display: flex;
-				align-items: center;
 
-				.commentListItemText {
+			@media screen and (max-width: 576px) {
+				.commentShareInput {
 					width: 80%;
-					border: none;
-					background-color: transparent;
-					color: #999;
-
-					&:focus {
-						outline: none;
-					}
 				}
 			}
 		}
