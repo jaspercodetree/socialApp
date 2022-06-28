@@ -35,13 +35,16 @@ export default function Register() {
 	};
 
 	return (
-		<div className="register">
-			<div className="registerWrapper">
-				<div className="registerLeft">
-					<h3 className="registerLogo">JasperLogo</h3>
+		<div className="register container-fluid">
+			<div className="registerWrapper row">
+				<div className="registerLeft  col-12 col-md-6">
+					<h3 className="registerLogo">JasperBook</h3>
 					<span className="registerDesc">連結世界上所有的朋友</span>
 				</div>
-				<form className="registerRight" onSubmit={handleSubmit}>
+				<form
+					className="registerRight col-12 col-md-6 mt-4 mt-md-0"
+					onSubmit={handleSubmit}
+				>
 					<div className="registerBox">
 						<input
 							type="text"
@@ -75,9 +78,10 @@ export default function Register() {
 						<button className="registerButton" type="submit">
 							註冊
 						</button>
+						<hr className="mt-0" />
 						<Link to="/login" style={{ textAlign: 'center' }}>
 							<button className="loginRegisterButton">
-								登入帳戶
+								返回登入畫面
 							</button>
 						</Link>
 					</div>

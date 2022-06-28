@@ -1,7 +1,7 @@
 .login {
   width: 100vw;
   height: 100vh;
-  background-color: #f3f3e6;
+  background-color: #f8f8e8;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -14,18 +14,11 @@
 }
 
 .login .loginWrapper {
-  width: 70%;
-  height: 70%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  width: 1200px;
 }
 
 .login .loginWrapper .loginLeft,
 .login .loginWrapper .loginRight {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -44,7 +37,7 @@
 .loginLeft .loginLogo {
   font-size: 60px;
   font-weight: 800;
-  color: #8666;
+  color: purple;
   margin-bottom: 10px;
 }
 
@@ -54,10 +47,8 @@
 
 .loginRight .loginBox {
   width: 80%;
-  height: 300px;
-  padding: 20px;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -71,11 +62,12 @@
 }
 
 .loginRight .loginBox .loginInput {
-  height: 50px;
+  height: 48px;
   border-radius: 10px;
   border: 1px solid gray;
   font-size: 18px;
   padding-left: 20px;
+  margin-bottom: 16px;
 }
 
 .loginRight .loginBox .loginInput:focus {
@@ -83,39 +75,8 @@
 }
 
 .loginRight .loginBox .loginButton {
-  height: 50px;
-  border-radius: 10px;
-  border: none;
-  background-color: blue;
-  color: #fff;
-  font-size: 20px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.loginRight .loginBox .loginForget {
-  text-align: center;
-  color: blue;
-}
-
-.loginRight .loginBox .loginForget a {
-  text-decoration: none;
-}
-
-.loginRight .loginBox .loginForget a:visited {
-  color: #000;
-}
-
-.loginRight .loginBox .loginForget a:hover {
-  color: blue;
-}
-
-.loginRight .loginBox .loginRegisterButton {
-  width: 60%;
-  height: 50px;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+  height: 48px;
+  margin-bottom: 16px;
   border-radius: 10px;
   border: none;
   background-color: purple;
@@ -123,4 +84,45 @@
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.loginRight .loginBox .loginButton:hover {
+  background-color: #9c009c;
+}
+
+.loginRight .loginBox .loginForget {
+  text-align: center;
+  color: #1877f2;
+  margin-bottom: 16px;
+}
+
+.loginRight .loginBox .loginForget a {
+  text-decoration: none;
+}
+
+.loginRight .loginBox .loginForget a:visited {
+  color: #1877f2;
+}
+
+.loginRight .loginBox .loginForget a:hover {
+  color: #000;
+}
+
+.loginRight .loginBox .loginRegisterButton {
+  width: 60%;
+  height: 48px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  border-radius: 10px;
+  border: none;
+  background-color: teal;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.loginRight .loginBox .loginRegisterButton:hover {
+  background-color: #009494;
 }

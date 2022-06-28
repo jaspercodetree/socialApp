@@ -26,14 +26,14 @@ export default function Login() {
 	};
 
 	return (
-		<div className="login">
-			<div className="loginWrapper">
-				<div className="loginLeft">
-					<h3 className="loginLogo">JasperLogo</h3>
+		<div className="login container-fluid">
+			<div className="loginWrapper row">
+				<div className="loginLeft col-12 col-md-6">
+					<h3 className="loginLogo">JasperBook</h3>
 					<span className="loginDesc">連結世界上所有的朋友</span>
 				</div>
-				<div className="loginRight">
-					<form className="loginBox" onSubmit={handleSubmit}>
+				<div className="loginRight col-12 col-md-6 mt-4 mt-md-0">
+					<form className="loginBox p-4" onSubmit={handleSubmit}>
 						<input
 							type="email"
 							placeholder="Email"
@@ -62,6 +62,7 @@ export default function Login() {
 						<span className="loginForget">
 							<Link to="/login">忘記密碼?</Link>
 						</span>
+						<hr className="mt-0" />
 						<Link to="/register" style={{ textAlign: 'center' }}>
 							<button className="loginRegisterButton">
 								{isFetching ? (

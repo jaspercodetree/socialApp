@@ -1,19 +1,16 @@
 .login {
 	width: 100vw;
 	height: 100vh;
-	background-color: rgb(243, 243, 230);
+	background-color: #f8f8e8;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
 	.loginWrapper {
-		width: 70%;
-		height: 70%;
-		display: flex;
+		width: 1200px;
 
 		.loginLeft,
 		.loginRight {
-			flex: 1;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -26,7 +23,7 @@
 	.loginLogo {
 		font-size: 60px;
 		font-weight: 800;
-		color: #8666;
+		color: purple;
 		margin-bottom: 10px;
 	}
 
@@ -38,20 +35,19 @@
 .loginRight {
 	.loginBox {
 		width: 80%;
-		height: 300px;
-		padding: 20px;
 		background-color: #fff;
-		border-radius: 10px;
+		border-radius: 16px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 
 		.loginInput {
-			height: 50px;
+			height: 48px;
 			border-radius: 10px;
 			border: 1px solid gray;
 			font-size: 18px;
 			padding-left: 20px;
+			margin-bottom: 16px;
 
 			&:focus {
 				outline: none;
@@ -59,37 +55,8 @@
 		}
 
 		.loginButton {
-			height: 50px;
-			border-radius: 10px;
-			border: none;
-			background-color: blue;
-			color: #fff;
-			font-size: 20px;
-			font-weight: 500;
-			cursor: pointer;
-		}
-
-		.loginForget {
-			text-align: center;
-			color: blue;
-
-			a {
-				text-decoration: none;
-
-				&:visited {
-					color: #000;
-				}
-
-				&:hover {
-					color: blue;
-				}
-			}
-		}
-
-		.loginRegisterButton {
-			width: 60%;
-			height: 50px;
-			align-self: center;
+			height: 48px;
+			margin-bottom: 16px;
 			border-radius: 10px;
 			border: none;
 			background-color: purple;
@@ -97,6 +64,45 @@
 			font-size: 20px;
 			font-weight: 500;
 			cursor: pointer;
+
+			&:hover {
+				background-color: rgb(156, 0, 156);
+			}
+		}
+
+		.loginForget {
+			text-align: center;
+			color: #1877f2;
+			margin-bottom: 16px;
+
+			a {
+				text-decoration: none;
+
+				&:visited {
+					color: #1877f2;
+				}
+
+				&:hover {
+					color: #000;
+				}
+			}
+		}
+
+		.loginRegisterButton {
+			width: 60%;
+			height: 48px;
+			align-self: center;
+			border-radius: 10px;
+			border: none;
+			background-color: teal;
+			color: #fff;
+			font-size: 20px;
+			font-weight: 500;
+			cursor: pointer;
+
+			&:hover {
+				background-color: rgb(0, 148, 148);
+			}
 		}
 	}
 }

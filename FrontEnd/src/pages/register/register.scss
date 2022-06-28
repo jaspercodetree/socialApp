@@ -1,19 +1,16 @@
 .register {
 	width: 100vw;
 	height: 100vh;
-	background-color: rgb(243, 243, 230);
+	background-color: #f8f8e8;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
 	.registerWrapper {
-		width: 70%;
-		height: 70%;
-		display: flex;
+		width: 1200px;
 
 		.registerLeft,
 		.registerRight {
-			flex: 1;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -26,7 +23,7 @@
 	.registerLogo {
 		font-size: 60px;
 		font-weight: 800;
-		color: #8666;
+		color: purple;
 		margin-bottom: 10px;
 	}
 
@@ -38,20 +35,20 @@
 .registerRight {
 	.registerBox {
 		width: 80%;
-		height: 400px;
 		padding: 20px;
 		background-color: #fff;
-		border-radius: 10px;
+		border-radius: 16px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 
 		.registerInput {
-			height: 50px;
+			height: 48px;
 			border-radius: 10px;
 			border: 1px solid gray;
 			font-size: 18px;
 			padding-left: 20px;
+			margin-bottom: 16px;
 
 			&:focus {
 				outline: none;
@@ -59,20 +56,8 @@
 		}
 
 		.registerButton {
-			height: 50px;
-			border-radius: 10px;
-			border: none;
-			background-color: blue;
-			color: #fff;
-			font-size: 20px;
-			font-weight: 500;
-			cursor: pointer;
-		}
-
-		.loginRegisterButton {
-			width: 60%;
-			height: 50px;
-			align-self: center;
+			height: 48px;
+			margin-bottom: 16px;
 			border-radius: 10px;
 			border: none;
 			background-color: purple;
@@ -80,6 +65,27 @@
 			font-size: 20px;
 			font-weight: 500;
 			cursor: pointer;
+
+			&:hover {
+				background-color: rgb(156, 0, 156);
+			}
+		}
+
+		.loginRegisterButton {
+			width: 60%;
+			height: 48px;
+			align-self: center;
+			border-radius: 10px;
+			border: none;
+			background-color: teal;
+			color: #fff;
+			font-size: 20px;
+			font-weight: 500;
+			cursor: pointer;
+
+			&:hover {
+				background-color: rgb(0, 148, 148);
+			}
 		}
 	}
 }
