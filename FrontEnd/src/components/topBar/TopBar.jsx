@@ -16,12 +16,12 @@ export default function TopBar() {
 	const { user, PF } = useContext(AuthContext);
 	const [searchName, setSearchName] = useState([]);
 	const [searchUsers, setSearchUsers] = useState([]);
+	const [isModalActive, setModalActive] = useState(false);
 
 	const logout = () => {
 		localStorage.removeItem('user');
 		window.location.replace('/login');
 	};
-
 	//searchUsers
 	useEffect(() => {
 		if (searchName.length !== 0) {
@@ -34,6 +34,11 @@ export default function TopBar() {
 			getUsers();
 		}
 	}, [searchName]);
+
+	//toggleModal
+	const toggleModal = () => {
+		setModalActive(true);
+	};
 
 	return (
 		<div className="topBarContainer container-fluid">
@@ -49,27 +54,46 @@ export default function TopBar() {
 						<input
 							type="text"
 							className="searchInput bg-transparent"
-							onChange={(e) => setSearchName(e.target.value)}
+							onChange={(e) => {
+								setSearchName(e.target.value);
+								toggleModal();
+							}}
 							placeholder={`搜尋用戶`}
+							value={searchName ? searchName : ''}
 						/>
 					</div>
 					<div
-						className={`searchUserListWrap position-absolute bg-white py-3 mt-1 border border-gray rounded-3 ${
-							searchName.length === 0 ? 'd-none' : ''
+						className={`searchUserListModal ${
+							isModalActive ? 'd-block' : 'd-none'
 						}`}
+						onClick={() => {
+							setModalActive(false);
+							setSearchName([]);
+						}}
 					>
-						<ul className="searchUserList m-0 p-0">
-							{searchUsers.map((u) => (
-								<Link
-									to={`/profile/${u.username}`}
-									style={{ textDecoration: 'none' }}
-									className="text-black"
-									key={u._id}
-								>
-									<SearchUser user={u} />
-								</Link>
-							))}
-						</ul>
+						<div
+							className={`searchUserListWrap position-absolute bg-white py-3 mt-1 border border-gray rounded-3 ${
+								searchName.length === 0 ? 'd-none' : ''
+							}`}
+							onClick={(e) => e.stopPropagation()}
+						>
+							<ul className="searchUserList m-0 p-0">
+								{searchUsers.map((u) => (
+									<Link
+										to={`/profile/${u.username}`}
+										style={{ textDecoration: 'none' }}
+										className="text-black"
+										key={u._id}
+										onClick={() => {
+											setModalActive(false);
+											setSearchName([]);
+										}}
+									>
+										<SearchUser user={u} />
+									</Link>
+								))}
+							</ul>
+						</div>
 					</div>
 				</div>
 				<div className="topBarRight col-3 col-lg-4">
