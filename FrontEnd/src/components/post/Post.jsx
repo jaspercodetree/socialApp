@@ -13,7 +13,7 @@ import { NearMeTwoTone } from '@material-ui/icons';
 export default function Post({ originPost }) {
 	const [post, setPost] = useState(originPost);
 
-	//A.此處user與useEffect的getuser 是指去獲得  好友圈內每一則post貼文的發文者user
+	//A.此處user與useEffect的getUser 是指去獲得  好友圈內每一則post貼文的發文者user
 	const [user, setUser] = useState({});
 
 	//B.like相關
@@ -112,14 +112,67 @@ export default function Post({ originPost }) {
 			}
 		};
 
-		if (e.key === 'Enter' || isClick) {
-			writeComment && sendCommentAjax();
-
+		if (e.key === 'Enter') {
 			//禁止enter換行
 			e.preventDefault();
+
+			//換行
+			commentShareInput.current.value += '\n';
+
+			//自適應高度;
+			e.target.style.height = 'auto';
+			e.target.style.height = `${e.target.scrollHeight}px`;
+		} else if (isClick) {
+			writeComment && sendCommentAjax();
+
+			//恢復原有高度
+			e.target.closest('div').firstChild.style.height = '25px';
+			// console.log(e.target.closest('div').firstChild.style.height);
+			//清空文字
 			commentShareInput.current.value = '';
 		}
+
+		// if (e.shiftKey === true && e.key === 'Enter') {
+		// 	//禁止enter換行
+		// 	e.preventDefault();
+
+		// 	//shift+enter換行
+		// 	commentShareInput.current.value += '\n';
+
+		// 	//自適應高度;
+		// 	e.target.style.height = 'auto';
+		// 	e.target.style.height = `${e.target.scrollHeight}px`;
+		// } else if (isClick || e.key === 'Enter') {
+		// 	//禁止enter換行
+		// 	e.preventDefault();
+
+		// 	writeComment && sendCommentAjax();
+		// 	e.target.style.height = '25px';
+		// 	commentShareInput.current.value = '';
+		// }
 	};
+
+	const [comments, setComments] = useState();
+
+	//comment
+	useEffect(() => {
+		//依創建時間排序
+		setComments(
+			post.comments.sort((p1, p2) => {
+				if (
+					new Date(p1.commentCreatedAt) >
+					new Date(p2.commentCreatedAt)
+				)
+					return 1;
+				if (
+					new Date(p1.commentCreatedAt) <
+					new Date(p2.commentCreatedAt)
+				)
+					return -1;
+				return 0;
+			})
+		);
+	}, [post.comments]);
 
 	return (
 		<div className="post">
@@ -144,7 +197,7 @@ export default function Post({ originPost }) {
 									正在
 									<img
 										className="mx-1 "
-										src={post.emojiImg}
+										src={PF + post.emojiImg}
 										alt=""
 									/>
 								</span>
@@ -180,12 +233,21 @@ export default function Post({ originPost }) {
 					)}
 				</div>
 				<div className="postCenter">
-					<span className="postText">{post.desc}</span>
-					<img
-						src={post.img ? PF + `post/` + post.img : ''}
-						alt=""
-						className="postImg"
-					/>
+					{post.desc && (
+						<h6
+							className="postText m-0"
+							dangerouslySetInnerHTML={{
+								__html: post.desc.replace(/\n|\r\n/g, '<br>'),
+							}}
+						></h6>
+					)}
+					{post.img && (
+						<img
+							src={PF + `post/` + post.img}
+							alt=""
+							className={`postImg ${post.desc ? 'mt-3' : 'm-0'}`}
+						/>
+					)}
 				</div>
 				<div className="postBottom">
 					<div className="postBottomLeft">
@@ -227,9 +289,11 @@ export default function Post({ originPost }) {
 								className="commentShareInput"
 								placeholder={`留言......`}
 								onChange={(e) => {
-									setWriteComment(e.target.value);
+									setWriteComment(
+										commentShareInput.current.value
+									);
 
-									//自適應高度
+									//自適應高度;
 									// console.log(
 									// 	e.target.style.height,
 									// 	e.target.scrollHeight
@@ -246,7 +310,9 @@ export default function Post({ originPost }) {
 								type="button"
 								name="sendCommentBtn"
 								id="sendCommentBtn"
-								className="bg-transparent border-0 position-absolute end-0 me-4"
+								className={`bg-transparent border-0 position-absolute end-0 me-4 ${
+									writeComment !== '' ? '' : 'disabled'
+								}`}
 								onClick={(e) => sendComment(e, true)}
 							>
 								<NearMeTwoTone />
@@ -254,16 +320,17 @@ export default function Post({ originPost }) {
 						</div>
 					</div>
 					<div className="commentList">
-						{post.comments.map((comment) => {
-							return (
-								<CommentItem
-									key={comment._id}
-									comment={comment}
-									postId={post._id}
-									getNewPost={setPost}
-								/>
-							);
-						})}
+						{comments &&
+							comments.map((comment) => {
+								return (
+									<CommentItem
+										key={comment._id}
+										comment={comment}
+										postId={post._id}
+										getNewPost={setPost}
+									/>
+								);
+							})}
 					</div>
 				</div>
 			</div>
