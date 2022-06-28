@@ -148,6 +148,11 @@
   cursor: pointer;
 }
 
+.shareBottom .shareButton.disabled {
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: not-allowed;
+}
+
 .emojiModal li {
   list-style: none !important;
   border-radius: 8px;

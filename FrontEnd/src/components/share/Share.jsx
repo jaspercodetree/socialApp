@@ -101,15 +101,17 @@ export default function Share() {
 
 	//emoji
 	function getEmoji(e) {
+		// console.log(e.target.querySelector('img').src.split('/images')[1]);
+		// console.log(e.target.querySelector('span').textContent);
+
 		setNewPost({
 			...newPost,
-			emojiImg: e.target.querySelector('img').src,
+			//只存PF後的路徑
+			emojiImg: e.target.querySelector('img').src.split('/images')[1],
 			emojiText: e.target.querySelector('span').textContent,
 		});
 		setEmojiModalShow(false);
 		// console.log(newPost);
-		// console.log(e.target.querySelector('img').src);
-		// console.log(e.target.querySelector('span').textContent);
 		// if (e.target !== this) return false;
 	}
 
@@ -159,7 +161,7 @@ export default function Share() {
 											正在
 											<img
 												className="mx-1 "
-												src={newPost.emojiImg}
+												src={PF + newPost.emojiImg}
 												alt=""
 											/>
 										</span>
@@ -236,7 +238,6 @@ export default function Share() {
 								htmlColor="tomato"
 								className="shareIcon"
 							/>
-							{/* <span className="shareOptionText">照片</span> */}
 							<input
 								style={{ display: 'none' }}
 								type="file"
@@ -251,11 +252,9 @@ export default function Share() {
 							onClick={() => setTagModalShow(true)}
 						>
 							<Label htmlColor="green" className="shareIcon" />
-							{/* <span className="shareOptionText">標註</span> */}
 						</div>
 						<div className="shareOption" onClick={getLocation}>
 							<Room htmlColor="blue" className="shareIcon" />
-							{/* <span className="shareOptionText">位置</span> */}
 						</div>
 						<div
 							className="shareOption"
@@ -265,12 +264,24 @@ export default function Share() {
 								htmlColor="orange"
 								className="shareIcon"
 							/>
-							{/* <span className="shareOptionText" variant="primary">
-								心情
-							</span> */}
 						</div>
 					</div>
-					<button className="shareButton" type="submit">
+					{/* share中有文字或圖片才能發文 */}
+					<button
+						className={`shareButton ${
+							(desc.current && desc.current.value !== '') ||
+							file !== null
+								? ''
+								: 'disabled'
+						}`}
+						type="submit"
+						disabled={
+							(desc.current && desc.current.value !== '') ||
+							file !== null
+								? false
+								: true
+						}
+					>
 						分享
 					</button>
 				</div>
@@ -324,10 +335,9 @@ export default function Share() {
 											e.stopPropagation();
 											setNewPost({
 												...newPost,
-												emojiImg:
-													e.target.parentNode.querySelector(
-														'img'
-													).src,
+												emojiImg: e.target.parentNode
+													.querySelector('img')
+													.src.split('/images')[1],
 												emojiText:
 													e.target.parentNode.querySelector(
 														'span'
@@ -344,9 +354,13 @@ export default function Share() {
 												setNewPost({
 													...newPost,
 													emojiImg:
-														e.target.parentNode.querySelector(
-															'img'
-														).src,
+														e.target.parentNode
+															.querySelector(
+																'img'
+															)
+															.src.split(
+																'/images'
+															)[1],
 													emojiText:
 														e.target.parentNode.parentNode.querySelector(
 															'span'
@@ -362,10 +376,9 @@ export default function Share() {
 											e.stopPropagation();
 											setNewPost({
 												...newPost,
-												emojiImg:
-													e.target.parentNode.querySelector(
-														'img'
-													).src,
+												emojiImg: e.target.parentNode
+													.querySelector('img')
+													.src.split('/images')[1],
 												emojiText:
 													e.target.parentNode.querySelector(
 														'span'
@@ -380,9 +393,13 @@ export default function Share() {
 												setNewPost({
 													...newPost,
 													emojiImg:
-														e.target.parentNode.parentNode.querySelector(
-															'img'
-														).src,
+														e.target.parentNode.parentNode
+															.querySelector(
+																'img'
+															)
+															.src.split(
+																'/images'
+															)[1],
 													emojiText:
 														e.target.parentNode.parentNode.querySelector(
 															'span'

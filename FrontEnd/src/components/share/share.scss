@@ -120,6 +120,11 @@
 		font-weight: 700;
 		font-size: 14px;
 		cursor: pointer;
+
+		&.disabled {
+			background-color: rgba(0, 0, 0, 0.2);
+			cursor: not-allowed;
+		}
 	}
 }
 
