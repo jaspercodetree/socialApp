@@ -138,7 +138,7 @@ export default function RightBar({ user, isHomePage }) {
 						<Link
 							to={`/profile/${friend.username}`}
 							style={{ textDecoration: 'none' }}
-							key={friend._id}
+							key={friend._id || 'noFriends'}
 						>
 							<div className="rightBarFollowing">
 								<img

@@ -4,8 +4,10 @@
 
 .dropdown-menu {
 	inset: 0px 0px auto auto !important;
-	padding: 0;
-	min-width: 120px;
+	transform: none !important;
+	top: 40px !important;
+	padding: 4px;
+	min-width: 100px;
 
 	.dropdown-item:hover {
 		background-color: #dc3545;

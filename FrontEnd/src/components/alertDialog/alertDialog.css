@@ -5,8 +5,11 @@
 
 .dropdown-menu {
   inset: 0px 0px auto auto !important;
-  padding: 0;
-  min-width: 120px;
+  -webkit-transform: none !important;
+          transform: none !important;
+  top: 40px !important;
+  padding: 4px;
+  min-width: 100px;
 }
 
 .dropdown-menu .dropdown-item:hover {
