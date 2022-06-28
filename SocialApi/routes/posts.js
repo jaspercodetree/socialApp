@@ -149,4 +149,20 @@ router.put('/:id/deleteComment', async (req, res) => {
 	}
 });
 
+//edit comment
+router.put('/:id/editComment', async (req, res) => {
+	try {
+		const post = await Post.findById(req.params.id);
+		await post.updateOne({
+			$pull: { comments: { _id: req.body.comment._id } },
+		});
+		await post.updateOne({
+			$push: { comments: req.body.comment },
+		});
+		res.status(200).json('editComment success');
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
 module.exports = router;
