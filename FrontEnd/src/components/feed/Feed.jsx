@@ -39,9 +39,11 @@ export default function Feed({ username, isHomePage }) {
 			}
 		>
 			<div className="feedWrapper">
-				{(isHomePage || username === user.username) && <Share />}
+				{(isHomePage || username === user.username) && (
+					<Share setPosts={setPosts} />
+				)}
 				{posts.map((p) => (
-					<Post key={p._id} originPost={p} />
+					<Post key={p._id} originPost={p} setPosts={setPosts} />
 				))}
 			</div>
 		</div>

@@ -71,16 +71,25 @@
 	width: 100%;
 	margin: 16px 0;
 
-	.shareImg {
-		width: 100%;
-	}
+	.shareImgWrap {
+		.shareImg {
+			max-height: 400px;
+			max-width: 100%;
+		}
 
-	.shareCancelImg {
-		position: absolute;
-		top: -10px;
-		right: 0;
-		cursor: pointer;
-		color: rgb(250, 115, 250);
+		.shareCancelImg {
+			position: absolute;
+			top: -12px;
+			right: -12px;
+			cursor: pointer;
+			color: #dc3545;
+			background-color: #fff;
+			border-radius: 50%;
+
+			&:hover {
+				color: #fc6272;
+			}
+		}
 	}
 }
 

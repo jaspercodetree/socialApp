@@ -85,16 +85,23 @@
   margin: 16px 0;
 }
 
-.shareImgContainer .shareImg {
-  width: 100%;
+.shareImgContainer .shareImgWrap .shareImg {
+  max-height: 400px;
+  max-width: 100%;
 }
 
-.shareImgContainer .shareCancelImg {
+.shareImgContainer .shareImgWrap .shareCancelImg {
   position: absolute;
-  top: -10px;
-  right: 0;
+  top: -12px;
+  right: -12px;
   cursor: pointer;
-  color: #fa73fa;
+  color: #dc3545;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.shareImgContainer .shareImgWrap .shareCancelImg:hover {
+  color: #fc6272;
 }
 
 .shareBottom {

@@ -1,11 +1,8 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
-// import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { MoreVert } from '@material-ui/icons';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import jwt_decode from 'jwt-decode';
@@ -13,7 +10,7 @@ import './alertDialog.css';
 
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 
-export default function AlertDialog({ post, editPost }) {
+export default function AlertDialog({ post, editPost, setPosts }) {
 	const { user: currentUser, dispatch } = useContext(AuthContext);
 
 	const [open, setOpen] = useState(false);
@@ -81,7 +78,24 @@ export default function AlertDialog({ post, editPost }) {
 				headers: { authorization: 'Bearer ' + currentUser.accessToken },
 				data: { userId: currentUser._id },
 			});
-			window.location.reload();
+
+			const getPosts = async () => {
+				const res = await axios.get(
+					'/posts/timeline/' + currentUser._id
+				);
+
+				//依貼文時間排序
+				setPosts(
+					res.data.sort((p1, p2) => {
+						if (new Date(p1.createdAt) > new Date(p2.createdAt))
+							return -1;
+						if (new Date(p1.createdAt) < new Date(p2.createdAt))
+							return 1;
+						return 0;
+					})
+				);
+			};
+			getPosts();
 		} catch (err) {
 			console.log(err);
 		}
@@ -112,14 +126,17 @@ export default function AlertDialog({ post, editPost }) {
 			</DropdownButton>
 
 			<Dialog open={open} onClose={handleClose}>
-				<DialogTitle id="alert-dialog-title">
-					{'確定刪除此貼文 ?'}
+				<DialogTitle
+					id="alert-dialog-title"
+					className="pb-0 text-danger"
+				>
+					{'刪除此篇貼文 ?'}
 				</DialogTitle>
-				<DialogActions>
-					<Button onClick={handleClose} color="primary">
+				<DialogActions className="justify-content-center">
+					<Button onClick={handleClose} color="black">
 						取消
 					</Button>
-					<Button onClick={handleDelete} color="primary" autoFocus>
+					<Button onClick={handleDelete} color="black" autoFocus>
 						確定
 					</Button>
 				</DialogActions>

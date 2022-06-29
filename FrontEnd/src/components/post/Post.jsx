@@ -9,7 +9,7 @@ import AlertDialog from '../alertDialog/AlertDialog';
 import CommentItem from '../commentItem/CommentItem';
 import { NearMeTwoTone } from '@material-ui/icons';
 
-export default function Post({ originPost }) {
+export default function Post({ originPost, setPosts }) {
 	const [post, setPost] = useState(originPost);
 
 	//A.此處user與useEffect的getUser 是指去獲得  好友圈內每一則post貼文的發文者user
@@ -297,7 +297,11 @@ export default function Post({ originPost }) {
 					</div>
 					{post.userId === currentUser._id && (
 						<div className="postTopRight">
-							<AlertDialog post={post} editPost={editPost} />
+							<AlertDialog
+								post={post}
+								editPost={editPost}
+								setPosts={setPosts}
+							/>
 						</div>
 					)}
 				</div>

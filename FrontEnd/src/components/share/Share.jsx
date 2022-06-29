@@ -15,7 +15,7 @@ import { Modal } from 'react-bootstrap';
 import SearchTagUser from '../searchTagUser/SearchTagUser';
 import { Link } from 'react-router-dom';
 
-export default function Share() {
+export default function Share({ setPosts }) {
 	const { user, PF } = useContext(AuthContext);
 	const desc = useRef();
 	const [file, setFile] = useState(null);
@@ -23,6 +23,8 @@ export default function Share() {
 	const [emojiModalShow, setEmojiModalShow] = useState(false);
 
 	let [newPost, setNewPost] = useState({ userId: user._id });
+
+	console.log(newPost);
 
 	const [tagModalShow, setTagModalShow] = useState(false);
 	const [searchName, setSearchName] = useState([]);
@@ -93,7 +95,28 @@ export default function Share() {
 
 		try {
 			await axios.post('/posts', newPost);
-			window.location.reload();
+
+			//刪除share暫存
+			setNewPost({ userId: user._id });
+			desc.current.value = '';
+			setFile(null);
+
+			//重新獲取貼文
+			const getPosts = async () => {
+				const res = await axios.get('/posts/timeline/' + user._id);
+
+				//依貼文時間排序
+				setPosts(
+					res.data.sort((p1, p2) => {
+						if (new Date(p1.createdAt) > new Date(p2.createdAt))
+							return -1;
+						if (new Date(p1.createdAt) < new Date(p2.createdAt))
+							return 1;
+						return 0;
+					})
+				);
+			};
+			getPosts();
 		} catch (error) {
 			console.log(error);
 		}
@@ -219,16 +242,18 @@ export default function Share() {
 				{/* 上傳圖片預覽 */}
 				{file && (
 					<div className="shareImgContainer">
-						<img
-							className="shareImg"
-							src={URL.createObjectURL(file)}
-							alt=""
-						/>
-						<Cancel
-							className="shareCancelImg"
-							style={{ fontSize: '28px' }}
-							onClick={() => setFile(null)}
-						/>
+						<div className="shareImgWrap position-relative">
+							<img
+								className="shareImg"
+								src={URL.createObjectURL(file)}
+								alt=""
+							/>
+							<Cancel
+								className="shareCancelImg"
+								style={{ fontSize: '28px' }}
+								onClick={() => setFile(null)}
+							/>
+						</div>
 					</div>
 				)}
 				<div className="shareBottom">
@@ -303,7 +328,7 @@ export default function Share() {
 						你現在感受如何？
 					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body className="container">
+				<Modal.Body className="container-fluid">
 					<ul className="row p-0 m-0">
 						{[
 							{ img: '10065', text: '開心' },
@@ -433,7 +458,7 @@ export default function Share() {
 						標註用戶
 					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body className="container">
+				<Modal.Body className="container-fluid">
 					<div className="searchBar">
 						<Search className="searchIcon" />
 						<input
