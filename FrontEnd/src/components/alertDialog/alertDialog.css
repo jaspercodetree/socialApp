@@ -12,7 +12,13 @@
   min-width: 100px;
 }
 
-.dropdown-menu .dropdown-item:hover {
+.dropdown-menu .dropdownItemEdit:hover {
+  background-color: teal;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.dropdown-menu .dropdownItemDelete:hover {
   background-color: #dc3545;
   color: #fff;
   border-radius: 4px;

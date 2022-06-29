@@ -1,5 +1,4 @@
 import './post.css';
-// import { Users } from '../../dummyData';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useContext, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
@@ -154,7 +153,7 @@ export default function Post({ originPost }) {
 
 	const [comments, setComments] = useState();
 
-	//comment
+	//comment sort
 	useEffect(() => {
 		//依創建時間排序
 		setComments(
@@ -173,6 +172,73 @@ export default function Post({ originPost }) {
 			})
 		);
 	}, [post.comments]);
+
+	//edit post
+	const postEditWrap = useRef();
+	const postShareInput = useRef();
+
+	const [writePost, setWritePost] = useState('');
+	const [isPostEditable, setIsPostEditable] = useState(false);
+
+	const editPost = async (e) => {
+		// console.log(commentEditWrap.current);
+		// commentListItemText.current.classList.add('d-none');
+		// commentListItemTime.current.classList.add('d-none');
+		postEditWrap.current.classList.remove('d-none');
+
+		setIsPostEditable(true);
+
+		const scrollHeight = postShareInput.current.scrollHeight;
+		postShareInput.current.style.height = `${scrollHeight}px`;
+	};
+
+	const cancelEditPost = () => {
+		postShareInput.current.value = post.desc;
+		setIsPostEditable(false);
+	};
+
+	//send post
+	const sendPost = (e, isClick) => {
+		console.log(post);
+		console.log(user);
+
+		const _id = post._id;
+
+		const sendPostAjax = async () => {
+			try {
+				await axios
+					.put(`/posts/${_id}`, {
+						userId: user._id,
+						_id: _id,
+						desc: writePost,
+						isPostEditEver: true,
+					})
+					.then(async () => {
+						const res = await axios.get(`/posts/${_id}`);
+						setPost(res.data);
+					});
+			} catch (err) {
+				console.log(err);
+			}
+		};
+
+		if (e.key === 'Enter') {
+			//禁止enter換行
+			e.preventDefault();
+
+			//換行
+			postShareInput.current.value += '\n';
+
+			//自適應高度;
+			e.target.style.height = 'auto';
+			e.target.style.height = `${e.target.scrollHeight}px`;
+		} else if (isClick) {
+			writePost && sendPostAjax();
+
+			//關閉編輯視窗
+			setIsPostEditable(false);
+		}
+	};
 
 	return (
 		<div className="post">
@@ -222,20 +288,29 @@ export default function Post({ originPost }) {
 								</span>
 							</span>
 						)}
-						<span className="postDate ms-2">
+						<span className="postDate ms-0">
 							{format(post.createdAt)}
 						</span>
+						{post.isPostEditEver && (
+							<span className="postEditTime ms-2">已編輯</span>
+						)}
 					</div>
 					{post.userId === currentUser._id && (
 						<div className="postTopRight">
-							<AlertDialog post={post} />
+							<AlertDialog post={post} editPost={editPost} />
 						</div>
 					)}
 				</div>
-				<div className="postCenter">
+				<div
+					className={`postCenter d-flex flex-column ${
+						isPostEditable ? 'postCenterEditable' : ''
+					}`}
+				>
 					{post.desc && (
 						<h6
-							className="postText m-0"
+							className={`postText m-0 ${
+								isPostEditable ? 'd-none' : ''
+							}`}
 							dangerouslySetInnerHTML={{
 								__html: post.desc.replace(/\n|\r\n/g, '<br>'),
 							}}
@@ -245,9 +320,56 @@ export default function Post({ originPost }) {
 						<img
 							src={PF + `post/` + post.img}
 							alt=""
-							className={`postImg ${post.desc ? 'mt-3' : 'm-0'}`}
+							className={`postImg ${post.desc ? 'mt-3' : 'm-0'} ${
+								isPostEditable ? 'd-none' : ''
+							}`}
 						/>
 					)}
+
+					<div
+						className={`postShareWrap postEditWrap px-3 py-2 position-relative ${
+							isPostEditable ? '' : 'd-none'
+						}`}
+						ref={postEditWrap}
+					>
+						<textarea
+							rows="1"
+							className="postShareInput"
+							onChange={(e) => {
+								setWritePost(postShareInput.current.value);
+
+								//自適應高度
+								e.target.style.height = 'auto';
+								e.target.style.height = `${e.target.scrollHeight}px`;
+							}}
+							onKeyDown={(e) => {
+								sendPost(e);
+							}}
+							ref={postShareInput}
+							defaultValue={post.desc}
+						></textarea>
+						<button
+							type="button"
+							name="sendPostBtn"
+							id="sendPostBtn"
+							className={`bg-transparent border-0 position-absolute end-0 me-4 ${
+								postShareInput !== '' ? '' : 'disabled'
+							}`}
+							onClick={(e) => sendPost(e, true)}
+						>
+							<NearMeTwoTone />
+						</button>
+					</div>
+					<div className="postEditCancelWrap mt-3">
+						<span
+							className={`postEditCancel text-primary text-decoration-underline  ${
+								isPostEditable ? '' : 'd-none'
+							}`}
+							onClick={cancelEditPost}
+						>
+							取消
+						</span>
+					</div>
 				</div>
 				<div className="postBottom">
 					<div className="postBottomLeft">

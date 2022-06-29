@@ -71,7 +71,8 @@
           text-decoration-color: #000;
 }
 
-.postTop .postTopLeft .postDate {
+.postTop .postTopLeft .postDate,
+.postTop .postTopLeft .postEditTime {
   font-size: 8px;
   font-weight: 500;
 }
@@ -82,6 +83,12 @@
 
 .postCenter {
   margin: 16px 0;
+  border-radius: 12px;
+}
+
+.postCenter.postCenterEditable {
+  background-color: #eee;
+  padding: 20px 0;
 }
 
 .postCenter .postText {
@@ -94,6 +101,65 @@
   max-height: 500px;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+.postCenter .postShareWrap {
+  -ms-flex-item-align: center;
+      align-self: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 90%;
+  background-color: #fff;
+  border-radius: 30px;
+}
+
+.postCenter .postShareWrap .postShareInput {
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  width: 93%;
+  resize: none;
+}
+
+.postCenter .postShareWrap .postShareInput:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 1400px) {
+  .postCenter .postShareWrap .postShareInput {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .postCenter .postShareWrap .postShareInput {
+    width: 80%;
+  }
+}
+
+.postCenter .postShareWrap #sendPostBtn.disabled {
+  cursor: not-allowed;
+}
+
+.postCenter .postEditCancelWrap {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  text-align: center;
+}
+
+.postCenter .postEditCancelWrap .postEditCancel {
+  cursor: pointer;
+}
+
+.postCenter .postEditCancelWrap .postEditCancel:hover {
+  color: #00137c !important;
 }
 
 .postBottom {

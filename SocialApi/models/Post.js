@@ -33,6 +33,10 @@ const PostSchema = new mongoose.Schema(
 		tagUserId: {
 			type: String,
 		},
+		isPostEditEver: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{ timestamps: true }
 );

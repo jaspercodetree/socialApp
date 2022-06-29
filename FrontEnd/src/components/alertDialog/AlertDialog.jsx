@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,7 +13,7 @@ import './alertDialog.css';
 
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 
-export default function AlertDialog({ post }) {
+export default function AlertDialog({ post, editPost }) {
 	const { user: currentUser, dispatch } = useContext(AuthContext);
 
 	const [open, setOpen] = useState(false);
@@ -96,7 +96,14 @@ export default function AlertDialog({ post }) {
 				className="border-0"
 			>
 				<Dropdown.Item
-					className="dropdownItem text-center"
+					className="dropdownItem dropdownItemEdit text-center"
+					eventKey="2"
+					onClick={(e) => editPost(e)}
+				>
+					編輯貼文
+				</Dropdown.Item>
+				<Dropdown.Item
+					className="dropdownItem dropdownItemDelete text-center"
 					eventKey="1"
 					onClick={handleClickOpen}
 				>
