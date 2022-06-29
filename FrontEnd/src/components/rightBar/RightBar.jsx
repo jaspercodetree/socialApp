@@ -2,7 +2,7 @@ import './rightBar.css';
 import Advertisement from '../advertisement/Advertisement';
 import { Add, Remove } from '@material-ui/icons';
 import Online from '../online/Online';
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';

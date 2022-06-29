@@ -1,16 +1,5 @@
 import './sidebar.css';
 import RecommendUser from '../recommendUser/RecommendUser';
-import {
-	RssFeed,
-	Chat,
-	PlayCircleFilledOutlined,
-	Group,
-	Bookmark,
-	HelpOutline,
-	WorkOutline,
-	Event,
-	School,
-} from '@material-ui/icons';
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';

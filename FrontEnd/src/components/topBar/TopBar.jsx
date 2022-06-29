@@ -1,11 +1,5 @@
 import './topBar.css';
-import {
-	Search,
-	Person,
-	Chat,
-	Notifications,
-	ExitToAppSharp,
-} from '@material-ui/icons';
+import { Search, ExitToAppSharp } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../context/AuthContext';
