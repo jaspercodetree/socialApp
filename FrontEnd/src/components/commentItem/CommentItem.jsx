@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { format } from 'timeago.js';
 import { MoreHoriz, NearMeTwoTone } from '@material-ui/icons';
+import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 
 const CommentItem = ({ comment, postId, getNewPost }) => {
 	const { user, PF } = useContext(AuthContext);
@@ -137,6 +138,17 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 		}
 	};
 
+	//刪除確認
+	const [open, setOpen] = useState(false);
+
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
 	return (
 		<div className="commentListItem">
 			<div className="commentListLeft">
@@ -219,7 +231,7 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 					</button>
 				</div>
 				<span
-					className={`commentEditCancel text-primary text-decoration-underline ps-3 pt-1 ${
+					className={`commentEditCancel w-100 text-center text-primary text-decoration-underline pt-2 ${
 						isEditable ? '' : 'd-none'
 					}`}
 					onClick={cancelEditComment}
@@ -264,11 +276,27 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 						name="commentDeleteBtn"
 						id="commentDeleteBtn"
 						className="btn"
-						onClick={() => deleteComment()}
+						onClick={handleClickOpen}
 					>
 						刪除留言
 					</button>
 				</div>
+				<Dialog open={open} onClose={handleClose}>
+					<DialogTitle
+						id="alert-dialog-title"
+						className="pb-0 text-danger"
+					>
+						{'刪除此則留言 ?'}
+					</DialogTitle>
+					<DialogActions className="justify-content-center">
+						<Button onClick={handleClose} color="black">
+							取消
+						</Button>
+						<Button onClick={deleteComment} color="black" autoFocus>
+							確定
+						</Button>
+					</DialogActions>
+				</Dialog>
 			</div>
 		</div>
 	);
