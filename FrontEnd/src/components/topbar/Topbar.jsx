@@ -1,10 +1,15 @@
 import './topBar.css';
 import { Search, ExitToAppSharp } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import SearchUser from '../searchUser/SearchUser';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 export default function TopBar() {
 	const { user, PF } = useContext(AuthContext);
@@ -33,6 +38,41 @@ export default function TopBar() {
 	const toggleModal = () => {
 		setModalActive(true);
 	};
+
+	//Modal close outside
+	// Create a ref that we add to the element for which we want to detect outside clicks
+	const ref = useRef();
+	// State for our modal
+	const [isModalOpen, setModalOpen] = useState(false);
+	// Call hook passing in the ref and a function to call on outside click
+	useOnClickOutside(ref, () => setModalOpen(false));
+
+	function useOnClickOutside(ref, handler) {
+		useEffect(
+			() => {
+				const listener = (event) => {
+					// Do nothing if clicking ref's element or descendent elements
+					if (!ref.current || ref.current.contains(event.target)) {
+						return;
+					}
+					handler(event);
+				};
+				document.addEventListener('mousedown', listener);
+				document.addEventListener('touchstart', listener);
+				return () => {
+					document.removeEventListener('mousedown', listener);
+					document.removeEventListener('touchstart', listener);
+				};
+			},
+			// Add ref and handler to effect dependencies
+			// It's worth noting that because passed in handler is a new ...
+			// ... function on every render that will cause this effect ...
+			// ... callback/cleanup to run every render. It's not a big deal ...
+			// ... but to optimize you can wrap handler in useCallback before ...
+			// ... passing it into this hook.
+			[ref, handler]
+		);
+	}
 
 	return (
 		<div className="topBarContainer container-fluid">
@@ -91,17 +131,16 @@ export default function TopBar() {
 					</div>
 				</div>
 				<div className="topBarRight col-3 col-lg-4">
-					<Link to={`/profile/${user.username}`}>
-						<img
-							src={
-								user.profilePicture
-									? PF + `/person/${user.profilePicture}`
-									: PF + '/person/noAvatar.png'
-							}
-							alt="userAvatar"
-							className="topBarImg me-3"
-						/>
-					</Link>
+					<img
+						src={
+							user.profilePicture
+								? PF + `/person/${user.profilePicture}`
+								: PF + '/person/noAvatar.png'
+						}
+						alt="userAvatar"
+						className="topBarImg me-3"
+						onClick={() => setModalOpen(true)}
+					/>
 					<div className="topBarIcons">
 						{/* <div className="topBarIconItem">
 							<Person />
@@ -115,8 +154,42 @@ export default function TopBar() {
 							<Notifications />
 							<span className="topBarIconBadge">3</span>
 						</div> */}
-						<div className="topBarIconItem" onClick={logout}>
-							<ExitToAppSharp />
+
+						<div
+							ref={ref}
+							className={`personalModal position-absolute d-flex flex-column align-items-center p-2 ${
+								isModalOpen ? '' : 'd-none'
+							}`}
+							onClick={(e) => {
+								setModalOpen(false);
+							}}
+						>
+							<Link
+								id="personalTimeList"
+								className="w-100 text-center mb-1 d-flex align-items-center justify-content-center"
+								to={`/profile/${user.username}`}
+							>
+								<span className="topBarUsername text-black">
+									{user.username}
+								</span>
+							</Link>
+							<hr className="text-black w-100 my-1" />
+							<Link
+								name="personalInfoBtn"
+								id="personalInfoBtn"
+								className="btn text-black my-1"
+								to={`/profile/${user.username}/personalInfo`}
+							>
+								編輯個人資料
+							</Link>
+							<button
+								name="logoutBtn"
+								id="logoutBtn"
+								className="btn"
+								onClick={logout}
+							>
+								登出
+							</button>
 						</div>
 					</div>
 				</div>

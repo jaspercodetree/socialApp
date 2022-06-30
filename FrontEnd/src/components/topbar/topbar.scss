@@ -103,6 +103,45 @@
 			font-size: 8px;
 			font-weight: bold;
 		}
+
+		.personalModal {
+			min-width: 120px;
+			top: 42px;
+			right: 16px;
+			background-color: #fff;
+			border: 1px solid rgba(0, 0, 0, 0.15);
+			border-radius: 0.5rem;
+			z-index: 50;
+
+			a {
+				width: 100%;
+				height: 34px;
+
+				&#personalTimeList:hover {
+					background-color: purple;
+					span {
+						color: #fff !important;
+					}
+					border-radius: 4px;
+				}
+
+				&#personalInfoBtn:hover {
+					background-color: teal;
+					color: #fff !important;
+					border-radius: 4px;
+				}
+			}
+
+			button {
+				width: 100%;
+				height: 34px;
+				&#logoutBtn:hover {
+					background-color: #dc3545;
+					color: #fff;
+					border-radius: 4px;
+				}
+			}
+		}
 	}
 
 	.topBarImg {

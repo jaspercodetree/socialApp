@@ -24,8 +24,6 @@ export default function Share({ setPosts }) {
 
 	let [newPost, setNewPost] = useState({ userId: user._id });
 
-	console.log(newPost);
-
 	const [tagModalShow, setTagModalShow] = useState(false);
 	const [searchName, setSearchName] = useState([]);
 	const [searchTagUsers, setSearchTagUsers] = useState([]);
