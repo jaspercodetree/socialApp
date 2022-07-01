@@ -4,8 +4,14 @@ import Share from '../share/Share';
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
+import PersonalInfo from '../personalInfo/PersonalInfo';
 
-export default function Feed({ username, isHomePage }) {
+export default function Feed({
+	username,
+	isHomePage,
+	isPersonalInfo,
+	getUser,
+}) {
 	const [posts, setPosts] = useState([]);
 	const { user } = useContext(AuthContext);
 
@@ -39,12 +45,22 @@ export default function Feed({ username, isHomePage }) {
 			}
 		>
 			<div className="feedWrapper">
-				{(isHomePage || username === user.username) && (
-					<Share setPosts={setPosts} />
+				{isPersonalInfo ? (
+					<PersonalInfo getUser={getUser} />
+				) : (
+					<>
+						{(isHomePage || username === user.username) && (
+							<Share setPosts={setPosts} />
+						)}
+						{posts.map((p) => (
+							<Post
+								key={p._id}
+								originPost={p}
+								setPosts={setPosts}
+							/>
+						))}
+					</>
 				)}
-				{posts.map((p) => (
-					<Post key={p._id} originPost={p} setPosts={setPosts} />
-				))}
 			</div>
 		</div>
 	);

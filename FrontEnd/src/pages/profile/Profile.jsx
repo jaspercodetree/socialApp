@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
 import RightBar from '../../components/rightBar/RightBar';
@@ -7,31 +7,33 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import TopBar from '../../components/topBar/TopBar';
 import './profile.css';
 
-export default function Profile() {
+export default function Profile({ isPersonalInfo }) {
 	const PF = 'http://localhost:8800/images/';
 	//練習用useParams  (可以透過.username拿取 是因為在App.js已有命名)
 	const username = useParams().username;
 
 	const [user, setUser] = useState({});
+
+	const getUser = useCallback(async () => {
+		await axios
+			.get(`/users?username=${username}`)
+			.then((res) => {
+				// console.log(res.data);
+				if (res.data.coverPicture) {
+					res.data.coverPictureSrc =
+						PF + `person/${res.data.coverPicture}`;
+					setUser(res.data);
+				} else {
+					res.data.coverPictureSrc = PF + `person/noCover.png`;
+					setUser(res.data);
+				}
+			})
+			.catch((err) => console.log(err));
+	}, [username]);
+
 	useEffect(() => {
-		const getUser = async () => {
-			await axios
-				.get(`/users?username=${username}`)
-				.then((res) => {
-					// console.log(res.data);
-					if (res.data.coverPicture) {
-						res.data.coverPictureSrc =
-							PF + `post/${res.data.coverPicture}`;
-						setUser(res.data);
-					} else {
-						res.data.coverPictureSrc = PF + `person/noCover.png`;
-						setUser(res.data);
-					}
-				})
-				.catch((err) => console.log(err));
-		};
 		getUser();
-	}, [username, PF]);
+	}, [username, PF, getUser]);
 
 	// console.log(user);
 
@@ -64,7 +66,11 @@ export default function Profile() {
 						</div>
 					</div>
 					<div className="profileRightBottom">
-						<Feed username={username} />
+						<Feed
+							username={username}
+							isPersonalInfo={isPersonalInfo}
+							getUser={getUser}
+						/>
 						<RightBar user={user} />
 					</div>
 				</div>

@@ -27,8 +27,11 @@ function App() {
 				<Route path="/register">
 					<Register />
 				</Route>
-				<Route path="/profile/:username">
+				<Route exact path="/profile/:username">
 					<Profile />
+				</Route>
+				<Route path="/profile/:username/personalInfo">
+					<Profile isPersonalInfo={true} />
 				</Route>
 				<Route path="/upload">
 					<Upload />

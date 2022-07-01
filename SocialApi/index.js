@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan('common'));
 
-//multer上傳圖片檔案
+//multer上傳圖片檔案 - posts
 //設定儲存位置
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -42,6 +42,26 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 //撰寫上傳檔案的router
 app.post('/api/upload', upload.single('file'), (req, res) => {
+	try {
+		return res.status(200).json('檔案上傳成功');
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+//multer上傳圖片檔案 - person profile
+//設定儲存位置
+const storagePerson = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, 'public/images/person');
+	},
+	filename: (req, file, cb) => {
+		cb(null, req.body.name);
+	},
+});
+const uploadPerson = multer({ storage: storagePerson });
+//撰寫上傳檔案的router
+app.post('/api/upload/person', uploadPerson.single('file'), (req, res) => {
 	try {
 		return res.status(200).json('檔案上傳成功');
 	} catch (err) {
