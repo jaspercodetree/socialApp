@@ -47,7 +47,7 @@ export default function PersonalInfo({ getUser }) {
 			coverPicture: user.coverPicture,
 		};
 
-		//1.透過/upload/person將profile圖片上傳到資料夾，並將路徑名稱存到updateData；2.再將updateData 透過/posts上傳到資料庫
+		//A-1.透過/upload/person將profile圖片上傳到資料夾，並將路徑名稱存到updateData；2.再將updateData 透過/posts上傳到資料庫
 		if (fileProfileImg) {
 			const data = new FormData();
 			const filename = Date.now() + fileProfileImg.name;
@@ -58,7 +58,12 @@ export default function PersonalInfo({ getUser }) {
 			console.log(updateData);
 
 			try {
+				//新增圖片到資料夾
 				await axios.post('/upload/person', data);
+				//刪除資料夾原先的圖片
+				await axios.post(`/img/delete`, {
+					filename: `person/${user.profilePicture}`,
+				});
 			} catch (error) {
 				console.log(error);
 			}
@@ -66,7 +71,7 @@ export default function PersonalInfo({ getUser }) {
 			updateData.profilePicture = user.profilePicture;
 		}
 
-		//cover圖片
+		//B-cover圖片
 		if (fileCoverImg) {
 			const data = new FormData();
 			const filename = Date.now() + fileCoverImg.name;
@@ -77,7 +82,12 @@ export default function PersonalInfo({ getUser }) {
 			console.log(updateData);
 
 			try {
+				//新增圖片到資料夾
 				await axios.post('/upload/person', data);
+				//刪除資料夾原先的圖片
+				await axios.post(`/img/delete`, {
+					filename: `person/${user.coverPicture}`,
+				});
 			} catch (error) {
 				console.log(error);
 			}
@@ -86,6 +96,7 @@ export default function PersonalInfo({ getUser }) {
 		}
 
 		try {
+			//更新資料庫
 			await axios.put(`/users/${user._id}`, updateData);
 
 			//更新useContext
@@ -99,10 +110,14 @@ export default function PersonalInfo({ getUser }) {
 
 			await dispatch({ type: 'LOGIN_SUCCESS', payload: userData });
 
+			//從父層重新獲得新的profile user頁面資料
 			getUser();
+
 			//清空暫存圖片
 			setFileProfileImg(null);
 			setFileCoverImg(null);
+
+			//恢復檢視狀態
 			setIsEditable(false);
 		} catch (error) {
 			console.log(error);

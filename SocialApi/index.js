@@ -69,6 +69,29 @@ app.post('/api/upload/person', uploadPerson.single('file'), (req, res) => {
 	}
 });
 
+// 刪除圖片
+const fs = require('fs').promises;
+
+async function deleteFile(filePath) {
+	try {
+		await fs.unlink(filePath);
+		console.log(`Deleted ${filePath}`);
+	} catch (error) {
+		console.error(
+			`Got an error trying to delete the file: ${error.message}`
+		);
+	}
+}
+
+app.post('/api/img/delete', (req, res) => {
+	try {
+		deleteFile(`./public/images/${req.body.filename}`);
+		return res.status(200).json('檔案成功');
+	} catch (err) {
+		console.log(err);
+	}
+});
+
 //path(目的:將靜態檔案改到api資料夾)
 //透過path讓輸入網址/images時，不執行get request等api行為，而是直接拜訪靜態資料夾public/images
 //此時可以將圖片放進api內的public/images 並改變前端的env內的檔案連結  使得靜態檔案可以存放在伺服器端  並且能被網頁讀取
