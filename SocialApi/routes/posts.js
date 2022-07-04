@@ -64,6 +64,24 @@ router.delete('/:id/', verify, async (req, res) => {
 		const post = await Post.findById(req.params.id);
 		if (req.body.userId === post.userId) {
 			post.deleteOne();
+
+			//如果貼文有圖，刪除資料夾內圖片
+			if (post.img) {
+				const fs = require('fs').promises;
+
+				async function deleteFile(filePath) {
+					try {
+						await fs.unlink(filePath);
+						console.log(`Deleted ${filePath}`);
+					} catch (error) {
+						console.error(
+							`Got an error trying to delete the file: ${error.message}`
+						);
+					}
+				}
+				deleteFile(`./public/images/post/${post.img}`);
+			}
+
 			res.status(200).json('此篇貼文已被刪除');
 		} else {
 			res.status(400).json('你只能刪除自己的貼文');
