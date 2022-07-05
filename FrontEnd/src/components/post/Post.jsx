@@ -7,7 +7,7 @@ import axios from 'axios';
 import { format } from 'timeago.js';
 import AlertDialog from '../alertDialog/AlertDialog';
 import CommentItem from '../commentItem/CommentItem';
-import { NearMeTwoTone } from '@material-ui/icons';
+import { Cancel, NearMeTwoTone, PermMedia } from '@material-ui/icons';
 
 export default function Post({ originPost, setPosts }) {
 	const [post, setPost] = useState(originPost);
@@ -173,55 +173,104 @@ export default function Post({ originPost, setPosts }) {
 		);
 	}, [post.comments]);
 
-	//edit post
+	//2.Edit post
 	const postEditWrap = useRef();
 	const postShareInput = useRef();
-
-	const [writePost, setWritePost] = useState('');
 	const [isPostEditable, setIsPostEditable] = useState(false);
 
+	//原有圖片("檔案名")
+	const [originPostImg, setOriginPostImg] = useState(post.img);
+	//新上傳圖片("blob")
+	const [filePostImg, setFilePostImg] = useState(null);
+
+	//顯示編輯區
 	const editPost = async (e) => {
-		// console.log(commentEditWrap.current);
-		// commentListItemText.current.classList.add('d-none');
-		// commentListItemTime.current.classList.add('d-none');
 		postEditWrap.current.classList.remove('d-none');
 
 		setIsPostEditable(true);
 
+		//自適應textarea
 		const scrollHeight = postShareInput.current.scrollHeight;
 		postShareInput.current.style.height = `${scrollHeight}px`;
 	};
 
+	//取消編輯
 	const cancelEditPost = () => {
+		//原文字與圖片
 		postShareInput.current.value = post.desc;
+		setOriginPostImg(post.img);
+
+		//關閉編輯區
 		setIsPostEditable(false);
+		//清空blob圖片
+		setFilePostImg(null);
 	};
 
-	//send post
+	//完成送出 send Edit Post
 	const sendPost = (e, isClick) => {
-		console.log(post);
-		console.log(user);
-
 		const _id = post._id;
 
 		const sendPostAjax = async () => {
-			try {
-				await axios
-					.put(`/posts/${_id}`, {
-						userId: user._id,
-						_id: _id,
-						desc: writePost,
-						isPostEditEver: true,
-					})
-					.then(async () => {
-						const res = await axios.get(`/posts/${_id}`);
-						setPost(res.data);
+			e.preventDefault();
+
+			//更新資料
+			const updateData = {
+				userId: user._id,
+				_id: _id,
+				desc: postShareInput.current.value,
+				isPostEditEver: true,
+				img: originPostImg,
+			};
+
+			if (filePostImg) {
+				//新上傳post圖片
+				const data = new FormData();
+				const filename = Date.now() + filePostImg.name;
+				data.append('name', filename);
+				data.append('file', filePostImg);
+
+				updateData.img = filename;
+
+				try {
+					//新增圖片到資料夾
+					await axios.post('/upload', data);
+					//刪除資料夾原先的圖片
+					await axios.post(`/img/delete`, {
+						filename: `post/${post.img}`,
 					});
+
+					//更新originPostImg 為新上傳檔案名
+					setOriginPostImg(filename);
+				} catch (error) {
+					console.log(error);
+				}
+			} else if (post.img && updateData.img === '') {
+				//刪除資料夾原先的圖片
+				await axios.post(`/img/delete`, {
+					filename: `post/${post.img}`,
+				});
+				console.log(updateData);
+			}
+
+			//更新資料庫
+			try {
+				await axios.put(`/posts/${_id}`, updateData).then(async () => {
+					//重新獲取posts
+					const res = await axios.get(`/posts/${_id}`);
+					setPost(res.data);
+
+					//清空blob圖片
+					setFilePostImg(null);
+
+					//關閉編輯區
+					setIsPostEditable(false);
+				});
 			} catch (err) {
 				console.log(err);
 			}
 		};
 
+		//入口程式
 		if (e.key === 'Enter') {
 			//禁止enter換行
 			e.preventDefault();
@@ -229,14 +278,13 @@ export default function Post({ originPost, setPosts }) {
 			//換行
 			postShareInput.current.value += '\n';
 
-			//自適應高度;
+			//textarea自適應高度;
 			e.target.style.height = 'auto';
 			e.target.style.height = `${e.target.scrollHeight}px`;
 		} else if (isClick) {
-			writePost && sendPostAjax();
-
-			//關閉編輯視窗
-			setIsPostEditable(false);
+			//1.有文字 或 2.有原圖片 或 3.有新圖片
+			(postShareInput.current.value || originPostImg || filePostImg) &&
+				sendPostAjax();
 		}
 	};
 
@@ -310,6 +358,7 @@ export default function Post({ originPost, setPosts }) {
 						isPostEditable ? 'postCenterEditable' : ''
 					}`}
 				>
+					{/* 檢視 */}
 					{post.desc && (
 						<h6
 							className={`postText m-0 ${
@@ -330,34 +379,112 @@ export default function Post({ originPost, setPosts }) {
 						/>
 					)}
 
+					{/* 編輯 */}
 					<div
 						className={`postShareWrap postEditWrap px-3 py-2 position-relative ${
 							isPostEditable ? '' : 'd-none'
 						}`}
 						ref={postEditWrap}
 					>
-						<textarea
-							rows="1"
-							className="postShareInput"
-							onChange={(e) => {
-								setWritePost(postShareInput.current.value);
+						<div className="w-100">
+							<textarea
+								rows="1"
+								className="postShareInput"
+								onChange={(e) => {
+									//自適應高度
+									e.target.style.height = 'auto';
+									e.target.style.height = `${e.target.scrollHeight}px`;
+								}}
+								onKeyDown={(e) => {
+									sendPost(e);
+								}}
+								ref={postShareInput}
+								defaultValue={post.desc}
+							></textarea>
 
-								//自適應高度
-								e.target.style.height = 'auto';
-								e.target.style.height = `${e.target.scrollHeight}px`;
-							}}
-							onKeyDown={(e) => {
-								sendPost(e);
-							}}
-							ref={postShareInput}
-							defaultValue={post.desc}
-						></textarea>
+							{/* post img */}
+							<div className="w-75">
+								{/* 此處若input id非唯一，會造成上傳檔案只在第一則post顯示，因此改id */}
+								<label
+									htmlFor={`uploadPostFile_${post._id}`}
+									className={` ${
+										isPostEditable
+											? 'd-inline-block'
+											: 'd-none'
+									} uploadPostFileLabel mt-1`}
+								>
+									<PermMedia
+										htmlColor="tomato"
+										className=" me-1"
+									/>
+
+									<input
+										style={{ display: 'none' }}
+										type="file"
+										name={`uploadPostFile_${post._id}`}
+										id={`uploadPostFile_${post._id}`}
+										className={``}
+										accept=".png, .jpg, .jpeg"
+										onChange={(e) => {
+											setFilePostImg(e.target.files[0]);
+										}}
+									/>
+								</label>
+								{(originPostImg || filePostImg) && (
+									<Cancel
+										className="cancelPostImg ms-1"
+										onClick={(e) => {
+											setOriginPostImg('');
+											setFilePostImg(null);
+										}}
+									/>
+								)}
+
+								{/* 圖片預覽 */}
+								<div
+									className={`shareImgContainer mt-1 ${
+										originPostImg || filePostImg
+											? ''
+											: 'd-none'
+									}`}
+								>
+									<div className="shareImgWrap position-relative">
+										{filePostImg ? (
+											<>
+												<img
+													className="postUserImgPreview w-100"
+													src={URL.createObjectURL(
+														filePostImg
+													)}
+													alt=""
+												/>
+											</>
+										) : (
+											<img
+												className="postUserImgPreview w-100"
+												src={
+													post.img &&
+													PF + `post/` + post.img
+												}
+												alt=""
+											/>
+										)}
+									</div>
+								</div>
+							</div>
+						</div>
+
 						<button
 							type="button"
 							name="sendPostBtn"
 							id="sendPostBtn"
 							className={`bg-transparent border-0 position-absolute end-0 me-4 ${
-								postShareInput !== '' ? '' : 'disabled'
+								(postShareInput.current &&
+									postShareInput.current.value) ||
+								originPostImg ||
+								filePostImg
+									? ''
+									: 'disabled'
 							}`}
 							onClick={(e) => sendPost(e, true)}
 						>

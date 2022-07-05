@@ -107,6 +107,22 @@
 			}
 		}
 
+		.uploadPostFileLabel {
+			cursor: pointer;
+		}
+
+		.cancelPostImg {
+			cursor: pointer;
+			color: #dc3545;
+			background-color: #fff;
+			width: 20px;
+			text-align: right;
+
+			&:hover {
+				color: #fc6272;
+			}
+		}
+
 		@media screen and (max-width: 1400px) {
 			.postShareInput {
 				width: 90%;
