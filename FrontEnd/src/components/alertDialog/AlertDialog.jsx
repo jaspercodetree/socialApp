@@ -9,19 +9,19 @@ import jwt_decode from 'jwt-decode';
 import './alertDialog.css';
 
 import { DropdownButton, Dropdown } from 'react-bootstrap';
+// import axiosJWT, { AxiosJWTConfig } from '../../AxiosJWTConfig';
 
 export default function AlertDialog({ post, editPost, setPosts }) {
 	const { user: currentUser, dispatch } = useContext(AuthContext);
 
-	const [open, setOpen] = useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+	const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
+	// //JWT verify
+	// AxiosJWTConfig({ setIsDeleteModalOpen, setIsFailModalOpen });
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+	//新建一種axios名為axiosJWT，作為需要使用截斷器驗證時使用的axios
+	const axiosJWT = axios.create();
 
 	//delete JWT
 	const refreshToken = async () => {
@@ -29,6 +29,8 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 			const res = await axios.post('/auth/refresh', {
 				token: currentUser.refreshToken,
 			});
+
+			//更新useContext user data
 			dispatch({
 				type: 'REFRESH',
 				payload: {
@@ -36,19 +38,19 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 					refreshToken: res.data.refreshToken,
 				},
 			});
-			// setUser({
+			// 以上類似 setUser({
 			// 	...currentUser._doc,
 			// 	accessToken: res.data.accessToken,
 			// 	refreshToken: res.data.refreshToken,
 			// });
+			// console.log(currentUser);
+
 			return res.data;
 		} catch (err) {
 			console.log(err);
+			setIsFailModalOpen(true);
 		}
 	};
-
-	//新建一種axios名為axiosJWT，作為需要使用截斷器驗證時使用的axios
-	const axiosJWT = axios.create();
 
 	//透過使用axios 的方法interceptors攔截器，在我執行需要驗證accessToken的API時(例如此處為delete)，
 	//我讓這個axiosJWT在發出請求前request先被截斷，先行驗證下面這個程式
@@ -58,12 +60,14 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 		async (config) => {
 			let currentDate = new Date();
 			const decodedToken = jwt_decode(currentUser.accessToken);
-			console.log(jwt_decode(currentUser.accessToken));
+			// console.log(jwt_decode(currentUser.accessToken));
 			if (decodedToken.exp * 1000 < currentDate.getTime()) {
 				const data = await refreshToken();
+
+				//更新 new accessToken
 				config.headers['authorization'] = 'Bearer ' + data.accessToken;
 			}
-			console.log('config', config);
+			// console.log('config', config);
 			return config;
 		},
 		//假使出現錯誤的話執行
@@ -72,6 +76,7 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 		}
 	);
 
+	//確認 刪除貼文
 	const handleDelete = async () => {
 		try {
 			await axiosJWT.delete('/posts/' + post._id, {
@@ -103,12 +108,7 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 
 	return (
 		<div>
-			<DropdownButton
-				title=""
-				variant="light"
-				id="bg-nested-dropdown"
-				className="border-0"
-			>
+			<DropdownButton title="" id="bg-nested-dropdown">
 				<Dropdown.Item
 					className="dropdownItem dropdownItemEdit text-center"
 					eventKey="2"
@@ -119,13 +119,16 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 				<Dropdown.Item
 					className="dropdownItem dropdownItemDelete text-center"
 					eventKey="1"
-					onClick={handleClickOpen}
+					onClick={() => setIsDeleteModalOpen(true)}
 				>
 					刪除貼文
 				</Dropdown.Item>
 			</DropdownButton>
 
-			<Dialog open={open} onClose={handleClose}>
+			<Dialog
+				open={isDeleteModalOpen}
+				onClose={() => setIsDeleteModalOpen(false)}
+			>
 				<DialogTitle
 					id="alert-dialog-title"
 					className="pb-0 text-danger"
@@ -133,11 +136,34 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 					{'刪除此篇貼文 ?'}
 				</DialogTitle>
 				<DialogActions className="justify-content-center">
-					<Button onClick={handleClose} color="black">
+					<Button onClick={() => setIsDeleteModalOpen(false)}>
 						取消
 					</Button>
-					<Button onClick={handleDelete} color="black" autoFocus>
+					<Button onClick={handleDelete} autoFocus>
 						確定
+					</Button>
+				</DialogActions>
+			</Dialog>
+
+			<Dialog
+				open={isFailModalOpen}
+				onClose={() => setIsFailModalOpen(false)}
+			>
+				<DialogTitle
+					id="alert-dialog-title"
+					className="pb-0 text-danger text-center"
+				>
+					<p className="m-0">權限驗證已逾時</p>
+					<p className="m-0">若要刪除貼文，請您重新登入</p>
+				</DialogTitle>
+				<DialogActions className="justify-content-center">
+					<Button
+						onClick={() => {
+							setIsFailModalOpen(false);
+							setIsDeleteModalOpen(false);
+						}}
+					>
+						關閉
 					</Button>
 				</DialogActions>
 			</Dialog>

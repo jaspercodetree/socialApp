@@ -12,10 +12,9 @@ const verify = (req, res, next) => {
 		jwt.verify(token, 'mySecretKey', (err, user) => {
 			if (err) {
 				return res.status(403).json('Token is not valid!');
+			} else {
+				next();
 			}
-
-			req.user = user;
-			next();
 		});
 	} else {
 		res.status(401).json('You are not authenticated!');

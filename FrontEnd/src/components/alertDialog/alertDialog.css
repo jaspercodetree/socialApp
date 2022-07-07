@@ -1,6 +1,22 @@
 .dropdown-toggle {
+  background-color: #eee;
+  color: #ccc;
+  border: none;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
+}
+
+.dropdown-toggle:hover {
+  background-color: #ccc !important;
+  color: #fff !important;
+}
+
+.show > .btn-primary.dropdown-toggle,
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+  background-color: #eee;
+  color: #ccc;
+  border: none;
 }
 
 .dropdown-menu {

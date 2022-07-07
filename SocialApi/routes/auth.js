@@ -30,22 +30,26 @@ let refreshTokens = [];
 router.post('/refresh', (req, res) => {
 	//take the refresh token from the user
 	const refreshToken = req.body.token;
-	console.log(refreshTokens);
+	console.log('1', refreshTokens);
 
 	//send error if there is no token or it's invalid
 	if (!refreshToken)
 		return res.status(401).json('You are not authenticated!');
+
 	if (!refreshTokens.includes(refreshToken)) {
 		return res.status(403).json('Refresh token is not valid!');
 	}
+
 	jwt.verify(refreshToken, 'myRefreshSecretKey', (err, user) => {
 		err && console.log(err);
 		refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+		console.log('2', refreshTokens);
 
 		const newAccessToken = generateAccessToken(user);
 		const newRefreshToken = generateRefreshToken(user);
 
 		refreshTokens.push(newRefreshToken);
+		console.log('3', refreshTokens);
 
 		res.status(200).json({
 			accessToken: newAccessToken,

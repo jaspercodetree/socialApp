@@ -1,5 +1,21 @@
 .dropdown-toggle {
+	background-color: #eee;
+	color: #ccc;
+	border: none;
 	box-shadow: none !important;
+
+	&:hover {
+		background-color: #ccc !important;
+		color: #fff !important;
+	}
+}
+
+.show > .btn-primary.dropdown-toggle,
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+	background-color: #eee;
+	color: #ccc;
+	border: none;
 }
 
 .dropdown-menu {
