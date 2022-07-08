@@ -37,6 +37,7 @@ router.post('/refresh', (req, res) => {
 		return res.status(401).json('You are not authenticated!');
 
 	if (!refreshTokens.includes(refreshToken)) {
+		console.log('11', refreshTokens);
 		return res.status(403).json('Refresh token is not valid!');
 	}
 
