@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 //JWT verify
 const verify = (req, res, next) => {
 	const authHeader = req.headers.authorization;
+
 	if (authHeader) {
 		const token = authHeader.split(' ')[1];
 
@@ -91,7 +92,6 @@ router.delete('/:id/', verify, async (req, res) => {
 });
 
 //其他功能
-
 //like & dislike
 router.put('/:id/like', async (req, res) => {
 	try {

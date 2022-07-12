@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
 
 //新建一種axios名為axiosJWT，作為需要使用截斷器驗證時使用的axios
@@ -9,19 +9,27 @@ const axiosJWT = axios.create();
 const AxiosJWTConfig = ({ children }) => {
 	const { user: currentUser, dispatch } = useContext(AuthContext);
 
+	//!大坑 interceptors會一直重複run，因此用完要關閉
+	// console.log(axios.interceptors.request.handlers);
+	if (axiosJWT.interceptors.request.handlers.length > 0) {
+		axiosJWT.interceptors.request.handlers = [];
+	}
+
 	//delete JWT
 	const refreshToken = async () => {
 		try {
 			const res = await axios.post('/auth/refresh', {
 				token: currentUser.refreshToken,
+				refreshTokens: currentUser.refreshTokens,
 			});
 
 			//更新useContext user data
-			dispatch({
+			await dispatch({
 				type: 'REFRESH',
 				payload: {
 					accessToken: res.data.accessToken,
 					refreshToken: res.data.refreshToken,
+					refreshTokens: [res.data.refreshToken],
 				},
 			});
 			// 以上類似 setUser({
@@ -30,6 +38,7 @@ const AxiosJWTConfig = ({ children }) => {
 			// 	refreshToken: res.data.refreshToken,
 			// });
 			console.log(currentUser);
+			console.log(res.data);
 
 			return res.data;
 		} catch (err) {
@@ -43,17 +52,20 @@ const AxiosJWTConfig = ({ children }) => {
 	//拿新的accessToken，將它存在config.headers['authorization']
 	axiosJWT.interceptors.request.use(
 		async (config) => {
+			// console.log(axiosJWT.interceptors.request.handlers);
 			let currentDate = new Date();
+
 			const decodedToken = jwt_decode(currentUser.accessToken);
 			console.log(jwt_decode(currentUser.accessToken));
 
 			if (decodedToken.exp * 1000 < currentDate.getTime()) {
-				const data = await refreshToken();
+				let data = await refreshToken();
+				console.log(data);
 
 				//更新 new accessToken
 				config.headers['authorization'] = 'Bearer ' + data.accessToken;
 			}
-			// console.log('config', config);
+			console.log('config', config);
 			return config;
 		},
 		//假使出現錯誤的話執行

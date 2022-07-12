@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
 	{
+		refreshTokens: {
+			type: Array,
+			default: [],
+		},
 		username: {
 			type: String,
 			require: true,

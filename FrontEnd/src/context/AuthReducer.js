@@ -48,6 +48,7 @@ const AuthReducer = (state, action) => {
 					...state.user,
 					accessToken: action.payload.accessToken,
 					refreshToken: action.payload.refreshToken,
+					refreshTokens: [action.payload.refreshToken],
 				},
 			};
 		default:
