@@ -3,6 +3,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import { Cancel, Edit, PermMedia } from '@material-ui/icons';
+import axiosJWT from '../../AxiosJWTConfig';
 
 export default function PersonalInfo({ getUser }) {
 	const { user, dispatch, PF } = useContext(AuthContext);
@@ -97,7 +98,7 @@ export default function PersonalInfo({ getUser }) {
 
 		try {
 			//更新資料庫
-			await axios.put(`/users/${user._id}`, updateData);
+			await axiosJWT.put(`/users/${user._id}`, updateData);
 
 			//更新useContext
 			let userData = '';

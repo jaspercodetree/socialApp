@@ -8,6 +8,7 @@ import { format } from 'timeago.js';
 import AlertDialog from '../alertDialog/AlertDialog';
 import CommentItem from '../commentItem/CommentItem';
 import { Cancel, NearMeTwoTone, PermMedia } from '@material-ui/icons';
+import axiosJWT from '../../AxiosJWTConfig';
 
 export default function Post({ originPost, setPosts }) {
 	const [post, setPost] = useState(originPost);
@@ -90,7 +91,7 @@ export default function Post({ originPost, setPosts }) {
 				}
 				const _id = _uuid();
 
-				await axios
+				await axiosJWT
 					.put(`/posts/${post._id}/addComment`, {
 						comment: {
 							_id: _id,

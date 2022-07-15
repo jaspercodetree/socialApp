@@ -20,7 +20,6 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 	const handleDelete = async () => {
 		try {
 			await axiosJWT.delete('/posts/' + post._id, {
-				headers: { authorization: 'Bearer ' + currentUser.accessToken },
 				data: { userId: currentUser._id },
 			});
 

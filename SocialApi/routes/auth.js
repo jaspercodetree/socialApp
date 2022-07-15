@@ -38,34 +38,32 @@ router.post('/refresh', (req, res) => {
 		return res.status(403).json('Refresh token is not valid!');
 	}
 
-	jwt.verify(refreshToken, 'myRefreshSecretKey', async (err, user) => {
+	jwt.verify(refreshToken, 'myRefreshSecretKey', async (err) => {
+		//找到此使用者
+		let user = await User.findOne({ _id: req.body.userId });
+
 		err && console.log(err);
 		refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
 		const newAccessToken = generateAccessToken(user);
 		const newRefreshToken = generateRefreshToken(user);
 
-		//找到此使用者 更新refreshTokens
-		try {
-			let user2 = await User.findOne({ _id: user.id });
-			await user2.updateOne({
-				$push: { refreshTokens: refreshToken },
-			});
-		} catch (err) {
-			res.status(500).json(err);
-		}
-		console.log('3', refreshTokens);
+		//更新資料庫refreshTokens;
+		await user.updateOne({
+			$set: { refreshTokens: [newRefreshToken] },
+		});
 
+		//if everything is ok, create new access token, refresh token and send to user
 		res.status(200).json({
 			accessToken: newAccessToken,
 			refreshToken: newRefreshToken,
 		});
 	});
-	//if everything is ok, create new access token, refresh token and send to user
 });
 
 const generateAccessToken = (user) => {
 	return jwt.sign({ id: user._id }, 'mySecretKey', {
+		//set access token expire time
 		expiresIn: '5s',
 	});
 };
@@ -94,8 +92,9 @@ router.post('/login', async (req, res) => {
 				//Generate an access token
 				const accessToken = generateAccessToken(user);
 				const refreshToken = generateRefreshToken(user);
+				// refreshTokens.push(refreshToken);
 
-				//找到此使用者 更新refreshTokens
+				//update refreshTokens in database
 				try {
 					await user.updateOne({
 						$push: { refreshTokens: refreshToken },
@@ -106,8 +105,6 @@ router.post('/login', async (req, res) => {
 
 				res.status(200).json({
 					...user._doc,
-					// username: user.username,
-					// isAdmin: user.isAdmin,
 					accessToken: accessToken,
 					refreshToken: refreshToken,
 					refreshTokens: [refreshToken],

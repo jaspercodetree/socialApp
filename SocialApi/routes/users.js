@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const verify = require('../verify');
 
 //update
 router.put('/:id', async (req, res) => {
@@ -27,7 +28,7 @@ router.put('/:id', async (req, res) => {
 });
 
 //delete
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', verify, async (req, res) => {
 	try {
 		//先抓user來判斷是否是Admin
 		const user = await User.findById(req.body.userId);

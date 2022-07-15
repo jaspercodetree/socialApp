@@ -14,6 +14,7 @@ import axios from 'axios';
 import { Modal } from 'react-bootstrap';
 import SearchTagUser from '../searchTagUser/SearchTagUser';
 import { Link } from 'react-router-dom';
+import axiosJWT from '../../AxiosJWTConfig';
 
 export default function Share({ setPosts }) {
 	const { user, PF } = useContext(AuthContext);
@@ -92,7 +93,7 @@ export default function Share({ setPosts }) {
 		}
 
 		try {
-			await axios.post('/posts', newPost);
+			await axiosJWT.post('/posts', newPost);
 
 			//刪除share暫存
 			setNewPost({ userId: user._id });

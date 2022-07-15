@@ -1,29 +1,10 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const Post = require('../models/Post');
-const jwt = require('jsonwebtoken');
+const verify = require('../verify');
 
-//JWT verify
-const verify = (req, res, next) => {
-	const authHeader = req.headers.authorization;
-
-	if (authHeader) {
-		const token = authHeader.split(' ')[1];
-
-		jwt.verify(token, 'mySecretKey', (err, user) => {
-			if (err) {
-				return res.status(403).json('Token is not valid!');
-			} else {
-				next();
-			}
-		});
-	} else {
-		res.status(401).json('You are not authenticated!');
-	}
-};
-
-//create
-router.post('/', async (req, res) => {
+//create post
+router.post('/', verify, async (req, res) => {
 	try {
 		const newPost = new Post(req.body);
 		const post = await newPost.save();
@@ -33,7 +14,7 @@ router.post('/', async (req, res) => {
 	}
 });
 
-//get
+//get a post
 router.get('/:id', async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
@@ -43,8 +24,8 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-//update
-router.put('/:id', async (req, res) => {
+//update post
+router.put('/:id', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		if (req.body.userId === post.userId) {
@@ -92,6 +73,7 @@ router.delete('/:id/', verify, async (req, res) => {
 });
 
 //其他功能
+
 //like & dislike
 router.put('/:id/like', async (req, res) => {
 	try {
@@ -145,7 +127,7 @@ router.get('/profile/:username', async (req, res) => {
 });
 
 //add comment
-router.put('/:id/addComment', async (req, res) => {
+router.put('/:id/addComment', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		await post.updateOne({ $push: { comments: req.body.comment } });

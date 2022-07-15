@@ -1,15 +1,10 @@
 import './topBar.css';
-import { Search, ExitToAppSharp } from '@material-ui/icons';
+import { Search } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import SearchUser from '../searchUser/SearchUser';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
 
 export default function TopBar() {
 	const { user, PF } = useContext(AuthContext);
@@ -17,8 +12,12 @@ export default function TopBar() {
 	const [searchUsers, setSearchUsers] = useState([]);
 	const [isModalActive, setModalActive] = useState(false);
 
-	const logout = () => {
+	const logout = async () => {
 		localStorage.removeItem('user');
+		await axios.put(`/users/${user._id}`, {
+			userId: user._id,
+			refreshTokens: [],
+		});
 		window.location.replace('/login');
 	};
 	//searchUsers
