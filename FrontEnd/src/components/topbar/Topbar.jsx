@@ -5,6 +5,7 @@ import { useContext, useState, useEffect, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import SearchUser from '../searchUser/SearchUser';
 import axios from 'axios';
+import axiosJWT from '../../AxiosJWTConfig';
 
 export default function TopBar() {
 	const { user, PF } = useContext(AuthContext);
@@ -13,11 +14,13 @@ export default function TopBar() {
 	const [isModalActive, setModalActive] = useState(false);
 
 	const logout = async () => {
-		localStorage.removeItem('user');
-		await axios.put(`/users/${user._id}`, {
+		//clear refreshTokens in database
+		await axiosJWT.put(`/users/${user._id}`, {
 			userId: user._id,
 			refreshTokens: [],
 		});
+		//clear localStorage
+		localStorage.removeItem('user');
 		window.location.replace('/login');
 	};
 	//searchUsers

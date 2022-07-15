@@ -11,7 +11,7 @@ import {
 } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
-import Upload from './pages/upload/Upload';
+// import Upload from './pages/upload/Upload';
 
 function App() {
 	const { user } = useContext(AuthContext);
@@ -33,9 +33,9 @@ function App() {
 				<Route path="/profile/:username/personalInfo">
 					<Profile isPersonalInfo={true} />
 				</Route>
-				<Route path="/upload">
+				{/* <Route path="/upload">
 					<Upload />
-				</Route>
+				</Route> */}
 			</Switch>
 		</Router>
 	);

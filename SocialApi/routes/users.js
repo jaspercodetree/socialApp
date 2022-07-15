@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+
 const verify = require('../verify');
 
 //update
-router.put('/:id', async (req, res) => {
+router.put('/:id', verify, async (req, res) => {
 	if (req.body.userId === req.params.id) {
 		//傳進來的資料如有密碼，將其要修改的密碼加密
 		if (req.body.password) {
@@ -117,7 +118,7 @@ router.get('/search', async (req, res) => {
 });
 
 //follow a user
-router.put('/:id/follow', async (req, res) => {
+router.put('/:id/follow', verify, async (req, res) => {
 	//followers粉絲群
 	//followings追蹤的目標
 	if (req.body.userId !== req.params.id) {
@@ -145,7 +146,7 @@ router.put('/:id/follow', async (req, res) => {
 });
 
 //unfollow a user
-router.put('/:id/unfollow', async (req, res) => {
+router.put('/:id/unfollow', verify, async (req, res) => {
 	if (req.body.userId !== req.params.id) {
 		try {
 			const currentUser = await User.findById(req.body.userId);

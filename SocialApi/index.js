@@ -11,6 +11,8 @@ const authRoute = require('./routes/auth');
 const usersRoute = require('./routes/users');
 const postsRoute = require('./routes/posts');
 
+const verify = require('./verify');
+
 //使用dotenv
 dotenv.config();
 
@@ -41,7 +43,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 //撰寫上傳檔案的router
-app.post('/api/upload', upload.single('file'), (req, res) => {
+app.post('/api/upload', verify, upload.single('file'), (req, res) => {
 	try {
 		return res.status(200).json('檔案上傳成功');
 	} catch (err) {
@@ -61,13 +63,18 @@ const storagePerson = multer.diskStorage({
 });
 const uploadPerson = multer({ storage: storagePerson });
 //撰寫上傳檔案的router
-app.post('/api/upload/person', uploadPerson.single('file'), (req, res) => {
-	try {
-		return res.status(200).json('檔案上傳成功');
-	} catch (err) {
-		console.log(err);
+app.post(
+	'/api/upload/person',
+	verify,
+	uploadPerson.single('file'),
+	(req, res) => {
+		try {
+			return res.status(200).json('檔案上傳成功');
+		} catch (err) {
+			console.log(err);
+		}
 	}
-});
+);
 
 // 刪除圖片
 const fs = require('fs').promises;
@@ -83,7 +90,7 @@ async function deleteFile(filePath) {
 	}
 }
 
-app.post('/api/img/delete', (req, res) => {
+app.post('/api/img/delete', verify, (req, res) => {
 	try {
 		deleteFile(`./public/images/${req.body.filename}`);
 		return res.status(200).json('檔案成功');

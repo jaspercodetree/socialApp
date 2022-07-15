@@ -7,12 +7,13 @@ import { AuthContext } from '../../context/AuthContext';
 import { format } from 'timeago.js';
 import { MoreHoriz, NearMeTwoTone } from '@material-ui/icons';
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
+import axiosJWT from '../../AxiosJWTConfig';
 
 const CommentItem = ({ comment, postId, getNewPost }) => {
 	const { user, PF } = useContext(AuthContext);
 
 	const deleteComment = async () => {
-		await axios
+		await axiosJWT
 			.put(`/posts/${postId}/deleteComment`, {
 				comment: {
 					_id: comment._id,
@@ -99,7 +100,7 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 			// commentEditWrap.current.classList.add('d-none');
 
 			try {
-				await axios
+				await axiosJWT
 					.put(`/posts/${postId}/editComment`, {
 						comment: {
 							_id: _id,

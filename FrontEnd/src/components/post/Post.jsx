@@ -43,7 +43,7 @@ export default function Post({ originPost, setPosts }) {
 
 	const likeHandler = () => {
 		try {
-			axios.put('/posts/' + post._id + '/like', {
+			axiosJWT.put('/posts/' + post._id + '/like', {
 				userId: currentUser._id,
 			});
 		} catch (err) {
@@ -234,9 +234,9 @@ export default function Post({ originPost, setPosts }) {
 
 				try {
 					//新增圖片到資料夾
-					await axios.post('/upload', data);
+					await axiosJWT.post('/upload', data);
 					//刪除資料夾原先的圖片
-					await axios.post(`/img/delete`, {
+					await axiosJWT.post(`/img/delete`, {
 						filename: `post/${post.img}`,
 					});
 
@@ -247,7 +247,7 @@ export default function Post({ originPost, setPosts }) {
 				}
 			} else if (post.img && updateData.img === '') {
 				//刪除資料夾原先的圖片
-				await axios.post(`/img/delete`, {
+				await axiosJWT.post(`/img/delete`, {
 					filename: `post/${post.img}`,
 				});
 				console.log(updateData);
@@ -255,17 +255,19 @@ export default function Post({ originPost, setPosts }) {
 
 			//更新資料庫
 			try {
-				await axios.put(`/posts/${_id}`, updateData).then(async () => {
-					//重新獲取posts
-					const res = await axios.get(`/posts/${_id}`);
-					setPost(res.data);
+				await axiosJWT
+					.put(`/posts/${_id}`, updateData)
+					.then(async () => {
+						//重新獲取posts
+						const res = await axios.get(`/posts/${_id}`);
+						setPost(res.data);
 
-					//清空blob圖片
-					setFilePostImg(null);
+						//清空blob圖片
+						setFilePostImg(null);
 
-					//關閉編輯區
-					setIsPostEditable(false);
-				});
+						//關閉編輯區
+						setIsPostEditable(false);
+					});
 			} catch (err) {
 				console.log(err);
 			}

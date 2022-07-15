@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
+import axiosJWT from '../../AxiosJWTConfig';
 
 export default function RightBar({ user, isHomePage }) {
 	const [friends, setFriends] = useState([]);
@@ -62,12 +63,12 @@ export default function RightBar({ user, isHomePage }) {
 	//注意:即使已經更新資料庫，但由於追蹤按鈕的文字是由context內的followings是否有user._id判斷，因此我們必須透過useReducer去更新context的狀態，來更新文字
 	const handleClick = async () => {
 		if (followed) {
-			await axios.put(`/users/${user._id}/unfollow`, {
+			await axiosJWT.put(`/users/${user._id}/unfollow`, {
 				userId: loginUser._id,
 			});
 			dispatch({ type: 'UNFOLLOW', payload: user._id });
 		} else {
-			await axios.put(`/users/${user._id}/follow`, {
+			await axiosJWT.put(`/users/${user._id}/follow`, {
 				userId: loginUser._id,
 			});
 			dispatch({ type: 'FOLLOW', payload: user._id });

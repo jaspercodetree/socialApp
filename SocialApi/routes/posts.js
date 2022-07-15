@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const Post = require('../models/Post');
+
 const verify = require('../verify');
 
 //create post
@@ -75,7 +76,7 @@ router.delete('/:id/', verify, async (req, res) => {
 //其他功能
 
 //like & dislike
-router.put('/:id/like', async (req, res) => {
+router.put('/:id/like', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		if (post.likes.includes(req.body.userId)) {
@@ -138,7 +139,7 @@ router.put('/:id/addComment', verify, async (req, res) => {
 });
 
 //delete comment
-router.put('/:id/deleteComment', async (req, res) => {
+router.put('/:id/deleteComment', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		await post.updateOne({ $pull: { comments: req.body.comment } });
@@ -149,7 +150,7 @@ router.put('/:id/deleteComment', async (req, res) => {
 });
 
 //edit comment
-router.put('/:id/editComment', async (req, res) => {
+router.put('/:id/editComment', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
 		await post.updateOne({

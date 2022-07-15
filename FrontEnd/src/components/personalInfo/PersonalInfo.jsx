@@ -1,7 +1,6 @@
 import './personalInfo.css';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import axios from 'axios';
 import { Cancel, Edit, PermMedia } from '@material-ui/icons';
 import axiosJWT from '../../AxiosJWTConfig';
 
@@ -37,7 +36,6 @@ export default function PersonalInfo({ getUser }) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		const updateData = {
 			userId: user._id,
 			username: username,
@@ -60,9 +58,9 @@ export default function PersonalInfo({ getUser }) {
 
 			try {
 				//新增圖片到資料夾
-				await axios.post('/upload/person', data);
+				await axiosJWT.post('/upload/person', data);
 				//刪除資料夾原先的圖片
-				await axios.post(`/img/delete`, {
+				await axiosJWT.post(`/img/delete`, {
 					filename: `person/${user.profilePicture}`,
 				});
 			} catch (error) {
@@ -84,9 +82,9 @@ export default function PersonalInfo({ getUser }) {
 
 			try {
 				//新增圖片到資料夾
-				await axios.post('/upload/person', data);
+				await axiosJWT.post('/upload/person', data);
 				//刪除資料夾原先的圖片
-				await axios.post(`/img/delete`, {
+				await axiosJWT.post(`/img/delete`, {
 					filename: `person/${user.coverPicture}`,
 				});
 			} catch (error) {
@@ -99,17 +97,14 @@ export default function PersonalInfo({ getUser }) {
 		try {
 			//更新資料庫
 			await axiosJWT.put(`/users/${user._id}`, updateData);
+			//1.user內有新token 2.updateData內有新資料 =>結合最新 useContext user
+			// console.log('combine', { ...user, ...updateData });
 
 			//更新useContext
-			let userData = '';
-			await axios
-				.get(`/users?userId=${user._id}`)
-				.then((res) => {
-					userData = res.data;
-				})
-				.catch((err) => console.log(err));
-
-			await dispatch({ type: 'LOGIN_SUCCESS', payload: userData });
+			await dispatch({
+				type: 'LOGIN_SUCCESS',
+				payload: { ...user, ...updateData },
+			});
 
 			//從父層重新獲得新的profile user頁面資料
 			getUser();

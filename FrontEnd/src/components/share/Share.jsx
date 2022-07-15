@@ -86,7 +86,7 @@ export default function Share({ setPosts }) {
 			console.log(newPost);
 
 			try {
-				await axios.post('/upload', data);
+				await axiosJWT.post('/upload', data);
 			} catch (error) {
 				console.log(error);
 			}

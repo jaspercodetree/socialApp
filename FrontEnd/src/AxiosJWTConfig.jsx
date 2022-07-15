@@ -54,10 +54,10 @@ const AxiosJWTConfig = ({ children }) => {
 	axiosJWT.interceptors.request.use(
 		async (config) => {
 			let currentDate = new Date();
-			console.log(axiosJWT.interceptors.request.handlers);
+			// console.log(axiosJWT.interceptors.request.handlers);
 
 			const decodedToken = jwt_decode(currentUser.accessToken);
-			console.log(jwt_decode(currentUser.accessToken));
+			// console.log(jwt_decode(currentUser.accessToken));
 
 			if (decodedToken.exp * 1000 < currentDate.getTime()) {
 				let data = await refreshToken();
@@ -74,7 +74,7 @@ const AxiosJWTConfig = ({ children }) => {
 				console.log('JWT origin accessToken can be used');
 			}
 
-			console.log('config', config);
+			// console.log('config', config);
 			return config;
 		},
 		//假使出現錯誤的話執行
