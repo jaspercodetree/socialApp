@@ -14,6 +14,7 @@ export default function Feed({
 }) {
 	const [posts, setPosts] = useState([]);
 	const { user } = useContext(AuthContext);
+	const [allUserInfoForComment, setAllUserInfoForComment] = useState({});
 
 	//有收到username 則判斷為使用者個人頁面；否則為使用者共同貼圖牆頁面
 	useEffect(() => {
@@ -36,6 +37,27 @@ export default function Feed({
 		getPosts();
 	}, [username, user._id]);
 
+	//get all userInfo for commentItem username & profilePicture
+	useEffect(() => {
+		let userObj = {};
+		const getAllUser = async () => {
+			await axios
+				.get(`/users/all`)
+				.then((res) => {
+					res.data.forEach((i) => {
+						userObj[`${i._id}`] = {
+							username: i.username,
+							profilePicture: i.profilePicture,
+						};
+					});
+					setAllUserInfoForComment(userObj);
+				})
+				.catch((err) => console.log(err));
+		};
+		getAllUser();
+	}, []);
+	// console.log('allUserInfoForComment', allUserInfoForComment);
+
 	return (
 		<div
 			className={
@@ -57,6 +79,7 @@ export default function Feed({
 								key={p._id}
 								originPost={p}
 								setPosts={setPosts}
+								allUserInfoForComment={allUserInfoForComment}
 							/>
 						))}
 					</>

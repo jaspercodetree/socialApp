@@ -10,7 +10,7 @@ import CommentItem from '../commentItem/CommentItem';
 import { Cancel, NearMeTwoTone, PermMedia } from '@material-ui/icons';
 import axiosJWT from '../../AxiosJWTConfig';
 
-export default function Post({ originPost, setPosts }) {
+export default function Post({ originPost, setPosts, allUserInfoForComment }) {
 	const [post, setPost] = useState(originPost);
 
 	//A.此處user與useEffect的getUser 是指去獲得  好友圈內每一則post貼文的發文者user
@@ -173,6 +173,50 @@ export default function Post({ originPost, setPosts }) {
 			})
 		);
 	}, [post.comments]);
+
+	// let [commentUsers, setCommentUsers] = useState({});
+
+	// let commentId = [];
+	// comments && comments.forEach((item) => commentId.push(item.commentUserId));
+	// let uniqueCommentId = [...new Set(commentId)];
+	// console.log(uniqueCommentId);
+
+	// let commentUser = {};
+
+	// var bar = new Promise((resolve, reject) => {
+	// 	uniqueCommentId.forEach(async (id, index) => {
+	// 		await axios.get(`/users?userId=${id}`).then((res) => {
+	// 			commentUser[`${id}`] = {
+	// 				username: res.data.username,
+	// 				profilePicture: res.data.profilePicture,
+	// 			};
+	// 		});
+
+	// 		index === uniqueCommentId.length - 1 && resolve();
+	// 	});
+	// });
+
+	//bar.then(() => {
+	// console.log(commentUser);
+	// setCommentUsers((prevState) => ({
+	// 	...prevState,
+	// 	...commentUsers,
+	// }));
+	//});
+
+	// useEffect(() => {}, [commentUser]);
+
+	// uniqueCommentId.forEach(async (id) => {
+	// 	await axios.get(`/users?userId=${id}`).then((res) => {
+	// 		// setCommentUsers({
+	// 		// 	i: {
+	// 		// 		username: res.data.username,
+	// 		// 		profilePicture: res.data.profilePicture,
+	// 		// 	},
+	// 		// });
+	// 	});
+	// });
+	// console.log(commentUsers);
 
 	//2.Edit post
 	const postEditWrap = useRef();
@@ -584,6 +628,9 @@ export default function Post({ originPost, setPosts }) {
 										comment={comment}
 										postId={post._id}
 										getNewPost={setPost}
+										allUserInfoForComment={
+											allUserInfoForComment
+										}
 									/>
 								);
 							})}

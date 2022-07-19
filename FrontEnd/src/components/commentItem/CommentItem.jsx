@@ -9,8 +9,30 @@ import { MoreHoriz, NearMeTwoTone } from '@material-ui/icons';
 import { Button, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import axiosJWT from '../../AxiosJWTConfig';
 
-const CommentItem = ({ comment, postId, getNewPost }) => {
+const CommentItem = ({
+	comment,
+	postId,
+	getNewPost,
+	allUserInfoForComment,
+}) => {
 	const { user, PF } = useContext(AuthContext);
+	// console.log(allUserInfoForComment);
+	// console.log(allUserInfoForComment['60e553e65cd1772ce8f1e3ea'].username);
+
+	const [commentUsername, setCommentUsername] = useState();
+	const [commentProfilePic, setCommentProfilePic] = useState();
+
+	//update comment username & profilePic
+	useEffect(() => {
+		if (Object.keys(allUserInfoForComment).length) {
+			setCommentUsername(
+				allUserInfoForComment[`${comment.commentUserId}`].username
+			);
+			setCommentProfilePic(
+				allUserInfoForComment[`${comment.commentUserId}`].profilePicture
+			);
+		}
+	}, [allUserInfoForComment, comment.commentUserId]);
 
 	const deleteComment = async () => {
 		await axiosJWT
@@ -105,8 +127,8 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 						comment: {
 							_id: _id,
 							commentUserId: user._id,
-							commentUsername: user.username,
-							commentProfilePic: user.profilePicture,
+							// commentUsername: user.username,
+							// commentProfilePic: user.profilePicture,
 							commentText: writeComment,
 							commentCreatedAt: comment.commentCreatedAt,
 							commentEditAt: new Date(),
@@ -153,11 +175,11 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 	return (
 		<div className="commentListItem">
 			<div className="commentListLeft">
-				<Link to={`/profile/${comment.commentUsername}`}>
+				<Link to={`/profile/${commentUsername}`}>
 					<img
 						src={
-							comment.commentProfilePic
-								? PF + `person/${comment.commentProfilePic}`
+							commentProfilePic
+								? PF + `person/${commentProfilePic}`
 								: PF + `person/noAvatar.png`
 						}
 						alt=""
@@ -166,9 +188,9 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 				</Link>
 			</div>
 			<div className="commentListRight px-3 py-2">
-				<Link to={`/profile/${comment.commentUsername}`}>
+				<Link to={`/profile/${commentUsername}`}>
 					<h6 className="commentListItemUser fw-bold mb-1">
-						{comment.commentUsername}
+						{commentUsername}
 					</h6>
 				</Link>
 				{comment.commentText && (
@@ -290,10 +312,14 @@ const CommentItem = ({ comment, postId, getNewPost }) => {
 						{'刪除此則留言 ?'}
 					</DialogTitle>
 					<DialogActions className="justify-content-center">
-						<Button onClick={handleClose} color="black">
+						<Button onClick={handleClose} color="default">
 							取消
 						</Button>
-						<Button onClick={deleteComment} color="black" autoFocus>
+						<Button
+							onClick={deleteComment}
+							color="default"
+							autoFocus
+						>
 							確定
 						</Button>
 					</DialogActions>
