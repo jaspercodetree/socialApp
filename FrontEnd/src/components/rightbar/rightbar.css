@@ -35,9 +35,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -80,12 +80,17 @@
           justify-content: space-between;
 }
 
-.rightBarFollowings a {
+.rightBarFollowings .rightBarFollowingsLink {
+  color: #000;
+  text-decoration: none;
+}
+
+.rightBarFollowings .rightBarFollowingsLink:visited {
   color: #000;
 }
 
-.rightBarFollowings a:visited {
-  color: #000;
+.rightBarFollowings .rightBarFollowingsLink.noFriends {
+  pointer-events: none;
 }
 
 .rightBarFollowings .rightBarFollowing {

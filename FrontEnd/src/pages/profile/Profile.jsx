@@ -44,7 +44,7 @@ export default function Profile({ isPersonalInfo }) {
 			<TopBar />
 			<div className="profile">
 				<Sidebar />
-				<div className="profileRight">
+				<div className="profileRight col-12 col-lg-10">
 					<div className="profileRightTop">
 						<div className="profileCover">
 							<img

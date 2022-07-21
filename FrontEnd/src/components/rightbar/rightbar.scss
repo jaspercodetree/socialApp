@@ -35,7 +35,7 @@
 //rightBarFollowButton
 .rightBarFollowButton {
 	display: flex;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
 	background-color: #ffa;
 	border-radius: 8px;
@@ -72,11 +72,16 @@
 	flex-wrap: wrap;
 	justify-content: space-between;
 
-	a {
+	.rightBarFollowingsLink {
 		color: #000;
+		text-decoration: none;
 
 		&:visited {
 			color: #000;
+		}
+
+		&.noFriends {
+			pointer-events: none;
 		}
 	}
 

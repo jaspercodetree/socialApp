@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
+import Advertisement from '../advertisement/Advertisement';
 
 export default function Sidebar() {
 	const [recommendUsers, setRecommendUsers] = useState([]);
@@ -37,7 +38,10 @@ export default function Sidebar() {
 						</Link>
 					))}
 				</ul>
-
+				<Advertisement />
+				<Advertisement />
+				<Advertisement />
+				<Advertisement />
 				{/* <hr className="sidebarHr" />
 
 				<ul className="sidebarList">

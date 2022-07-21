@@ -45,7 +45,7 @@ export default function RightBar({ user, isHomePage }) {
 							: setProfileFriends([
 									{
 										profilePicture: 'noAvatar.png',
-										username: 'QwQ 朋友募集中',
+										username: '好友募集中',
 									},
 							  ]);
 					})
@@ -80,14 +80,14 @@ export default function RightBar({ user, isHomePage }) {
 	const HomeRightBar = () => {
 		return (
 			<>
-				<div className="birthdayContainer">
+				{/* <div className="birthdayContainer">
 					<img src="assets/gift.png" alt="" className="birthdayImg" />
 					<span className="birthdayText">
 						<b>曾國峰</b> 以及 <b>5個其他的朋友</b> 今天生日
 					</span>
-				</div>
+				</div> */}
 				<Advertisement />
-				<div className="rightBarTitle">在線的朋友</div>
+				<div className="rightBarTitle">朋友</div>
 				<ul className="rightBarFriendList">
 					{friends.map((f) => (
 						<Online key={f._id} friend={f} />
@@ -138,8 +138,11 @@ export default function RightBar({ user, isHomePage }) {
 					{profileFriends.map((friend) => (
 						<Link
 							to={`/profile/${friend.username}`}
-							style={{ textDecoration: 'none' }}
+							style={{}}
 							key={friend._id || 'noFriends'}
+							className={`rightBarFollowingsLink ${
+								friend.username === '好友募集中' && 'noFriends'
+							}`}
 						>
 							<div className="rightBarFollowing">
 								<img
