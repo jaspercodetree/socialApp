@@ -13,7 +13,11 @@ export default function Feed({
 	getUser,
 }) {
 	const [posts, setPosts] = useState([]);
-	const { user } = useContext(AuthContext);
+	const [isGetData, setIsGetData] = useState(false);
+	//random gif
+	const [randomNo, setRandomNo] = useState();
+
+	const { user, PF } = useContext(AuthContext);
 	const [allUserInfoForComment, setAllUserInfoForComment] = useState({});
 
 	//有收到username 則判斷為使用者個人頁面；否則為使用者共同貼圖牆頁面
@@ -33,6 +37,9 @@ export default function Feed({
 					return 0;
 				})
 			);
+			setIsGetData(true);
+			setRandomNo(Math.floor(Math.random() * 1) + 1);
+			// console.log(randomNo);
 		};
 		getPosts();
 	}, [username, user._id]);
@@ -57,7 +64,6 @@ export default function Feed({
 		getAllUser();
 	}, []);
 	// console.log('allUserInfoForComment', allUserInfoForComment);
-
 	return (
 		<div
 			className={
@@ -72,16 +78,34 @@ export default function Feed({
 				) : (
 					<>
 						{(isHomePage || username === user.username) && (
-							<Share setPosts={setPosts} />
+							<Share setPosts={setPosts} username={username} />
 						)}
-						{posts.map((p) => (
-							<Post
-								key={p._id}
-								originPost={p}
-								setPosts={setPosts}
-								allUserInfoForComment={allUserInfoForComment}
-							/>
-						))}
+						{isGetData &&
+							(posts.length !== 0 ? (
+								posts.map((p) => (
+									<Post
+										key={p._id}
+										originPost={p}
+										setPosts={setPosts}
+										allUserInfoForComment={
+											allUserInfoForComment
+										}
+										username={username}
+									/>
+								))
+							) : (
+								<div className="w-100 p-3 mt-3 border rounded-3 text-center">
+									<h6>等待開墾中</h6>
+									<img
+										className="w-75"
+										src={
+											PF +
+											`/post/noPostsView_${randomNo}.jpeg`
+										}
+										alt=""
+									/>
+								</div>
+							))}
 					</>
 				)}
 			</div>

@@ -269,7 +269,9 @@ export default function PersonalInfo({ getUser }) {
 												src={`${
 													PF +
 													'person/' +
-													user.profilePicture
+													(user.profilePicture
+														? user.profilePicture
+														: 'noAvatar.png')
 												}`}
 												alt=""
 											/>
@@ -334,7 +336,9 @@ export default function PersonalInfo({ getUser }) {
 												src={`${
 													PF +
 													'person/' +
-													user.coverPicture
+													(user.coverPicture
+														? user.coverPicture
+														: 'noCover.png')
 												}`}
 												alt=""
 											/>

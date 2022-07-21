@@ -10,7 +10,12 @@ import CommentItem from '../commentItem/CommentItem';
 import { Cancel, NearMeTwoTone, PermMedia } from '@material-ui/icons';
 import axiosJWT from '../../AxiosJWTConfig';
 
-export default function Post({ originPost, setPosts, allUserInfoForComment }) {
+export default function Post({
+	originPost,
+	setPosts,
+	allUserInfoForComment,
+	username,
+}) {
 	const [post, setPost] = useState(originPost);
 
 	//A.此處user與useEffect的getUser 是指去獲得  好友圈內每一則post貼文的發文者user
@@ -396,6 +401,7 @@ export default function Post({ originPost, setPosts, allUserInfoForComment }) {
 								post={post}
 								editPost={editPost}
 								setPosts={setPosts}
+								username={username}
 							/>
 						</div>
 					)}

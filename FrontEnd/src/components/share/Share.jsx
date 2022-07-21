@@ -2,7 +2,6 @@ import './share.css';
 import {
 	PermMedia,
 	Label,
-	Room,
 	EmojiEmotions,
 	Cancel,
 	Search,
@@ -16,7 +15,7 @@ import SearchTagUser from '../searchTagUser/SearchTagUser';
 import { Link } from 'react-router-dom';
 import axiosJWT from '../../AxiosJWTConfig';
 
-export default function Share({ setPosts }) {
+export default function Share({ setPosts, username }) {
 	const { user, PF } = useContext(AuthContext);
 	const desc = useRef();
 	const [file, setFile] = useState(null);
@@ -100,9 +99,11 @@ export default function Share({ setPosts }) {
 			desc.current.value = '';
 			setFile(null);
 
-			//重新獲取貼文
+			//重新獲取貼文 (有收到username 則判斷為使用者個人頁面；否則為使用者共同貼圖牆頁面)
 			const getPosts = async () => {
-				const res = await axios.get('/posts/timeline/' + user._id);
+				const res = username
+					? await axios.get('/posts/profile/' + username)
+					: await axios.get('/posts/timeline/' + user._id);
 
 				//依貼文時間排序
 				setPosts(
@@ -138,21 +139,21 @@ export default function Share({ setPosts }) {
 	}
 
 	//location
-	let latitude = '';
-	let longitude = '';
-	function getLocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(showPosition);
-		} else {
-			console.log('Geolocation is not supported by this browser.');
-		}
-	}
+	// let latitude = '';
+	// let longitude = '';
+	// function getLocation() {
+	// 	if (navigator.geolocation) {
+	// 		navigator.geolocation.getCurrentPosition(showPosition);
+	// 	} else {
+	// 		console.log('Geolocation is not supported by this browser.');
+	// 	}
+	// }
 
-	function showPosition(position) {
-		latitude = position.coords.latitude;
-		longitude = position.coords.longitude;
-		console.log(latitude, longitude);
-	}
+	// function showPosition(position) {
+	// 	latitude = position.coords.latitude;
+	// 	longitude = position.coords.longitude;
+	// 	console.log(latitude, longitude);
+	// }
 
 	return (
 		<div className="share">
@@ -277,9 +278,9 @@ export default function Share({ setPosts }) {
 						>
 							<Label htmlColor="green" className="shareIcon" />
 						</div>
-						<div className="shareOption" onClick={getLocation}>
+						{/* <div className="shareOption" onClick={getLocation}>
 							<Room htmlColor="blue" className="shareIcon" />
-						</div>
+						</div> */}
 						<div
 							className="shareOption"
 							onClick={() => setEmojiModalShow(true)}

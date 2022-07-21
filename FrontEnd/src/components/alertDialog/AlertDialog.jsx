@@ -10,7 +10,7 @@ import './alertDialog.css';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import axiosJWT from '../../AxiosJWTConfig';
 
-export default function AlertDialog({ post, editPost, setPosts }) {
+export default function AlertDialog({ post, editPost, setPosts, username }) {
 	const { user: currentUser } = useContext(AuthContext);
 
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -24,9 +24,9 @@ export default function AlertDialog({ post, editPost, setPosts }) {
 			});
 
 			const getPosts = async () => {
-				const res = await axios.get(
-					'/posts/timeline/' + currentUser._id
-				);
+				const res = username
+					? await axios.get('/posts/profile/' + username)
+					: await axios.get('/posts/timeline/' + currentUser._id);
 
 				//依貼文時間排序
 				setPosts(
