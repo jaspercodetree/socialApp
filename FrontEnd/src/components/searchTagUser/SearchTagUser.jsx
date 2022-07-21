@@ -31,6 +31,7 @@ export default function SearchTagUser({
 				alt=""
 				className="searchTagUserImg"
 				onClick={(e) => {
+					e.stopPropagation();
 					setNewPost({
 						...newPost,
 						tagUserId:
@@ -42,6 +43,7 @@ export default function SearchTagUser({
 			<span
 				className="searchTagUserName"
 				onClick={(e) => {
+					e.stopPropagation();
 					setNewPost({
 						...newPost,
 						tagUserId:
