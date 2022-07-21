@@ -6,14 +6,13 @@ import { useRef } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-export default function Login() {
+export default function Login({ error }) {
 	const email = useRef();
 	const password = useRef();
 	const { isFetching, dispatch } = useContext(AuthContext);
 	// const { isFetching, setState } = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
-		//讓submit時 不要refresh page
 		e.preventDefault();
 		loginCall(
 			{
@@ -49,30 +48,23 @@ export default function Login() {
 							minLength="5"
 							ref={password}
 						/>
-						<button type="submit" className="loginButton">
+						<button type="submit" className="loginButton mb-0">
 							{isFetching ? (
-								<CircularProgress
-									color="secondary"
-									size="18px"
-								/>
+								<CircularProgress color="inherit" size="18px" />
 							) : (
 								'登入'
 							)}
 						</button>
-						<span className="loginForget">
-							<Link to="/login">忘記密碼?</Link>
+						<span className="text-center text-danger  mt-1">
+							{error}
 						</span>
-						<hr className="mt-0" />
+						{/* <span className="loginForget">
+							<Link to="/login">忘記密碼?</Link>
+						</span> */}
+						<hr className="mt-3" />
 						<Link to="/register" style={{ textAlign: 'center' }}>
 							<button className="loginRegisterButton">
-								{isFetching ? (
-									<CircularProgress
-										color="secondary"
-										size="18px"
-									/>
-								) : (
-									'註冊'
-								)}
+								註冊
 							</button>
 						</Link>
 					</form>

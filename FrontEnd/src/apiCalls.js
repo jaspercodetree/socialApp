@@ -3,14 +3,16 @@ import { LoginStart, LoginSuccess, LoginFailure } from './context/AuthAction';
 
 export const loginCall = async (userCredential, dispatch) => {
 	dispatch(LoginStart());
-	try {
-		const user = await axios.post('/auth/login', userCredential);
-		dispatch(LoginSuccess(user));
-		// alert("success");
-	} catch (error) {
-		dispatch(LoginFailure(error));
-		// alert(error);
-	}
+
+	await axios
+		.post('/auth/login', userCredential)
+		.then((res) => {
+			dispatch(LoginSuccess(res.data));
+		})
+		.catch((error) => {
+			dispatch(LoginFailure('帳號或密碼錯誤，請重新輸入'));
+			// console.log(error);
+		});
 };
 
 ////使用setState的寫法

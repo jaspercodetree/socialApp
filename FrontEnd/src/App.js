@@ -14,7 +14,8 @@ import { AuthContext } from './context/AuthContext';
 // import Upload from './pages/upload/Upload';
 
 function App() {
-	const { user } = useContext(AuthContext);
+	const { user, error } = useContext(AuthContext);
+
 	return (
 		<Router>
 			<Switch>
@@ -22,7 +23,7 @@ function App() {
 					{user ? <Home /> : <Login />}
 				</Route>
 				<Route path="/login">
-					{user ? <Redirect to="/" /> : <Login />}
+					{user ? <Redirect to="/" /> : <Login error={error} />}
 				</Route>
 				<Route path="/register">
 					<Register />

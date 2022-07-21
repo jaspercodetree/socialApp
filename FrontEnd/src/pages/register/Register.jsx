@@ -1,6 +1,6 @@
 import './register.css';
 import { Link } from 'react-router-dom';
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 import { useHistory } from 'react-router';
 import axios from 'axios';
 
@@ -11,27 +11,33 @@ export default function Register() {
 	const passwordAgain = useRef();
 
 	const history = useHistory();
+	const [isValidity, setValidity] = useState(0);
+
+	const checkPasswordConsistency = () => {
+		if (password.current.value !== passwordAgain.current.value) {
+			setValidity(1);
+		} else {
+			setValidity(0);
+		}
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (password.current.value !== passwordAgain.current.value) {
-			// passwordAgain.current.setCustomValidity(
-			// 	'您輸入的密碼不一致，請重新檢查'
-			// );
-			// alert('您輸入的密碼不一致，請重新檢查');
-		} else {
-			const user = {
-				username: username.current.value,
-				email: email.current.value,
-				password: password.current.value,
-			};
-			try {
-				await axios.post('/auth/register', user);
-				history.push('/login');
-			} catch (error) {
-				console.log(error);
-			}
-		}
+
+		const user = {
+			username: username.current.value,
+			email: email.current.value,
+			password: password.current.value,
+		};
+
+		isValidity === 0 &&
+			(await axios
+				.post('/auth/register', user)
+				.then((res) => history.push('/login'))
+				.catch((err) => {
+					setValidity(2);
+					console.log(err);
+				}));
 	};
 
 	return (
@@ -74,11 +80,17 @@ export default function Register() {
 							className="registerInput"
 							required
 							ref={passwordAgain}
+							onBlur={checkPasswordConsistency}
 						/>
-						<button className="registerButton" type="submit">
+						<button className="registerButton m-0" type="submit">
 							註冊
 						</button>
-						<hr className="mt-0" />
+						<span className="validityText text-center text-danger mt-1">
+							{isValidity === 1 &&
+								'您輸入的密碼不一致，請重新檢查'}
+							{isValidity === 2 && '此email已註冊'}
+						</span>
+						<hr className="mt-3" />
 						<Link to="/login" style={{ textAlign: 'center' }}>
 							<button className="loginRegisterButton">
 								返回登入畫面
