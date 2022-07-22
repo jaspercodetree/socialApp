@@ -108,13 +108,18 @@
 			min-width: 120px;
 			top: 42px;
 			right: 16px;
-			background-color: #fff;
+			background-color: #eee;
 			border: 1px solid rgba(0, 0, 0, 0.15);
 			border-radius: 0.5rem;
 			z-index: 50;
 
-			a {
+			@media screen and( max-width:767px) {
+				right: 0;
+			}
+
+			.personalModalBtn {
 				width: 100%;
+				box-shadow: none;
 				height: 34px;
 
 				&#personalTimeList:hover {
@@ -125,10 +130,76 @@
 					border-radius: 4px;
 				}
 
-				&#personalInfoBtn:hover {
+				&#personalInfoBtn:hover,
+				&#followingsBtn:hover,
+				&#recommendUserBtn:hover {
 					background-color: teal;
 					color: #fff !important;
 					border-radius: 4px;
+				}
+			}
+
+			//rightBarFollowings
+			.rightBarFollowings {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;
+				max-width: 100%;
+				max-height: 250px;
+				overflow-y: scroll;
+				background-color: #f8f8e8;
+
+				.rightBarFollowingsLink {
+					color: #000;
+					text-decoration: none;
+
+					&:visited {
+						color: #000;
+					}
+
+					&.noFriends {
+						pointer-events: none;
+					}
+				}
+
+				.rightBarFollowing {
+					display: flex;
+					flex-direction: column;
+					margin-bottom: 20px;
+					align-items: center;
+					cursor: pointer;
+
+					&:hover {
+						background-color: #eee;
+						border-radius: 5px;
+					}
+
+					.rightBarFollowingImg {
+						width: 100px;
+						height: 100px;
+						object-fit: cover;
+						border-radius: 5px;
+						margin-bottom: 8px;
+					}
+
+					.rightBarFollowingName {
+						text-decoration: none;
+					}
+				}
+			}
+
+			//recommendUserList
+			.recommendUserList {
+				display: flex;
+				flex-wrap: wrap;
+				max-width: 100%;
+				max-height: 250px;
+				overflow-y: scroll;
+				background-color: #f8f8e8;
+
+				.recommendUser:hover {
+					background-color: #eee;
+					border-radius: 16px;
 				}
 			}
 
@@ -140,6 +211,7 @@
 					color: #fff;
 					border-radius: 4px;
 				}
+				box-shadow: none;
 			}
 		}
 	}

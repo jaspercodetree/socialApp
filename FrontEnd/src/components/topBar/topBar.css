@@ -129,35 +129,122 @@
   min-width: 120px;
   top: 42px;
   right: 16px;
-  background-color: #fff;
+  background-color: #eee;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.5rem;
   z-index: 50;
 }
 
-.topBarRight .topBarIcons .personalModal a {
+@media screen and (max-width: 767px) {
+  .topBarRight .topBarIcons .personalModal {
+    right: 0;
+  }
+}
+
+.topBarRight .topBarIcons .personalModal .personalModalBtn {
   width: 100%;
+  -webkit-box-shadow: none;
+          box-shadow: none;
   height: 34px;
 }
 
-.topBarRight .topBarIcons .personalModal a#personalTimeList:hover {
+.topBarRight .topBarIcons .personalModal .personalModalBtn#personalTimeList:hover {
   background-color: purple;
   border-radius: 4px;
 }
 
-.topBarRight .topBarIcons .personalModal a#personalTimeList:hover span {
+.topBarRight .topBarIcons .personalModal .personalModalBtn#personalTimeList:hover span {
   color: #fff !important;
 }
 
-.topBarRight .topBarIcons .personalModal a#personalInfoBtn:hover {
+.topBarRight .topBarIcons .personalModal .personalModalBtn#personalInfoBtn:hover, .topBarRight .topBarIcons .personalModal .personalModalBtn#followingsBtn:hover, .topBarRight .topBarIcons .personalModal .personalModalBtn#recommendUserBtn:hover {
   background-color: teal;
   color: #fff !important;
   border-radius: 4px;
 }
 
+.topBarRight .topBarIcons .personalModal .rightBarFollowings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  max-width: 100%;
+  max-height: 250px;
+  overflow-y: scroll;
+  background-color: #f8f8e8;
+}
+
+.topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowingsLink {
+  color: #000;
+  text-decoration: none;
+}
+
+.topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowingsLink:visited {
+  color: #000;
+}
+
+.topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowingsLink.noFriends {
+  pointer-events: none;
+}
+
+.topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowing {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 20px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+}
+
+.topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowing:hover {
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+.topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowing .rightBarFollowingImg {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowing .rightBarFollowingName {
+  text-decoration: none;
+}
+
+.topBarRight .topBarIcons .personalModal .recommendUserList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  max-width: 100%;
+  max-height: 250px;
+  overflow-y: scroll;
+  background-color: #f8f8e8;
+}
+
+.topBarRight .topBarIcons .personalModal .recommendUserList .recommendUser:hover {
+  background-color: #eee;
+  border-radius: 16px;
+}
+
 .topBarRight .topBarIcons .personalModal button {
   width: 100%;
   height: 34px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 
 .topBarRight .topBarIcons .personalModal button#logoutBtn:hover {

@@ -1,27 +1,35 @@
 import './topBar.css';
-import { Search } from '@material-ui/icons';
+import { KeyboardArrowDown, KeyboardArrowUp, Search } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import SearchUser from '../searchUser/SearchUser';
 import axios from 'axios';
 import axiosJWT from '../../AxiosJWTConfig';
+import RecommendUser from '../recommendUser/RecommendUser';
+import { CircularProgress } from '@material-ui/core';
 
 export default function TopBar() {
 	const { user, PF } = useContext(AuthContext);
 	const [searchName, setSearchName] = useState([]);
 	const [searchUsers, setSearchUsers] = useState([]);
 	const [isModalActive, setModalActive] = useState(false);
+	const [isFetching, setIsFetching] = useState(false);
 
 	const logout = async () => {
+		setIsFetching(true);
 		//clear refreshTokens in database
-		await axiosJWT.put(`/users/${user._id}`, {
-			userId: user._id,
-			refreshTokens: [],
-		});
-		//clear localStorage
-		localStorage.removeItem('user');
-		window.location.replace('/login');
+		await axiosJWT
+			.put(`/users/${user._id}`, {
+				userId: user._id,
+				refreshTokens: [],
+			})
+			.then(() => {
+				//clear localStorage
+				localStorage.removeItem('user');
+				window.location.replace('/login');
+			})
+			.catch((err) => console.log(err));
 	};
 	//searchUsers
 	useEffect(() => {
@@ -47,7 +55,11 @@ export default function TopBar() {
 	// State for our modal
 	const [isModalOpen, setModalOpen] = useState(false);
 	// Call hook passing in the ref and a function to call on outside click
-	useOnClickOutside(ref, () => setModalOpen(false));
+	useOnClickOutside(ref, () => {
+		setModalOpen(false);
+		setFollowingsOpen(false);
+		setRecommendUserOpen(false);
+	});
 
 	function useOnClickOutside(ref, handler) {
 		useEffect(
@@ -75,6 +87,55 @@ export default function TopBar() {
 			[ref, handler]
 		);
 	}
+
+	//朋友
+	const [profileFriends, setProfileFriends] = useState([]);
+	const [followingsOpen, setFollowingsOpen] = useState(false);
+
+	const toggleFollowings = () => {
+		setFollowingsOpen(!followingsOpen);
+	};
+
+	useEffect(() => {
+		if (user && Object.entries(user).length !== 0) {
+			// console.log(Object.entries(user));
+			const getProfileFriends = async () => {
+				await axios
+					.get(`/users/friends/` + user._id)
+					.then((res) => {
+						res.data.length !== 0
+							? setProfileFriends(res.data)
+							: setProfileFriends([
+									{
+										profilePicture: 'noAvatar.png',
+										username: '好友募集中',
+									},
+							  ]);
+					})
+					.catch((err) => console.log(err));
+			};
+			getProfileFriends();
+		}
+	}, [user]);
+
+	//推薦朋友名單
+	const [recommendUsers, setRecommendUsers] = useState([]);
+	const [recommendUserOpen, setRecommendUserOpen] = useState(false);
+	const toggleRecommendUser = () => {
+		setRecommendUserOpen(!recommendUserOpen);
+	};
+
+	useEffect(() => {
+		if (user != null) {
+			const getUsers = async () => {
+				await axios
+					.get(`/users/${user._id}/recommendUsers`)
+					.then((res) => setRecommendUsers(res.data))
+					.catch((err) => console.log(err));
+			};
+			getUsers();
+		}
+	}, [user]);
 
 	return (
 		<div className="topBarContainer container-fluid">
@@ -162,14 +223,14 @@ export default function TopBar() {
 							className={`personalModal position-absolute d-flex flex-column align-items-center p-2 ${
 								isModalOpen ? '' : 'd-none'
 							}`}
-							onClick={(e) => {
-								setModalOpen(false);
-							}}
 						>
 							<Link
 								id="personalTimeList"
-								className="w-100 text-center mb-1 d-flex align-items-center justify-content-center"
+								className="personalModalBtn w-100 text-center mb-1 d-flex align-items-center justify-content-center"
 								to={`/profile/${user.username}`}
+								onClick={(e) => {
+									setModalOpen(false);
+								}}
 							>
 								<span className="topBarUsername text-black">
 									{user.username}
@@ -179,18 +240,117 @@ export default function TopBar() {
 							<Link
 								name="personalInfoBtn"
 								id="personalInfoBtn"
-								className="btn text-black my-1"
+								className="personalModalBtn btn text-black mt-1"
 								to={`/profile/${user.username}/personalInfo`}
+								onClick={(e) => {
+									setModalOpen(false);
+								}}
 							>
 								編輯個人資料
 							</Link>
+
+							{/* 朋友列表 */}
+							<button
+								id="followingsBtn"
+								className="personalModalBtn btn text-black mb-1"
+								onClick={toggleFollowings}
+							>
+								<span>朋友列表</span>
+								<span>
+									{followingsOpen ? (
+										<KeyboardArrowUp />
+									) : (
+										<KeyboardArrowDown />
+									)}
+								</span>
+							</button>
+							<div
+								className={`rightBarFollowings pt-3 mb-2 w-100 ${
+									followingsOpen ? '' : 'd-none'
+								}`}
+							>
+								{profileFriends.map((friend) => (
+									<Link
+										to={`/profile/${friend.username}`}
+										style={{}}
+										key={friend._id || 'noFriends'}
+										className={`rightBarFollowingsLink px-3 ${
+											friend.username === '好友募集中' &&
+											'noFriends'
+										}`}
+										onClick={(e) => {
+											setModalOpen(false);
+										}}
+									>
+										<div className="rightBarFollowing">
+											<img
+												src={
+													friend.profilePicture
+														? PF +
+														  `person/${friend.profilePicture}`
+														: PF +
+														  '/person/noAvatar.png'
+												}
+												alt=""
+												className="rightBarFollowingImg"
+											/>
+											<span className="rightBarFollowingName">
+												{friend.username}
+											</span>
+										</div>
+									</Link>
+								))}
+							</div>
+
+							{/* 推薦朋友名單 */}
+							<button
+								id="recommendUserBtn"
+								className="personalModalBtn btn text-black mb-1"
+								onClick={toggleRecommendUser}
+							>
+								<span>推薦追蹤</span>
+								<span>
+									{recommendUserOpen ? (
+										<KeyboardArrowUp />
+									) : (
+										<KeyboardArrowDown />
+									)}
+								</span>
+							</button>
+							<ul
+								className={`recommendUserList p-3 mb-2 w-100 ${
+									recommendUserOpen ? '' : 'd-none'
+								}`}
+							>
+								{recommendUsers.map((u) => (
+									<Link
+										to={`/profile/${u.username}`}
+										style={{ textDecoration: 'none' }}
+										className="text-black w-100"
+										key={u._id}
+										onClick={(e) => {
+											setModalOpen(false);
+										}}
+									>
+										<RecommendUser user={u} />
+									</Link>
+								))}
+							</ul>
+
 							<button
 								name="logoutBtn"
 								id="logoutBtn"
 								className="btn"
 								onClick={logout}
 							>
-								登出
+								{isFetching ? (
+									<CircularProgress
+										color="inherit"
+										size="18px"
+									/>
+								) : (
+									'登出'
+								)}
 							</button>
 						</div>
 					</div>
