@@ -115,6 +115,7 @@
 
 			@media screen and( max-width:767px) {
 				right: 0;
+				min-width: 100%;
 			}
 
 			.personalModalBtn {
@@ -141,13 +142,18 @@
 
 			//rightBarFollowings
 			.rightBarFollowings {
-				display: flex;
-				flex-wrap: wrap;
+				display: grid;
+				grid-template-columns: repeat(auto-fill, 100px);
 				justify-content: space-around;
+				grid-gap: 16px;
 				max-width: 100%;
 				max-height: 250px;
 				overflow-y: scroll;
 				background-color: #f8f8e8;
+
+				@media screen and (min-width: 767px) {
+					min-width: 300px;
+				}
 
 				.rightBarFollowingsLink {
 					color: #000;

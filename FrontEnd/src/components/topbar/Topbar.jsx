@@ -118,7 +118,7 @@ export default function TopBar() {
 		}
 	}, [user]);
 
-	//推薦朋友名單
+	//推薦追蹤
 	const [recommendUsers, setRecommendUsers] = useState([]);
 	const [recommendUserOpen, setRecommendUserOpen] = useState(false);
 	const toggleRecommendUser = () => {
@@ -302,7 +302,7 @@ export default function TopBar() {
 								))}
 							</div>
 
-							{/* 推薦朋友名單 */}
+							{/* 推薦追蹤 */}
 							<button
 								id="recommendUserBtn"
 								className="personalModalBtn btn text-black mb-1"

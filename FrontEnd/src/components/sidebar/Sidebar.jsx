@@ -25,7 +25,7 @@ export default function Sidebar() {
 	return (
 		<div className="sidebar d-none d-lg-block col-lg-2">
 			<div className="sidebarWrapper">
-				<h6 className="mb-3 ms-1 ">推薦朋友名單</h6>
+				<h6 className="mb-3 ms-1 fw-bold">推薦追蹤</h6>
 				<ul className="recommendUserList">
 					{recommendUsers.map((u) => (
 						<Link
@@ -39,9 +39,7 @@ export default function Sidebar() {
 					))}
 				</ul>
 				<Advertisement />
-				<Advertisement />
-				<Advertisement />
-				<Advertisement />
+
 				{/* <hr className="sidebarHr" />
 
 				<ul className="sidebarList">

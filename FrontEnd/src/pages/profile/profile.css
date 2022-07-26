@@ -1,9 +1,3 @@
-.profile {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .profileRightTop .profileCover {
   height: 320px;
   position: relative;

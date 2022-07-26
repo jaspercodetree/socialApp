@@ -2,6 +2,7 @@
   padding: 16px 32px;
   background-color: #fff;
   border-radius: 12px;
+  /* select */
 }
 
 .personalInfoWrap .personalInfoBox .personalInfoBtn {
@@ -14,7 +15,8 @@
   margin-bottom: 4px;
 }
 
-.personalInfoWrap .personalInfoBox input {
+.personalInfoWrap .personalInfoBox input,
+.personalInfoWrap .personalInfoBox select {
   height: 48px;
   border-radius: 8px;
   border: 0.5px solid #a1aab9;
@@ -22,14 +24,28 @@
   margin-bottom: 16px;
 }
 
-.personalInfoWrap .personalInfoBox input:focus {
+.personalInfoWrap .personalInfoBox input:focus,
+.personalInfoWrap .personalInfoBox select:focus {
   outline: none;
 }
 
-.personalInfoWrap .personalInfoBox input:disabled {
+.personalInfoWrap .personalInfoBox input:disabled,
+.personalInfoWrap .personalInfoBox select:disabled {
   border-width: 0 0 1px 0;
   border-radius: 0;
   background-color: transparent;
+}
+
+.personalInfoWrap .personalInfoBox select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.personalInfoWrap .personalInfoBox select.selectArrow {
+  background-image: linear-gradient(45deg, transparent 50%, #888 50%), linear-gradient(135deg, #888 50%, transparent 50%) !important;
+  background-position: calc(100% - 25px) 20px, calc(100% - 19px) 20px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
 }
 
 .personalInfoWrap .personalInfoBox textarea {

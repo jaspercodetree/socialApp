@@ -35,8 +35,10 @@ export default function Post({
 	//A.
 	useEffect(() => {
 		const getUser = async () => {
-			const res = await axios.get(`/users?userId=${post.userId}`);
-			setUser(res.data);
+			await axios
+				.get(`/users?userId=${post.userId}`)
+				.then((res) => setUser(res.data))
+				.catch((err) => console.log(err));
 		};
 		getUser();
 	}, [post.userId]);
@@ -46,17 +48,16 @@ export default function Post({
 		setIsLiked(post.likes.includes(currentUser._id));
 	}, [currentUser._id, post.likes]);
 
-	const likeHandler = () => {
-		try {
-			axiosJWT.put('/posts/' + post._id + '/like', {
+	const likeHandler = async () => {
+		await axiosJWT
+			.put('/posts/' + post._id + '/like', {
 				userId: currentUser._id,
-			});
-		} catch (err) {
-			console.log(err);
-		}
-
-		isLiked ? setLike(like - 1) : setLike(like + 1);
-		setIsLiked(!isLiked);
+			})
+			.then(() => {
+				isLiked ? setLike(like - 1) : setLike(like + 1);
+				setIsLiked(!isLiked);
+			})
+			.catch((err) => console.log(err));
 	};
 
 	//get tagUserName

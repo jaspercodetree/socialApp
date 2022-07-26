@@ -1,10 +1,3 @@
-.rightBar {
-	.rightBarWrapper {
-		padding: 16px;
-	}
-}
-
-//birthdayContainer
 .birthdayContainer {
 	display: flex;
 	align-items: center;
@@ -19,12 +12,6 @@
 	}
 }
 
-.rightBarTitle {
-	font-weight: 700;
-	margin: 20px 0;
-}
-
-//rightBarFriendList
 .rightBarFriendList {
 	list-style: none;
 	padding: 0;
@@ -43,12 +30,30 @@
 	margin-top: 42px;
 	cursor: pointer;
 	max-width: 130px;
+
+	&.unFollowBtn {
+		background-color: #eee;
+	}
+
+	@media screen and (max-width: 767px) {
+		margin-top: 0;
+		margin-bottom: 16px;
+		max-width: 100%;
+	}
 }
 
 .rightBarTitle {
 	font-size: 18px;
 	font-weight: 500;
 	margin-bottom: 10px;
+
+	@media screen and (max-width: 767px) {
+		cursor: pointer;
+		text-align: center;
+		&:hover {
+			background-color: #fcfcd0;
+		}
+	}
 }
 
 //rightBarInfo
@@ -68,9 +73,10 @@
 
 //rightBarFollowings
 .rightBarFollowings {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 100px);
+	justify-content: space-around;
+	grid-gap: 16px;
 
 	.rightBarFollowingsLink {
 		color: #000;
@@ -88,7 +94,6 @@
 	.rightBarFollowing {
 		display: flex;
 		flex-direction: column;
-		margin-bottom: 20px;
 		align-items: center;
 		cursor: pointer;
 

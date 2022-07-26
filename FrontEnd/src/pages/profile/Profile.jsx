@@ -42,7 +42,7 @@ export default function Profile({ isPersonalInfo }) {
 	return (
 		<>
 			<TopBar />
-			<div className="profile">
+			<div className="profile d-flex">
 				<Sidebar />
 				<div className="profileRight col-12 col-lg-10">
 					<div className="profileRightTop">
@@ -62,12 +62,12 @@ export default function Profile({ isPersonalInfo }) {
 								className="profileUserImg"
 							/>
 						</div>
-						<div className="profileInfo">
+						<div className="profileInfo px-4 px-md-5">
 							<h4 className="profileInfoName">{user.username}</h4>
 							<span className="profileInfoDesc">{user.desc}</span>
 						</div>
 					</div>
-					<div className="profileRightBottom">
+					<div className="profileRightBottom d-flex flex-column-reverse flex-md-row">
 						<Feed
 							username={username}
 							isPersonalInfo={isPersonalInfo}

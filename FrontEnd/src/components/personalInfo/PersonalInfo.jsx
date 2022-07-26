@@ -12,6 +12,8 @@ export default function PersonalInfo({ getUser }) {
 	const [username, setUsername] = useState(user.username);
 	const [email, setEmail] = useState(user.email);
 	const [city, setCity] = useState(user.city);
+	const [hometown, setHometown] = useState(user.from);
+	const [relationship, setRelationship] = useState(user.relationship);
 	const [desc, setDesc] = useState(user.desc);
 	const [fileProfileImg, setFileProfileImg] = useState(null);
 	const [fileCoverImg, setFileCoverImg] = useState(null);
@@ -28,6 +30,8 @@ export default function PersonalInfo({ getUser }) {
 		setUsername(user.username);
 		setEmail(user.email);
 		setCity(user.city);
+		setHometown(user.from);
+		setRelationship(user.relationship);
 		setDesc(user.desc);
 
 		setFileProfileImg(null);
@@ -41,6 +45,8 @@ export default function PersonalInfo({ getUser }) {
 			username: username,
 			email: email,
 			city: city,
+			from: hometown,
+			relationship: relationship,
 			desc: desc,
 			profilePicture: user.profilePicture,
 			coverPicture: user.coverPicture,
@@ -183,7 +189,7 @@ export default function PersonalInfo({ getUser }) {
 
 					<div className="row justify-content-center">
 						<div className="form-group col-12 col-lg-8">
-							<label htmlFor="userCity">居住城市</label>
+							<label htmlFor="userCity">現居</label>
 							<input
 								id="userCity"
 								name="userCity"
@@ -194,6 +200,46 @@ export default function PersonalInfo({ getUser }) {
 								value={city}
 								onChange={(e) => setCity(e.target.value)}
 							/>
+						</div>
+					</div>
+
+					<div className="row justify-content-center">
+						<div className="form-group col-12 col-lg-8">
+							<label htmlFor="userHometown">來自</label>
+							<input
+								id="userHometown"
+								name="userHometown"
+								className="w-100"
+								type="text"
+								required
+								disabled={!isEditable}
+								value={hometown}
+								onChange={(e) => setHometown(e.target.value)}
+							/>
+						</div>
+					</div>
+
+					<div className="row justify-content-center">
+						<div className="form-group col-12 col-lg-8">
+							<label htmlFor="userRelationship">關係</label>
+							<select
+								id="userRelationship"
+								name="userRelationship"
+								className={`w-100 ${
+									isEditable && 'selectArrow'
+								}`}
+								type="text"
+								required
+								disabled={!isEditable}
+								value={relationship}
+								onChange={(e) =>
+									setRelationship(e.target.value)
+								}
+							>
+								<option value="0">單身</option>
+								<option value="1">穩定交往中</option>
+								<option value="2">secret</option>
+							</select>
 						</div>
 					</div>
 

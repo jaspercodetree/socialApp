@@ -15,6 +15,8 @@ router.post('/register', async (req, res) => {
 			username: req.body.username,
 			email: req.body.email,
 			password: hashPassword,
+			//預設追蹤
+			followings: ['60e553e65cd1772ce8f1e3ea'],
 		});
 
 		//儲存&回傳值到前端
