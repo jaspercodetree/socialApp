@@ -1,3 +1,4 @@
+/* 贊助元件 */
 import React from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';

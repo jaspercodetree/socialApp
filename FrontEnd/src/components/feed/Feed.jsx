@@ -1,3 +1,4 @@
+/* 中間核心欄位 */
 import './feed.css';
 import Post from '../post/Post';
 import Share from '../share/Share';
@@ -14,7 +15,6 @@ export default function Feed({
 }) {
 	const [posts, setPosts] = useState([]);
 	const [isGetData, setIsGetData] = useState(false);
-	//random gif
 	const [randomNo, setRandomNo] = useState();
 
 	const { user, PF } = useContext(AuthContext);

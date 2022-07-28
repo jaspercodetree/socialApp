@@ -1,3 +1,4 @@
+/* 發文元件 */
 import './share.css';
 import {
 	PermMedia,

@@ -1,6 +1,6 @@
+/* 廣告元件 */
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import './advertisement.css';
 
 export default function Advertisement() {
 	const { PF } = useContext(AuthContext);
