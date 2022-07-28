@@ -18,11 +18,8 @@ export default function Post({
 }) {
 	const [post, setPost] = useState(originPost);
 
-	//A.此處user與useEffect的getUser 是指去獲得  好友圈內每一則post貼文的發文者user
-	const [user, setUser] = useState({});
-
-	//B.like相關
-	//此處user 由於與A處的名稱重複，因此我們起一個暱稱currentUser代替，currentUser代表的是登入的使用者資料
+	//like
+	//此處user 起一個暱稱currentUser代替，currentUser代表的是登入的使用者資料
 	const { user: currentUser, PF } = useContext(AuthContext);
 	const [like, setLike] = useState(post.likes.length);
 	const [isLiked, setIsLiked] = useState(false);
@@ -32,18 +29,6 @@ export default function Post({
 
 	const [tagUserName, setTagUserName] = useState('');
 
-	//A.
-	useEffect(() => {
-		const getUser = async () => {
-			await axios
-				.get(`/users?userId=${post.userId}`)
-				.then((res) => setUser(res.data))
-				.catch((err) => console.log(err));
-		};
-		getUser();
-	}, [post.userId]);
-
-	//B.
 	useEffect(() => {
 		setIsLiked(post.likes.includes(currentUser._id));
 	}, [currentUser._id, post.likes]);
@@ -266,7 +251,7 @@ export default function Post({
 
 			//更新資料
 			const updateData = {
-				userId: user._id,
+				userId: post.userId,
 				_id: _id,
 				desc: postShareInput.current.value,
 				isPostEditEver: true,
@@ -346,18 +331,18 @@ export default function Post({
 			<div className="postWrapper">
 				<div className="postTop">
 					<div className="postTopLeft">
-						<Link to={`/profile/${user.username}`}>
+						<Link to={`/profile/${post.username}`}>
 							<img
 								src={
-									user.profilePicture
-										? PF + `person/${user.profilePicture}`
+									post.profilePicture
+										? PF + `person/${post.profilePicture}`
 										: PF + `person/noAvatar.png`
 								}
 								alt=""
 								className="postProfileImg"
 							/>
 						</Link>
-						<span className="postUsername">{user.username}</span>
+						<span className="postUsername">{post.username}</span>
 						{post.emojiImg && (
 							<span className="emojiWrapper">
 								<span className="postEmojiImg">
@@ -558,12 +543,12 @@ export default function Post({
 				</div>
 				<div className="postBottom">
 					<div className="postBottomLeft">
-						<img
+						{/* <img
 							src={`${PF}like.png`}
 							alt=""
 							className="likeIcon"
 							onClick={likeHandler}
-						/>
+						/> */}
 						<img
 							src={`${PF}heart.png`}
 							alt=""

@@ -18,8 +18,30 @@ router.post('/', verify, async (req, res) => {
 //get a post
 router.get('/:id', async (req, res) => {
 	try {
+		//a.1 貼文
 		const post = await Post.findById(req.params.id);
-		res.status(200).json(post);
+		const postUserId = post.userId;
+		// console.log(post._doc);
+
+		//a.2 貼文個人資料
+		const postUserInfo = await User.find(
+			{ _id: postUserId },
+			{
+				username: 1,
+				profilePicture: 1,
+			}
+		);
+		// console.log(postUserInfo[0]._doc);
+
+		//a.3 結合a.1&a.2
+		let newPostUserPosts = Object.assign(
+			{},
+			postUserInfo[0]._doc,
+			post._doc
+		);
+		// console.log(newPostUserPosts);
+
+		res.status(200).json(newPostUserPosts);
 	} catch (err) {
 		res.status(500).json(err);
 	}
@@ -91,37 +113,122 @@ router.put('/:id/like', verify, async (req, res) => {
 	}
 });
 
-//貼文牆 (自己與已追蹤followings的好友)
+//貼文牆 (自己與已追蹤followings的好友 所有推文)
 router.get('/timeline/:id', async (req, res) => {
 	try {
-		//自己的貼文
-		const currentUserPosts = await Post.find({ userId: req.params.id });
-
-		//朋友的貼文
-		const currentUser = await User.findById(req.params.id);
-		const followingsUserIds = await currentUser.followings; //array
-		const friendPosts = await Promise.all(
-			followingsUserIds.map((friendId) => Post.find({ userId: friendId }))
+		//a.自己的貼文
+		//a.1 自己的個人資料
+		const currentUserInfo = await User.find(
+			{ _id: req.params.id },
+			{
+				username: 1,
+				profilePicture: 1,
+				followings: 1,
+			}
 		);
+		// console.log(currentUserInfo);
 
-		//合併兩個陣列,所有貼文
-		//此處要用展開運算符，才能只拿出friendPosts陣列裡面的資料合併
-		const timelinePosts = currentUserPosts.concat(...friendPosts);
-		res.status(200).json(timelinePosts);
+		//a.2 自己的所有貼文
+		const currentUserPosts = await Post.find({ userId: req.params.id });
+		// console.log(currentUserPosts);
+
+		//a.3 結合a.1&a.2
+		let newCurrentUserPosts = [];
+		currentUserPosts.forEach((item) => {
+			// console.log(item._doc);
+			// console.log(currentUserPosts[0]._doc);
+
+			newCurrentUserPosts.push(
+				Object.assign({}, currentUserInfo[0]._doc, item._doc)
+			);
+		});
+		// console.log(newCurrentUserPosts);
+
+		//b.朋友的貼文
+		//所有朋友的id array
+		const followingsUserIds = currentUserInfo[0].followings;
+
+		let followingsUserPost;
+		let followingsUserInfo;
+		let newFollowingsUserPost = [];
+
+		//由於要同步處理，因此使用for await
+		const getFriendPosts = async () => {
+			for await (const friendId of followingsUserIds) {
+				//b.1.朋友個人資訊
+				followingsUserInfo = await User.find(
+					{ _id: friendId },
+					{
+						username: 1,
+						profilePicture: 1,
+						followings: 1,
+					}
+				);
+				// console.log(followingsUserInfo);
+
+				//b.2.朋友所有貼文
+				followingsUserPost = await Post.find({ userId: friendId });
+				// console.log(followingsUserPost);
+
+				//b.3.結合b.1&b.2的新陣列
+				followingsUserPost.forEach((item) => {
+					// console.log(item._doc);
+					// console.log(followingsUserInfo[0]._doc);
+
+					newFollowingsUserPost.push(
+						Object.assign({}, followingsUserInfo[0]._doc, item._doc)
+					);
+				});
+			}
+			// console.log(newFollowingsUserPost);
+
+			//c.合併a&b陣列,得到自己與朋友的所有貼文
+			const timelinePosts = newCurrentUserPosts.concat(
+				newFollowingsUserPost
+			);
+			// console.log(timelinePosts);
+
+			res.status(200).json(timelinePosts);
+		};
+		getFriendPosts();
 	} catch (err) {
 		res.status(500).json(err);
 	}
 });
 
-//個人頁面 (自己所有貼文)
+//個人頁面 (個人所有貼文)
 router.get('/profile/:username', async (req, res) => {
 	try {
-		const currentUser = await User.findOne({
-			username: req.params.username,
-		});
-		const posts = await Post.find({ userId: currentUser._id });
+		//a.自己的貼文
+		//a.1 自己的個人資料
+		const currentUserInfo = await User.find(
+			{ username: req.params.username },
+			{
+				username: 1,
+				profilePicture: 1,
+			}
+		);
+		// console.log(currentUserInfo);
 
-		res.status(200).json(posts);
+		//a.2 自己的所有貼文
+		const currentUserPosts = await Post.find({
+			userId: currentUserInfo[0]._id,
+		});
+		// console.log(currentUserPosts);
+
+		//a.3 結合a.1&a.2
+		let newCurrentUserPosts = [];
+		currentUserPosts.forEach((item) => {
+			// console.log(item._doc);
+			// console.log(currentUserPosts[0]._doc);
+
+			newCurrentUserPosts.push(
+				Object.assign({}, currentUserInfo[0]._doc, item._doc)
+			);
+		});
+		// console.log(newCurrentUserPosts);
+
+		res.status(200).json(newCurrentUserPosts);
 	} catch (err) {
 		res.status(500).json(err);
 	}
