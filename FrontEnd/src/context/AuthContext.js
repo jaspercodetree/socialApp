@@ -15,9 +15,9 @@ export const AuthContext = createContext(INITIAL_STATE);
 export const AuthContextProvider = ({ children }) => {
 	//引入reducer
 	const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
-	// const [state, setState] = useState(INITIAL_STATE);
+	// 類似const [state, setState] = useState(INITIAL_STATE);
 
-	console.log(state.user);
+	// console.log(state.user);
 	//將登入後的拿到的user 轉JSON存在localstorage
 	useEffect(() => {
 		localStorage.setItem('user', JSON.stringify(state.user));
@@ -30,7 +30,6 @@ export const AuthContextProvider = ({ children }) => {
 				isFetching: state.isFetching,
 				error: state.error,
 				dispatch,
-				// setState,
 				PF: 'http://localhost:8800/images/',
 			}}
 		>

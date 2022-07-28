@@ -13,6 +13,7 @@ export default function Register() {
 	const history = useHistory();
 	const [isValidity, setValidity] = useState(0);
 
+	//密碼相同驗證
 	const checkPasswordConsistency = () => {
 		if (password.current.value !== passwordAgain.current.value) {
 			setValidity(1);

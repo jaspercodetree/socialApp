@@ -11,7 +11,6 @@ import {
 } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
-// import Upload from './pages/upload/Upload';
 
 function App() {
 	const { user, error } = useContext(AuthContext);
@@ -28,15 +27,13 @@ function App() {
 				<Route path="/register">
 					<Register />
 				</Route>
+				{/* isPersonalInfo 分別個人頁面與編輯個人頁面 */}
 				<Route exact path="/profile/:username">
 					<Profile />
 				</Route>
 				<Route path="/profile/:username/personalInfo">
 					<Profile isPersonalInfo={true} />
 				</Route>
-				{/* <Route path="/upload">
-					<Upload />
-				</Route> */}
 			</Switch>
 		</Router>
 	);

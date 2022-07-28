@@ -10,7 +10,6 @@ export default function Login({ error }) {
 	const email = useRef();
 	const password = useRef();
 	const { isFetching, dispatch } = useContext(AuthContext);
-	// const { isFetching, setState } = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -20,7 +19,6 @@ export default function Login({ error }) {
 				password: password.current.value,
 			},
 			dispatch
-			// setState
 		);
 	};
 

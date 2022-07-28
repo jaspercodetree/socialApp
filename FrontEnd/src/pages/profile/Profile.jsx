@@ -20,7 +20,6 @@ export default function Profile({ isPersonalInfo }) {
 		await axios
 			.get(`/users?username=${username}`)
 			.then((res) => {
-				// console.log(res.data);
 				if (res.data.coverPicture) {
 					res.data.coverPictureSrc =
 						PF + `person/${res.data.coverPicture}`;
@@ -36,8 +35,6 @@ export default function Profile({ isPersonalInfo }) {
 	useEffect(() => {
 		getUser();
 	}, [username, PF, getUser]);
-
-	// console.log(user);
 
 	return (
 		<>
