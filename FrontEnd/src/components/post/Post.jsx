@@ -20,7 +20,7 @@ export default function Post({
 
 	//like
 	//此處user 起一個暱稱currentUser代替，currentUser代表的是登入的使用者資料
-	const { user: currentUser, PF } = useContext(AuthContext);
+	const { user, PF } = useContext(AuthContext);
 	const [like, setLike] = useState(post.likes.length);
 	const [isLiked, setIsLiked] = useState(false);
 
@@ -30,13 +30,13 @@ export default function Post({
 	const [tagUserName, setTagUserName] = useState('');
 
 	useEffect(() => {
-		setIsLiked(post.likes.includes(currentUser._id));
-	}, [currentUser._id, post.likes]);
+		setIsLiked(post.likes.includes(user._id));
+	}, [user._id, post.likes]);
 
 	const likeHandler = async () => {
 		await axiosJWT
 			.put('/posts/' + post._id + '/like', {
-				userId: currentUser._id,
+				userId: user._id,
 			})
 			.then(() => {
 				isLiked ? setLike(like - 1) : setLike(like + 1);
@@ -86,9 +86,9 @@ export default function Post({
 					.put(`/posts/${post._id}/addComment`, {
 						comment: {
 							_id: _id,
-							commentUserId: currentUser._id,
-							commentUsername: currentUser.username,
-							commentProfilePic: currentUser.profilePicture,
+							commentUserId: user._id,
+							commentUsername: user.username,
+							commentProfilePic: user.profilePicture,
 							commentText: writeComment,
 							commentCreatedAt: new Date(),
 						},
@@ -381,7 +381,7 @@ export default function Post({
 							<span className="postEditTime ms-2">已編輯</span>
 						)}
 					</div>
-					{post.userId === currentUser._id && (
+					{post.userId === user._id && (
 						<div className="postTopRight">
 							<AlertDialog
 								post={post}
@@ -566,9 +566,8 @@ export default function Post({
 						<div className="commentShareLeft">
 							<img
 								src={
-									currentUser.profilePicture
-										? PF +
-										  `person/${currentUser.profilePicture}`
+									user.profilePicture
+										? PF + `person/${user.profilePicture}`
 										: PF + `person/noAvatar.png`
 								}
 								alt=""

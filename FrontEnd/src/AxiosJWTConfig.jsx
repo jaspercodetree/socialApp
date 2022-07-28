@@ -7,7 +7,7 @@ import { AuthContext } from './context/AuthContext';
 const axiosJWT = axios.create();
 
 const AxiosJWTConfig = ({ children }) => {
-	const { user: currentUser, dispatch } = useContext(AuthContext);
+	const { user, dispatch } = useContext(AuthContext);
 
 	//大坑注意!interceptors會持續run，因此要在使用後 停止他
 	// console.log(axios.interceptors.request.handlers);
@@ -19,9 +19,9 @@ const AxiosJWTConfig = ({ children }) => {
 	const refreshToken = async () => {
 		try {
 			const res = await axios.post('/auth/refresh', {
-				token: currentUser.refreshToken,
-				refreshTokens: currentUser.refreshTokens,
-				userId: currentUser._id,
+				token: user.refreshToken,
+				refreshTokens: user.refreshTokens,
+				userId: user._id,
 			});
 
 			//更新useContext user data
@@ -34,11 +34,11 @@ const AxiosJWTConfig = ({ children }) => {
 				},
 			});
 			// 以上類似 setUser({
-			// 	...currentUser._doc,
+			// 	...user._doc,
 			// 	accessToken: res.data.accessToken,
 			// 	refreshToken: res.data.refreshToken,
 			// });
-			// console.log(currentUser);
+			// console.log(user);
 			// console.log(res.data);
 
 			return res.data;
@@ -56,8 +56,8 @@ const AxiosJWTConfig = ({ children }) => {
 			let currentDate = new Date();
 			// console.log(axiosJWT.interceptors.request.handlers);
 
-			const decodedToken = jwt_decode(currentUser.accessToken);
-			// console.log(jwt_decode(currentUser.accessToken));
+			const decodedToken = jwt_decode(user.accessToken);
+			// console.log(jwt_decode(user.accessToken));
 
 			if (decodedToken.exp * 1000 < currentDate.getTime()) {
 				let data = await refreshToken();
@@ -69,8 +69,7 @@ const AxiosJWTConfig = ({ children }) => {
 					'JWT accessToken expire, refresh new access&fresh token'
 				);
 			} else {
-				config.headers['authorization'] =
-					'Bearer ' + currentUser.accessToken;
+				config.headers['authorization'] = 'Bearer ' + user.accessToken;
 				console.log('JWT origin accessToken can be used');
 			}
 
