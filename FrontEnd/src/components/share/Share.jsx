@@ -15,6 +15,7 @@ import { Modal } from 'react-bootstrap';
 import SearchTagUser from '../searchTagUser/SearchTagUser';
 import { Link } from 'react-router-dom';
 import axiosJWT from '../../AxiosJWTConfig';
+import { checkAndSetFile } from '../../checkAndSetFile';
 
 export default function Share({ setPosts, username }) {
 	const { user, PF } = useContext(AuthContext);
@@ -30,6 +31,7 @@ export default function Share({ setPosts, username }) {
 	const [searchTagUsers, setSearchTagUsers] = useState([]);
 	const [allUsers, setAllUsers] = useState([]);
 	const [tagUserName, setTagUserName] = useState('');
+
 	//searchTagUsers
 	useEffect(() => {
 		if (searchName.length !== 0) {
@@ -269,8 +271,11 @@ export default function Share({ setPosts, username }) {
 								type="file"
 								name="uploadFile"
 								id="uploadFile"
-								accept=".png, .jpg, .jpeg"
-								onChange={(e) => setFile(e.target.files[0])}
+								accept=".png, .jpg, .jpeg, .gif"
+								onChange={(e) =>
+									checkAndSetFile(e.target) &&
+									setFile(e.target.files[0])
+								}
 							/>
 						</label>
 						<div

@@ -10,6 +10,7 @@ import AlertDialog from '../alertDialog/AlertDialog';
 import CommentItem from '../commentItem/CommentItem';
 import { Cancel, NearMeTwoTone, PermMedia } from '@material-ui/icons';
 import axiosJWT from '../../AxiosJWTConfig';
+import { checkAndSetFile } from '../../checkAndSetFile';
 
 export default function Post({
 	originPost,
@@ -287,7 +288,7 @@ export default function Post({
 		<div className="post">
 			<div className="postWrapper">
 				<div className="postTop">
-					<div className="postTopLeft">
+					<div className="postTopLeft flex-wrap">
 						<Link to={`/profile/${post.username}`}>
 							<img
 								src={
@@ -420,9 +421,12 @@ export default function Post({
 										name={`uploadPostFile_${post._id}`}
 										id={`uploadPostFile_${post._id}`}
 										className={``}
-										accept=".png, .jpg, .jpeg"
+										accept=".png, .jpg, .jpeg, .gif"
 										onChange={(e) => {
-											setFilePostImg(e.target.files[0]);
+											checkAndSetFile(e.target) &&
+												setFilePostImg(
+													e.target.files[0]
+												);
 										}}
 									/>
 								</label>

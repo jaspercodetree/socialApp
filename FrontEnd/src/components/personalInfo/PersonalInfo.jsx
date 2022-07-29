@@ -4,6 +4,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { Cancel, Edit, PermMedia } from '@material-ui/icons';
 import axiosJWT from '../../AxiosJWTConfig';
+import { checkAndSetFile } from '../../checkAndSetFile';
 
 export default function PersonalInfo({ getUser }) {
 	const { user, dispatch, PF } = useContext(AuthContext);
@@ -281,11 +282,12 @@ export default function PersonalInfo({ getUser }) {
 										name="uploadProfileFile"
 										id="uploadProfileFile"
 										className={``}
-										accept=".png, .jpg, .jpeg"
+										accept=".png, .jpg, .jpeg, .gif"
 										onChange={(e) => {
-											setFileProfileImg(
-												e.target.files[0]
-											);
+											checkAndSetFile(e.target) &&
+												setFileProfileImg(
+													e.target.files[0]
+												);
 										}}
 									/>
 								</label>
@@ -350,9 +352,12 @@ export default function PersonalInfo({ getUser }) {
 										name="uploadCoverFile"
 										id="uploadCoverFile"
 										className={``}
-										accept=".png, .jpg, .jpeg"
+										accept=".png, .jpg, .jpeg, .gif"
 										onChange={(e) => {
-											setFileCoverImg(e.target.files[0]);
+											checkAndSetFile(e.target) &&
+												setFileCoverImg(
+													e.target.files[0]
+												);
 										}}
 									/>
 								</label>
