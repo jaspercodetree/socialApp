@@ -16,7 +16,7 @@ export default function Sponsor() {
 					target="_blank"
 				>
 					<img
-						src={PF + `sponsorAndAd/ad_0.png`}
+						src={PF + `sponsorAndAd/ad_0.jpg`}
 						alt=""
 						className="adImg w-100 rounded-3"
 					/>

@@ -153,7 +153,7 @@ export default function RightBar({ user, isHomePage }) {
 				>
 					<div
 						className={`jasperInfo ${
-							user.username === 'jasper' ? '' : 'd-none'
+							user.username === 'Jasper' ? '' : 'd-none'
 						}`}
 					>
 						<div className="rightBarInfoItem">
@@ -256,7 +256,7 @@ export default function RightBar({ user, isHomePage }) {
 									alt=""
 									className="rightBarFollowingImg"
 								/>
-								<span className="rightBarFollowingName">
+								<span className="rightBarFollowingName text-center">
 									{friend.username}
 								</span>
 							</div>

@@ -198,6 +198,7 @@
 }
 
 .topBarRight .topBarIcons .personalModal .rightBarFollowings .rightBarFollowing {
+  width: 100px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

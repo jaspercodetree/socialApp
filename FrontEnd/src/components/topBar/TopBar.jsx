@@ -275,7 +275,7 @@ export default function TopBar() {
 										to={`/profile/${friend.username}`}
 										style={{}}
 										key={friend._id || 'noFriends'}
-										className={`rightBarFollowingsLink px-3 ${
+										className={`rightBarFollowingsLink ${
 											friend.username === '好友募集中' &&
 											'noFriends'
 										}`}
@@ -295,7 +295,7 @@ export default function TopBar() {
 												alt=""
 												className="rightBarFollowingImg"
 											/>
-											<span className="rightBarFollowingName">
+											<span className="rightBarFollowingName text-center">
 												{friend.username}
 											</span>
 										</div>

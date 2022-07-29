@@ -15,7 +15,7 @@ export default function PersonalInfo({ getUser }) {
 	const [email, setEmail] = useState(user.email);
 	const [city, setCity] = useState(user.city);
 	const [hometown, setHometown] = useState(user.from);
-	const [relationship, setRelationship] = useState(user.relationship);
+	const [relationship, setRelationship] = useState(user.relationship || 2);
 	const [desc, setDesc] = useState(user.desc);
 	const [fileProfileImg, setFileProfileImg] = useState(null);
 	const [fileCoverImg, setFileCoverImg] = useState(null);
