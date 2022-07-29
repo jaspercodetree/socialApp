@@ -132,7 +132,9 @@ export default function RightBar({ user, isHomePage }) {
 				<hr className="mt-0 d-block d-md-none" />
 
 				<h4
-					className="rightBarTitle fw-bold mt-0 mt-md-3 mb-1 px-2 px-sm-4 px-md-0 py-2"
+					className={`rightBarTitle fw-bold mt-0 mt-md-3 mb-1 px-2 px-sm-4 px-md-0 py-2 ${
+						rightBarInfoOpen ? 'active' : ''
+					}`}
 					onClick={toggleRightBarInfo}
 				>
 					個人資訊
@@ -215,7 +217,9 @@ export default function RightBar({ user, isHomePage }) {
 					</div>
 				</div>
 				<h4
-					className="rightBarTitle fw-bold mt-0 mt-md-3 mb-1 px-2 px-sm-4 px-md-0 py-2"
+					className={`rightBarTitle fw-bold mt-0 mt-md-3 mb-1 px-2 px-sm-4 px-md-0 py-2 ${
+						rightBarFollowingsOpen ? 'active' : ''
+					}`}
 					onClick={toggleRightBarFollowings}
 				>
 					所有朋友

@@ -66,6 +66,9 @@
   .rightBarTitle:hover {
     background-color: #fcfcd0;
   }
+  .rightBarTitle.active {
+    background-color: #fcfcd0;
+  }
 }
 
 .rightBarInfo .rightBarInfoItem {
