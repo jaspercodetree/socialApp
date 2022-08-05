@@ -126,3 +126,7 @@
 .loginRight .loginBox .loginRegisterButton:hover {
   background-color: #009494;
 }
+
+.loginRight .sampleLogin {
+  cursor: pointer;
+}

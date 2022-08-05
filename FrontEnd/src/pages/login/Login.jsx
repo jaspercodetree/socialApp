@@ -12,7 +12,7 @@ export default function Login({ error }) {
 	const { isFetching, dispatch } = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
+		e && e.preventDefault();
 		loginCall(
 			{
 				email: email.current.value,
@@ -66,6 +66,30 @@ export default function Login({ error }) {
 							</button>
 						</Link>
 					</form>
+
+					<div className="fastLoginWrapper mt-3">
+						<h6>-- 範例快速登入 --</h6>
+						{/* <h6
+							className="sampleLogin text-primary text-center fw-bold"
+							onClick={() => {
+								email.current.value = 'gaki@gmail.com';
+								password.current.value = 'jasper';
+								handleSubmit();
+							}}
+						>
+							1. 新垣結衣
+						</h6> */}
+						<h6
+							className="sampleLogin text-primary text-center fw-bold"
+							onClick={() => {
+								email.current.value = 'takeshi@gmail.com';
+								password.current.value = 'jasper';
+								handleSubmit();
+							}}
+						>
+							金城武
+						</h6>
+					</div>
 				</div>
 			</div>
 		</div>
