@@ -100,6 +100,8 @@ export default function Share({ setPosts, username }) {
 			//刪除share暫存
 			setNewPost({ userId: user._id });
 			desc.current.value = '';
+			//恢復share文字框高度
+			desc.current.style.height = 'auto';
 			setFile(null);
 
 			//重新獲取貼文 (有收到username 則判斷為使用者個人頁面；否則為使用者共同貼圖牆頁面)

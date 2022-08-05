@@ -267,7 +267,7 @@
 .postComment .commentShare .commentShareRight .commentShareInput {
   border: none;
   background-color: transparent;
-  font-size: 14px;
+  font-size: inherit;
   width: 93%;
   resize: none;
 }

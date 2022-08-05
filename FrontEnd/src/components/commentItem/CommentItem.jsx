@@ -145,12 +145,6 @@ const CommentItem = ({
 		};
 
 		if (e.key === 'Enter') {
-			//禁止enter換行
-			e.preventDefault();
-
-			//換行
-			commentShareInput.current.value += '\n';
-
 			//自適應高度;
 			e.target.style.height = 'auto';
 			e.target.style.height = `${e.target.scrollHeight}px`;
