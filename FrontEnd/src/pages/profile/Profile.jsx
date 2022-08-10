@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useCallback, useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Feed from '../../components/feed/Feed';
+import { LoadingAnimate } from '../../components/loadingAnimate/LoadingAnimate';
 import RightBar from '../../components/rightBar/RightBar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import TopBar from '../../components/topBar/TopBar';
@@ -9,7 +10,7 @@ import { AuthContext } from '../../context/AuthContext';
 import './profile.css';
 
 export default function Profile({ isPersonalInfo }) {
-	const { PF } = useContext(AuthContext);
+	const { PF, isLoading } = useContext(AuthContext);
 
 	//練習用useParams  (可以透過.username拿取 是因為在App.js已有命名)
 	const username = useParams().username;
@@ -38,6 +39,7 @@ export default function Profile({ isPersonalInfo }) {
 
 	return (
 		<>
+			<LoadingAnimate isLoading={isLoading} />
 			<TopBar />
 			<div className="profile d-flex">
 				<Sidebar />

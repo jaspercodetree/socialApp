@@ -12,14 +12,16 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 import axiosJWT from '../../AxiosJWTConfig';
 
 export default function AlertDialog({ post, editPost, setPosts, username }) {
-	const { user } = useContext(AuthContext);
+	const { user, setIsLoading } = useContext(AuthContext);
 
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-	const [isFailModalOpen, setIsFailModalOpen] = useState(false);
 
 	//確認 刪除貼文
 	const handleDelete = async () => {
 		try {
+			setIsDeleteModalOpen(false);
+			setIsLoading(true);
+
 			await axiosJWT.delete('/posts/' + post._id, {
 				data: { userId: user._id },
 			});
@@ -39,6 +41,8 @@ export default function AlertDialog({ post, editPost, setPosts, username }) {
 						return 0;
 					})
 				);
+
+				setIsLoading(false);
 			};
 			getPosts();
 		} catch (err) {
@@ -81,29 +85,6 @@ export default function AlertDialog({ post, editPost, setPosts, username }) {
 					</Button>
 					<Button onClick={handleDelete} autoFocus>
 						確定
-					</Button>
-				</DialogActions>
-			</Dialog>
-
-			<Dialog
-				open={isFailModalOpen}
-				onClose={() => setIsFailModalOpen(false)}
-			>
-				<DialogTitle
-					id="alert-dialog-title"
-					className="pb-0 text-danger text-center"
-				>
-					<p className="m-0">權限驗證已逾時</p>
-					<p className="m-0">若要刪除貼文，請您重新登入</p>
-				</DialogTitle>
-				<DialogActions className="justify-content-center">
-					<Button
-						onClick={() => {
-							setIsFailModalOpen(false);
-							setIsDeleteModalOpen(false);
-						}}
-					>
-						關閉
 					</Button>
 				</DialogActions>
 			</Dialog>

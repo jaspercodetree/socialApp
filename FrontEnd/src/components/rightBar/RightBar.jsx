@@ -17,7 +17,12 @@ import Sponsor from '../sponsor/Sponsor';
 export default function RightBar({ user, isHomePage }) {
 	const [friends, setFriends] = useState([]);
 	const [profileFriends, setProfileFriends] = useState([]);
-	const { user: loginUser, dispatch, PF } = useContext(AuthContext);
+	const {
+		user: loginUser,
+		dispatch,
+		PF,
+		setIsLoading,
+	} = useContext(AuthContext);
 
 	const [followed, setFollowed] = useState(false);
 
@@ -68,6 +73,8 @@ export default function RightBar({ user, isHomePage }) {
 
 	//注意:即使已經更新資料庫，但由於追蹤按鈕的文字是由context內的followings是否有user._id判斷，因此我們必須透過useReducer去更新context的狀態，來更新文字
 	const handleClick = async () => {
+		setIsLoading(true);
+
 		if (followed) {
 			await axiosJWT.put(`/users/${user._id}/unfollow`, {
 				userId: loginUser._id,
@@ -81,6 +88,7 @@ export default function RightBar({ user, isHomePage }) {
 		}
 
 		// setFollowed(!followed);
+		setIsLoading(false);
 	};
 
 	//mobile

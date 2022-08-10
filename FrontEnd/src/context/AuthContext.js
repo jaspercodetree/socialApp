@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from 'react';
+import { createContext, useReducer, useEffect, useState } from 'react';
 import AuthReducer from './AuthReducer';
 
 //宣告初始狀態
@@ -23,6 +23,9 @@ export const AuthContextProvider = ({ children }) => {
 		localStorage.setItem('user', JSON.stringify(state.user));
 	}, [state.user]);
 
+	//載入動畫
+	const [isLoading, setIsLoading] = useState(false);
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -31,6 +34,8 @@ export const AuthContextProvider = ({ children }) => {
 				error: state.error,
 				dispatch,
 				PF: 'http://localhost:8800/images/',
+				isLoading: isLoading,
+				setIsLoading: setIsLoading,
 			}}
 		>
 			{children}

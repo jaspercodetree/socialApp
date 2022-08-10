@@ -11,13 +11,14 @@ import RecommendUser from '../recommendUser/RecommendUser';
 import { CircularProgress } from '@material-ui/core';
 
 export default function TopBar() {
-	const { user, PF } = useContext(AuthContext);
+	const { user, PF, setIsLoading } = useContext(AuthContext);
 	const [searchName, setSearchName] = useState([]);
 	const [searchUsers, setSearchUsers] = useState([]);
 	const [isModalActive, setModalActive] = useState(false);
 	const [isFetching, setIsFetching] = useState(false);
 
 	const logout = async () => {
+		setIsLoading(true);
 		setIsFetching(true);
 		//clear refreshTokens in database
 		await axiosJWT
@@ -31,6 +32,8 @@ export default function TopBar() {
 				window.location.replace('/login');
 			})
 			.catch((err) => console.log(err));
+
+		setIsLoading(false);
 	};
 	//searchUsers
 	useEffect(() => {

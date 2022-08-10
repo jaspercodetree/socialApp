@@ -7,7 +7,7 @@ import axiosJWT from '../../AxiosJWTConfig';
 import { checkAndSetFile } from '../../checkAndSetFile';
 
 export default function PersonalInfo({ getUser }) {
-	const { user, dispatch, PF } = useContext(AuthContext);
+	const { user, dispatch, PF, setIsLoading } = useContext(AuthContext);
 
 	const [isEditable, setIsEditable] = useState(false);
 
@@ -42,6 +42,8 @@ export default function PersonalInfo({ getUser }) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
+
 		const updateData = {
 			userId: user._id,
 			username: username,
@@ -123,6 +125,8 @@ export default function PersonalInfo({ getUser }) {
 
 			//恢復檢視狀態
 			setIsEditable(false);
+
+			setIsLoading(false);
 		} catch (error) {
 			console.log(error);
 		}

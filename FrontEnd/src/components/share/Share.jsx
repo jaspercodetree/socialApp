@@ -18,7 +18,7 @@ import axiosJWT from '../../AxiosJWTConfig';
 import { checkAndSetFile } from '../../checkAndSetFile';
 
 export default function Share({ setPosts, username }) {
-	const { user, PF } = useContext(AuthContext);
+	const { user, PF, setIsLoading } = useContext(AuthContext);
 	const desc = useRef();
 	const [file, setFile] = useState(null);
 
@@ -74,6 +74,8 @@ export default function Share({ setPosts, username }) {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		//loading animate
+		setIsLoading(true);
 
 		console.log(newPost);
 
@@ -120,6 +122,7 @@ export default function Share({ setPosts, username }) {
 						return 0;
 					})
 				);
+				setIsLoading(false);
 			};
 			getPosts();
 		} catch (error) {

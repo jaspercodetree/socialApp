@@ -16,7 +16,7 @@ const CommentItem = ({
 	getNewPost,
 	allUserInfoForComment,
 }) => {
-	const { user, PF } = useContext(AuthContext);
+	const { user, PF, setIsLoading } = useContext(AuthContext);
 	// console.log(allUserInfoForComment);
 	// console.log(allUserInfoForComment['60e553e65cd1772ce8f1e3ea'].username);
 
@@ -36,6 +36,9 @@ const CommentItem = ({
 	}, [allUserInfoForComment, comment.commentUserId]);
 
 	const deleteComment = async () => {
+		setOpen(false);
+		setIsLoading(true);
+
 		await axiosJWT
 			.put(`/posts/${postId}/deleteComment`, {
 				comment: {
@@ -49,6 +52,8 @@ const CommentItem = ({
 			.catch((err) => {
 				console.log(err);
 			});
+
+		setIsLoading(false);
 	};
 
 	const editComment = async (e) => {
@@ -123,6 +128,8 @@ const CommentItem = ({
 			// commentEditWrap.current.classList.add('d-none');
 
 			try {
+				setIsLoading(true);
+
 				await axiosJWT
 					.put(`/posts/${postId}/editComment`, {
 						comment: {
@@ -139,6 +146,8 @@ const CommentItem = ({
 						const res = await axios.get(`/posts/${postId}`);
 						getNewPost(res.data);
 					});
+
+				setIsLoading(false);
 			} catch (err) {
 				console.log(err);
 			}
@@ -158,14 +167,6 @@ const CommentItem = ({
 
 	//刪除確認
 	const [open, setOpen] = useState(false);
-
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	return (
 		<div className="commentListItem">
@@ -294,12 +295,12 @@ const CommentItem = ({
 						name="commentDeleteBtn"
 						id="commentDeleteBtn"
 						className="btn"
-						onClick={handleClickOpen}
+						onClick={() => setOpen(true)}
 					>
 						刪除留言
 					</button>
 				</div>
-				<Dialog open={open} onClose={handleClose}>
+				<Dialog open={open} onClose={() => setOpen(false)}>
 					<DialogTitle
 						id="alert-dialog-title"
 						className="pb-0 text-danger"
@@ -307,7 +308,7 @@ const CommentItem = ({
 						{'刪除此則留言 ?'}
 					</DialogTitle>
 					<DialogActions className="justify-content-center">
-						<Button onClick={handleClose} color="default">
+						<Button onClick={() => setOpen(false)} color="default">
 							取消
 						</Button>
 						<Button

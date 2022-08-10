@@ -22,7 +22,7 @@ export default function Post({
 
 	//like
 	//此處user 起一個暱稱currentUser代替，currentUser代表的是登入的使用者資料
-	const { user, PF } = useContext(AuthContext);
+	const { user, PF, setIsLoading } = useContext(AuthContext);
 	const [like, setLike] = useState(post.likes.length);
 	const [isLiked, setIsLiked] = useState(false);
 
@@ -36,6 +36,8 @@ export default function Post({
 	}, [user._id, post.likes]);
 
 	const likeHandler = async () => {
+		setIsLoading(true);
+
 		await axiosJWT
 			.put('/posts/' + post._id + '/like', {
 				userId: user._id,
@@ -45,6 +47,8 @@ export default function Post({
 				setIsLiked(!isLiked);
 			})
 			.catch((err) => console.log(err));
+
+		setIsLoading(false);
 	};
 
 	//get tagUserName
@@ -62,6 +66,8 @@ export default function Post({
 	const sendComment = (e, isClick) => {
 		const sendCommentAjax = async () => {
 			try {
+				setIsLoading(true);
+
 				//generate guid
 				function _uuid() {
 					var d = Date.now();
@@ -103,6 +109,8 @@ export default function Post({
 			} catch (err) {
 				console.log(err);
 			}
+
+			setIsLoading(false);
 		};
 
 		if (e.key === 'Enter') {
@@ -200,6 +208,7 @@ export default function Post({
 
 		const sendPostAjax = async () => {
 			e.preventDefault();
+			setIsLoading(true);
 
 			//更新資料
 			const updateData = {
@@ -258,6 +267,8 @@ export default function Post({
 			} catch (err) {
 				console.log(err);
 			}
+
+			setIsLoading(false);
 		};
 
 		//入口程式
