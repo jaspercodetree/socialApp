@@ -11,30 +11,33 @@ import {
 } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from './context/AuthContext';
+import ScrollToTop from './ScrollToTop';
 
 function App() {
 	const { user, error } = useContext(AuthContext);
 
 	return (
 		<Router>
-			<Switch>
-				<Route exact path="/">
-					{user ? <Home /> : <Login />}
-				</Route>
-				<Route path="/login">
-					{user ? <Redirect to="/" /> : <Login error={error} />}
-				</Route>
-				<Route path="/register">
-					<Register />
-				</Route>
-				{/* isPersonalInfo 分別個人頁面與編輯個人頁面 */}
-				<Route exact path="/profile/:username">
-					<Profile />
-				</Route>
-				<Route path="/profile/:username/personalInfo">
-					<Profile isPersonalInfo={true} />
-				</Route>
-			</Switch>
+			<ScrollToTop>
+				<Switch>
+					<Route exact path="/">
+						{user ? <Home /> : <Login />}
+					</Route>
+					<Route path="/login">
+						{user ? <Redirect to="/" /> : <Login error={error} />}
+					</Route>
+					<Route path="/register">
+						<Register />
+					</Route>
+					{/* isPersonalInfo 分別個人頁面與編輯個人頁面 */}
+					<Route exact path="/profile/:username">
+						<Profile />
+					</Route>
+					<Route path="/profile/:username/personalInfo">
+						<Profile isPersonalInfo={true} />
+					</Route>
+				</Switch>
+			</ScrollToTop>
 		</Router>
 	);
 }
