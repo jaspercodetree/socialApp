@@ -4,7 +4,7 @@ const Post = require('../models/Post');
 
 const verify = require('../verify');
 
-//create post
+//postPost
 router.post('/', verify, async (req, res) => {
 	try {
 		const newPost = new Post(req.body);
@@ -15,7 +15,7 @@ router.post('/', verify, async (req, res) => {
 	}
 });
 
-//get a post
+//getPost
 router.get('/:id', async (req, res) => {
 	try {
 		//a.1 貼文
@@ -47,7 +47,7 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
-//update post
+//putPost
 router.put('/:id', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
@@ -62,7 +62,7 @@ router.put('/:id', verify, async (req, res) => {
 	}
 });
 
-//delete
+//deletePost
 router.delete('/:id/', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
@@ -97,7 +97,7 @@ router.delete('/:id/', verify, async (req, res) => {
 
 //其他功能
 
-//like & dislike
+//postLikeDislike
 router.put('/:id/like', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
@@ -113,7 +113,7 @@ router.put('/:id/like', verify, async (req, res) => {
 	}
 });
 
-//貼文牆 (自己與已追蹤followings的好友 所有推文)
+//getTimeline 貼文牆 (自己與已追蹤followings的好友 所有推文)
 router.get('/timeline/:id', async (req, res) => {
 	try {
 		//a.自己的貼文
@@ -196,7 +196,7 @@ router.get('/timeline/:id', async (req, res) => {
 	}
 });
 
-//個人頁面 (個人所有貼文)
+//getPersonalPost 個人頁面 (個人所有貼文)
 router.get('/profile/:username', async (req, res) => {
 	try {
 		//a.自己的貼文
@@ -234,7 +234,7 @@ router.get('/profile/:username', async (req, res) => {
 	}
 });
 
-//add comment
+//postComment
 router.put('/:id/addComment', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
@@ -245,7 +245,7 @@ router.put('/:id/addComment', verify, async (req, res) => {
 	}
 });
 
-//delete comment
+//deleteComment
 router.put('/:id/deleteComment', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);
@@ -256,7 +256,7 @@ router.put('/:id/deleteComment', verify, async (req, res) => {
 	}
 });
 
-//edit comment
+//putComment
 router.put('/:id/editComment', verify, async (req, res) => {
 	try {
 		const post = await Post.findById(req.params.id);

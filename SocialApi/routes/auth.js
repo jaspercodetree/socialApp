@@ -27,6 +27,7 @@ router.post('/register', async (req, res) => {
 	}
 });
 
+//postRefreshToken
 router.post('/refresh', (req, res) => {
 	//take the refresh token from the user
 	let refreshToken = req.body.token;
@@ -66,7 +67,7 @@ router.post('/refresh', (req, res) => {
 const generateAccessToken = (user) => {
 	return jwt.sign({ id: user._id }, 'mySecretKey', {
 		//set access token expire time
-		expiresIn: '5s',
+		expiresIn: '3600s',
 	});
 };
 

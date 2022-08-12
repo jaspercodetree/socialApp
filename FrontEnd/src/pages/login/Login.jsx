@@ -82,7 +82,7 @@ export default function Login({ error }) {
 						<h6
 							className="sampleLogin text-primary text-center fw-bold"
 							onClick={() => {
-								email.current.value = 'takeshi@gmail.com';
+								email.current.value = 'takeshi@example.com';
 								password.current.value = 'jasper';
 								handleSubmit();
 							}}

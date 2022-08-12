@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const verify = require('../verify');
 
-//update
+//putUser
 router.put('/:id', verify, async (req, res) => {
 	if (req.body.userId === req.params.id) {
 		//傳進來的資料如有密碼，將其要修改的密碼加密
@@ -28,7 +28,7 @@ router.put('/:id', verify, async (req, res) => {
 	}
 });
 
-//delete
+//deleteUser
 router.delete('/:id', verify, async (req, res) => {
 	try {
 		//先抓user來判斷是否是Admin
@@ -45,7 +45,7 @@ router.delete('/:id', verify, async (req, res) => {
 	}
 });
 
-//get
+//getUser
 router.get('/', async (req, res) => {
 	//設計兩種方式都可以取得使用者(名稱或id)
 	const userId = req.query.userId;
@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-//get all user
+//getAllUsers
 router.get('/all', async (req, res) => {
 	try {
 		let users = await User.find();
@@ -73,7 +73,7 @@ router.get('/all', async (req, res) => {
 	}
 });
 
-//get recommend Users
+//getRecommendUsers
 router.get('/:id/recommendUsers', async (req, res) => {
 	try {
 		let authorFollowings = await User.findById(req.params.id).select(
@@ -103,7 +103,7 @@ router.get('/:id/recommendUsers', async (req, res) => {
 	}
 });
 
-//search user
+//searchUsers
 router.get('/search', async (req, res) => {
 	const username = req.query.username;
 
@@ -117,7 +117,7 @@ router.get('/search', async (req, res) => {
 	}
 });
 
-//follow a user
+//followUser
 router.put('/:id/follow', verify, async (req, res) => {
 	//followers粉絲群
 	//followings追蹤的目標
@@ -145,7 +145,7 @@ router.put('/:id/follow', verify, async (req, res) => {
 	}
 });
 
-//unfollow a user
+//unfollowUser
 router.put('/:id/unfollow', verify, async (req, res) => {
 	if (req.body.userId !== req.params.id) {
 		try {
@@ -171,7 +171,7 @@ router.put('/:id/unfollow', verify, async (req, res) => {
 	}
 });
 
-//get friends
+//getFriends
 router.get('/friends/:userId', async (req, res) => {
 	try {
 		const user = await User.findById(req.params.userId);
