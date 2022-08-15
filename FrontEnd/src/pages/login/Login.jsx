@@ -9,7 +9,7 @@ import { AuthContext } from '../../context/AuthContext';
 export default function Login({ error }) {
 	const email = useRef();
 	const password = useRef();
-	const { isFetching, dispatch } = useContext(AuthContext);
+	const { isFetching, dispatch, PF } = useContext(AuthContext);
 
 	const handleSubmit = (e) => {
 		e && e.preventDefault();
@@ -30,6 +30,19 @@ export default function Login({ error }) {
 					<span className="loginDesc">連結世界上所有的朋友</span>
 				</div>
 				<div className="loginRight col-12 col-md-6 mt-4 mt-md-0">
+					<div className="fastLoginWrapper mt-3">
+						<h6 className="text-center">-- 範例快速登入 --</h6>
+						<h6
+							className="sampleLogin text-primary text-center fw-bold mb-3"
+							onClick={() => {
+								email.current.value = 'takeshi@example.com';
+								password.current.value = 'jasper';
+								handleSubmit();
+							}}
+						>
+							金城武
+						</h6>
+					</div>
 					<form className="loginBox p-4" onSubmit={handleSubmit}>
 						<input
 							type="email"
@@ -67,28 +80,14 @@ export default function Login({ error }) {
 						</Link>
 					</form>
 
-					<div className="fastLoginWrapper mt-3">
-						<h6>-- 範例快速登入 --</h6>
-						{/* <h6
-							className="sampleLogin text-primary text-center fw-bold"
-							onClick={() => {
-								email.current.value = 'gaki@gmail.com';
-								password.current.value = 'jasper';
-								handleSubmit();
-							}}
-						>
-							1. 新垣結衣
-						</h6> */}
-						<h6
-							className="sampleLogin text-primary text-center fw-bold"
-							onClick={() => {
-								email.current.value = 'takeshi@example.com';
-								password.current.value = 'jasper';
-								handleSubmit();
-							}}
-						>
-							金城武
-						</h6>
+					<div className=" mt-3">
+						<h6 className="text-center">-- 手機瀏覽網頁連結 --</h6>
+						<div className="text-center fw-bold">
+							<img
+								src={PF + `mobileWebQRCOde.png`}
+								alt="mobileQRCode"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
