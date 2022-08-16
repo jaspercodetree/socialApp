@@ -1,70 +1,166 @@
-# Getting Started with Create React App
+<p align="center" dir="auto">
+  <a href="https://jasperbook.herokuapp.com" rel="nofollow">
+    <img src="https://i.imgur.com/4dnSRTr.png" alt="logo" width="72" height="72" style="max-width: 100%;">
+  </a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h3 align="center" dir="auto">JasperBook</h3>
+<p align="center" dir="auto">
+ Online platform for everyone to readily share your life, make friends, and interact with others all over the world. It mimics the functionality and interface of Facebook. You can browse JasperBook on your computer or cellphone.
+ <br/>
+ <a href="https://jasperbook.herokuapp.com" rel="nofollow"><strong>Explore my Website</strong></a>
+ <br/>
+ <h3 align="center" dir="auto">mobile link</h3>
+ <p align="center" dir="auto">
+   <img src="https://i.imgur.com/Cq8bYzs.png" alt="logo" width="100" height="100" style="max-width: 100%;">
+</p>
+</p>
 
-## Available Scripts
+## **Table of contents**
 
-In the project directory, you can run:
+- [App first look](https://github.com/jaspercodetree/socialApp#app-first-look)
+- [About JasperBook project](https://github.com/jaspercodetree/socialApp#about-jasperbook-project)
+- [How to use](https://github.com/jaspercodetree/socialApp#how-to-use)
+- [API Document](https://github.com/jaspercodetree/socialApp#api-document)
+- [Upcoming features](https://github.com/jaspercodetree/socialApp#upcoming-features)
+## **App first look**
 
-### `npm start`
+### **User Interface**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Untitled]("https://i.imgur.com/4dnSRTr.png)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### **board**
 
-### `npm test`
+## **About JasperBook project**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Online platform for everyone to readily share your life, make friends, and interact with others all over the world.
 
-### `npm run build`
+### **MERN stack**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- MongoDB — document database
+- Express(.js) — Node.js web framework
+- React(.js) — a client-side JavaScript framework
+- Node(.js) — the premier JavaScript web server
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### **Open source kits and API we have used**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Front End**
 
-### `npm run eject`
+- Using [React](https://reactjs.org/) as the front-end framework
+- Using [axios](https://axios-http.com/) to help connect front-end to back-end
+- Using [jwt-decode](https://github.com/auth0/jwt-decode#readme) to helps decoding JWTs token which are Base64Url encoded.
+- Using [Sass](https://github.com/sass/node-sass), CSS preprocessors, in the project. Making CSS code cleaner and reusable.
+- Using [Bootstrap 5](https://getbootstrap.com/) CSS framework to help create responsive front-end website
+- Using [timeago](https://www.npmjs.com/package/timeago.js/v/4.0.0-beta.3) to parse, validate and display date and time that are consistent with back-end
+- Using [material-ui](https://mui.com/zh/) to display beautiful icons on the website
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Back End**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Using [Express](http://expressjs.com/) as web framework for Node.js.
+- Using [Helmet](https://helmetjs.github.io/) to help secure Express apps by setting various HTTP headers
+- Using [Mongoose](https://mongoosejs.com/) to help writing MongoDB validation, casting and business logic
+- Using [morgan](https://github.com/expressjs/morgan#readme) as HTTP request logger middleware for node.js
+- Using [JSON Web Tokens](https://github.com/auth0/node-jsonwebtoken) to add token based authentication to RESTful API
+- Using [Multer](https://github.com/expressjs/multer) for file upload feature
+- Using [bcryptjs](https://github.com/dcodeIO/bcrypt.js) to hash and check password
+- Using [dotenv](https://github.com/motdotla/dotenv) to help load the environment variables saved in .env file
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## **How to use**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**Sign up & login**
 
-## Learn More
+- Sign up for a JasperBook account to start the journey
+- Log in to your JasperBook  user account
+    
+    Or you can use the sample account to quickly log in
+    
+    - email: takeshi@example.com
+    - password: jasper
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Timeline main page**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The left column is the user account that is recommended to be added as a friend
+- The right column is the friends you have
+- The middle column is your own and all your friends' articles
+- If you are a newly registered user, Jasper will be the default friend of everyone.
+- You can search for users by entering keywords on the top of navbar.
 
-### Code Splitting
+**Post your first post**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Write a paragraph
+- Choose a photo
+- Tag a user
+- And show the current mood, press the share button !
+- Then you can see your new post with the time it was posted
+- You only can edit or delete your post
 
-### Analyzing the Bundle Size
+**Respond to others**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- You can press the love button to like someone else's post
+- You can respond by commenting below the post
+- You can see the name and time of the message
+- You can edit or delete your own message
 
-### Making a Progressive Web App
+**Personal page**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- By clicking on the person's name or photo, you can visit each person's personal page
+- The middle column here will only have each person's own article
+- If you log in to your personal page, you can also post a message directly at the top of it
+- The right column is the basic information for each person.
+- What's more special is that Jasper's page has records of my work and professional skills
 
-### Advanced Configuration
+**Edit personal info**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Click on your photo of the navbar. And click the edit profile button.
+- You can update your personal info
+- Upload your avatar
+- Upload your cover photo
 
-### Deployment
+PS: The advertising site on the right is where I have volunteered for many years.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## **API Document**
 
-### `npm run build` fails to minify
+JasperBook app is using our own REST APIs. To learn more about the API, please check out my [API Docs](https://documenter.getpostman.com/view/13211824/VUjQm4Vb#c9ea10c6-39fc-42b0-9a81-71df68e4139d) for more information.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### **What's included**
+
+Within the API document you will find the following directories and files:
+
+```
+dist/
+├── auth/
+│   ├── register
+│   ├── login
+│   ├── postRefreshToken
+└── users/
+│   ├── putUser
+│   ├── getUser
+│   ├── getAllUsers
+│   ├── getRecommendUsers
+│   ├── searchUsers
+│   ├── followUser
+│   ├── unfollowUser
+│   ├── getFriends
+└── posts/
+│   ├── postPost
+│   ├── getPost
+│   ├── putPost
+│   ├── deletePost
+│   ├── postLikeDislike
+│   ├── getTimeline
+│   ├── getPersonalPost
+│   ├── postComment
+│   ├── putComment
+│   ├── deleteComment
+└── upload/
+    ├── postPostImage
+    ├── postPersonalImage
+    └── postDeleteImage
+```
+
+## **Upcoming features**
+
+- Build a website to improve web page fluency
+- User can updates or resets password
+- Online chat with friends
+- Posting can mark the location
