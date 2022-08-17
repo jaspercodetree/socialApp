@@ -25,11 +25,11 @@
 - [Upcoming features](https://github.com/jaspercodetree/socialApp#upcoming-features)
 ## **App first look**
 
-### **User Interface**
+### **Write a post**
+![Untitled](https://github.com/jaspercodetree/socialApp/blob/master/jasperbookView1.gif)
+### **Reply to comments**
+![Untitled](https://github.com/jaspercodetree/socialApp/blob/master/jasperbookView2.gif)
 
-![Untitled]("https://i.imgur.com/4dnSRTr.png)
-
-### **board**
 
 ## **About JasperBook project**
 
