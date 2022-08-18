@@ -6,10 +6,10 @@
 
 <h3 align="center" dir="auto">JasperBook</h3>
 <p align="center" dir="auto">
- Online platform for everyone to readily share your life, make friends, and interact with others all over the world. It mimics the functionality and interface of Facebook. You can browse JasperBook on your computer or cellphone.
+ Online platform for everyone to readily share your life, make friends, and interact with others all over the world. <br/>It mimics the functionality and interface of Facebook.<br/> You can browse JasperBook on your computer or cellphone.
  <br/>
   <h3 align="center">
-    <a href="https://jasperbook.herokuapp.com" rel="nofollow" target="_blank"><strong> 👉 Explore my Website 👈</strong></a>
+    <span>🌐&nbsp</span><a href="https://jasperbook.herokuapp.com" rel="nofollow" target="_blank"><strong>Explore my Website</strong></a>
   </h3>
  <br/>
  <div align="center" dir="auto">mobile link</div>
@@ -31,7 +31,8 @@
 ![Untitled](https://github.com/jaspercodetree/socialApp/blob/master/jasperbookView1.gif)
 ### **Reply to comments**
 ![Untitled](https://github.com/jaspercodetree/socialApp/blob/master/jasperbookView2.gif)
-
+### **Mobile view**
+![Untitled](https://github.com/jaspercodetree/socialApp/blob/master/jasperBookView3.gif)
 
 ## **About JasperBook project**
 
