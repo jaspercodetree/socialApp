@@ -94,7 +94,7 @@ export default function Register() {
 						<hr className="mt-3" />
 						<Link to="/login" style={{ textAlign: 'center' }}>
 							<button className="loginRegisterButton">
-								返回登入畫面
+								返回登入
 							</button>
 						</Link>
 					</div>
